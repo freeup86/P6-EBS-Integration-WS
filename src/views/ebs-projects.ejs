@@ -60,14 +60,19 @@
                         <td><%= project.projectNumber %></td>
                         <td><%= project.projectName %></td>
                         <td>
-                          <span class="badge <%= project.projectStatus === 'APPROVED' ? 'bg-success' : (project.projectStatus === 'PENDING' ? 'bg-warning text-dark' : 'bg-secondary') %>">
+                          <span class="badge <%= 
+                            project.projectStatus === 'APPROVED' ? 'bg-success' : 
+                            (project.projectStatus === 'PENDING' ? 'bg-warning text-dark' : 'bg-secondary') 
+                          %>">
                             <%= project.projectStatus %>
                           </span>
                         </td>
-                        <td><%= new Date(project.plannedStart).toLocaleDateString() %></td>
-                        <td><%= new Date(project.plannedFinish).toLocaleDateString() %></td>
+                        <td><%= project.plannedStart ? new Date(project.plannedStart).toLocaleDateString() : 'N/A' %></td>
+                        <td><%= project.plannedFinish ? new Date(project.plannedFinish).toLocaleDateString() : 'N/A' %></td>
                         <td>
-                          <button class="btn btn-primary btn-sm sync-btn" data-project-id="<%= project.projectNumber %>" data-project-name="<%= project.projectName %>">
+                          <button class="btn btn-primary btn-sm sync-btn" 
+                                  data-project-id="<%= project.projectNumber %>" 
+                                  data-project-name="<%= project.projectName %>">
                             Sync to P6
                           </button>
                         </td>
@@ -75,7 +80,11 @@
                     <% }); %>
                   <% } else { %>
                     <tr>
-                      <td colspan="6" class="text-center">No projects found</td>
+                      <td colspan="6" class="text-center">
+                        <div class="alert alert-info">
+                          No projects found. Please check your connection or API configuration.
+                        </div>
+                      </td>
                     </tr>
                   <% } %>
                 </tbody>

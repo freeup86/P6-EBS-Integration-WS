@@ -53,3 +53,124 @@
 2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1003
 2025-04-23 15:06:01 info: Mock P6 Update WBS API called for WBS: WBS004-OBJ
 2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1004
+2025-04-23 15:43:50 info: Server running in production mode on port 3000
+2025-04-23 15:43:58 info: GET / 304 16.450 ms
+2025-04-23 15:43:58 info: GET /css/style.css 200 3.113 ms
+2025-04-23 15:44:00 info: GET /integration/ebs/projects 304 71.811 ms
+2025-04-23 15:44:02 info: GET /integration/ebs/projects 304 1.965 ms
+2025-04-23 15:44:03 info: GET /integration/p6/projects 304 2.837 ms
+2025-04-23 15:44:04 info: Request to sync P6 resource assignments to EBS
+2025-04-23 15:44:04 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: No response received
+2025-04-23 15:44:04 error: P6 Authentication Error: getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-23 15:44:04 error: HTTP Error
+2025-04-23 15:44:04 info: POST /integration/p6-to-ebs/resources 500 124.346 ms
+2025-04-23 15:44:09 info: Request to sync P6 WBS to EBS tasks: P1001
+2025-04-23 15:44:09 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: No response received
+2025-04-23 15:44:09 error: P6 Authentication Error: getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-04-23 15:44:09 error: HTTP Error
+2025-04-23 15:44:09 info: POST /integration/p6-to-ebs/wbs/P1001 500 9.958 ms
+2025-04-23 15:44:11 info: GET /integration/status 200 2.724 ms
+2025-04-23 15:44:15 info: GET /integration/ebs/projects 304 1.795 ms
+2025-04-23 15:44:17 info: GET / 304 0.864 ms
+2025-04-23 15:44:32 info: GET /integration/ebs/projects 304 1.182 ms
+2025-04-23 15:44:40 info: GET /integration/p6/projects 304 1.089 ms
+2025-04-23 15:44:43 info: GET /integration/ebs/projects 304 1.230 ms
+2025-04-23 15:44:44 info: GET /integration/p6/projects 304 1.006 ms
+2025-04-23 15:44:46 info: GET /integration/ebs/projects 304 0.965 ms
+2025-04-23 15:44:48 info: GET /integration/p6/projects 304 0.904 ms
+2025-04-23 15:44:48 info: GET /integration/p6/projects 304 0.808 ms
+2025-04-23 15:44:49 info: GET /integration/p6/projects 304 1.044 ms
+2025-04-23 15:44:49 info: GET /integration/p6/projects 304 1.625 ms
+2025-04-23 15:44:50 info: GET /integration/p6/projects 304 1.490 ms
+2025-04-23 15:44:50 info: GET /integration/p6/projects 304 0.719 ms
+2025-04-23 15:44:50 info: GET /integration/p6/projects 304 0.886 ms
+2025-04-23 15:44:50 info: GET /integration/p6/projects 304 0.852 ms
+2025-04-23 15:44:51 info: GET /integration/p6/projects 304 0.776 ms
+2025-04-23 15:44:51 info: GET /integration/p6/projects 304 1.380 ms
+2025-04-23 15:44:51 info: GET /integration/p6/projects 304 0.946 ms
+2025-04-23 15:44:51 info: GET /integration/ebs/projects 304 0.999 ms
+2025-04-23 15:44:52 info: GET /integration/ebs/projects 304 0.632 ms
+2025-04-23 15:44:52 info: GET /integration/p6/projects 304 0.897 ms
+2025-04-23 15:44:54 info: GET /integration/p6/projects 304 0.748 ms
+2025-04-23 15:44:54 info: GET /integration/p6/projects 304 0.789 ms
+2025-04-23 15:44:55 info: GET /integration/ebs/projects 304 0.922 ms
+2025-04-23 15:44:55 info: GET /integration/status 200 0.834 ms
+2025-04-23 15:44:55 info: GET /integration/ebs/projects 304 0.950 ms
+2025-04-23 15:44:56 info: GET /integration/ebs/projects 304 0.858 ms
+2025-04-23 15:44:57 info: GET /integration/status 200 1.050 ms
+2025-04-23 15:44:58 info: GET /integration/p6/projects 304 0.664 ms
+2025-04-23 15:44:58 info: GET /integration/ebs/projects 304 0.694 ms
+2025-04-23 15:44:58 info: GET /integration/ebs/projects 304 0.748 ms
+2025-04-23 16:07:51 info: Server running in production mode on port 3000
+2025-04-23 16:07:56 info: GET / 304 13.992 ms
+2025-04-23 16:07:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:07:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:07:57 error: No response received
+2025-04-23 16:07:57 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:07:57 info: GET /integration/ebs/projects 200 143.126 ms
+2025-04-23 16:08:00 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:00 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:00 error: No response received
+2025-04-23 16:08:00 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:00 info: GET /integration/p6/projects 200 81.968 ms
+2025-04-23 16:08:06 warn: Not Found
+2025-04-23 16:08:06 error: HTTP Error
+2025-04-23 16:08:06 info: GET /integration/status 404 3.751 ms
+2025-04-23 16:08:14 warn: Not Found
+2025-04-23 16:08:14 error: HTTP Error
+2025-04-23 16:08:14 info: GET /integration/status 404 1.798 ms
+2025-04-23 16:08:26 warn: Not Found
+2025-04-23 16:08:26 error: HTTP Error
+2025-04-23 16:08:26 info: GET /integration/status 404 2.716 ms
+2025-04-23 16:08:33 warn: Not Found
+2025-04-23 16:08:33 error: HTTP Error
+2025-04-23 16:08:33 info: GET /integration/status 404 1.086 ms
+2025-04-23 16:11:01 info: Server running in production mode on port 3000
+2025-04-23 16:11:05 info: GET / 304 12.204 ms
+2025-04-23 16:11:06 info: GET /integration/status 200 46.919 ms
+2025-04-23 16:11:09 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:09 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:09 error: No response received
+2025-04-23 16:11:09 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:09 info: GET /integration/ebs/projects 304 50.044 ms
+2025-04-23 16:11:11 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:11:11 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:11:11 error: No response received
+2025-04-23 16:11:11 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:11:11 info: GET /integration/p6/projects 304 9.374 ms
+2025-04-23 16:14:42 info: Server running in production mode on port 3000
+2025-04-23 16:14:48 info: GET / 304 23.007 ms
+2025-04-23 16:14:50 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:14:50 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:14:50 error: No response received
+2025-04-23 16:14:50 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:14:50 info: GET /integration/ebs/projects 304 50.245 ms
+2025-04-23 16:14:52 info: GET /integration/status 200 47.782 ms
+2025-04-23 16:15:00 info: GET /integration/status 200 1.473 ms
+2025-04-23 16:15:11 info: GET / 304 0.887 ms
+2025-04-23 16:15:15 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 error: No response received
+2025-04-23 16:15:15 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 info: GET /integration/ebs/projects 304 8.354 ms
+2025-04-23 16:15:19 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:19 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:19 error: No response received
+2025-04-23 16:15:19 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:19 info: GET /integration/p6/projects 304 5.881 ms
+2025-04-23 16:15:26 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 error: No response received
+2025-04-23 16:15:26 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 info: GET /integration/p6/projects 304 5.410 ms
+2025-04-23 16:15:28 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 error: No response received
+2025-04-23 16:15:28 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 info: GET /integration/p6/projects 304 7.085 ms

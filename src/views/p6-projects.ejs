@@ -60,14 +60,19 @@
                         <td><%= project.id %></td>
                         <td><%= project.name %></td>
                         <td>
-                          <span class="badge <%= project.status === 'Active' ? 'bg-success' : (project.status === 'Planned' ? 'bg-warning text-dark' : 'bg-secondary') %>">
+                          <span class="badge <%= 
+                            project.status === 'Active' ? 'bg-success' : 
+                            (project.status === 'Planned' ? 'bg-warning text-dark' : 'bg-secondary') 
+                          %>">
                             <%= project.status %>
                           </span>
                         </td>
-                        <td><%= new Date(project.startDate).toLocaleDateString() %></td>
-                        <td><%= new Date(project.finishDate).toLocaleDateString() %></td>
+                        <td><%= project.startDate ? new Date(project.startDate).toLocaleDateString() : 'N/A' %></td>
+                        <td><%= project.finishDate ? new Date(project.finishDate).toLocaleDateString() : 'N/A' %></td>
                         <td>
-                          <button class="btn btn-primary btn-sm sync-wbs-btn" data-project-id="<%= project.id %>" data-project-name="<%= project.name %>">
+                          <button class="btn btn-primary btn-sm sync-wbs-btn" 
+                                  data-project-id="<%= project.id %>" 
+                                  data-project-name="<%= project.name %>">
                             Sync WBS to EBS
                           </button>
                         </td>
@@ -75,7 +80,11 @@
                     <% }); %>
                   <% } else { %>
                     <tr>
-                      <td colspan="6" class="text-center">No projects found</td>
+                      <td colspan="6" class="text-center">
+                        <div class="alert alert-info">
+                          No projects found. Please check your connection or API configuration.
+                        </div>
+                      </td>
                     </tr>
                   <% } %>
                 </tbody>

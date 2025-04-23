@@ -1,28 +1,11 @@
-// src/services/p6-to-ebs-service.js
-const axios = require('axios');
+const { createAdvancedApiClient } = require('../utils/api-client');
 const config = require('../config');
 const logger = require('../utils/logger');
 const dataMapping = require('./data-mapping-service');
 
-// P6 API client setup
-const p6Client = axios.create({
-  baseURL: config.p6.baseUrl,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
-});
-
-// EBS API client setup
-const ebsClient = axios.create({
-  baseURL: config.ebs.baseUrl,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
-});
+// Create advanced API clients for P6 and EBS
+const p6Client = createAdvancedApiClient(config.p6);
+const ebsClient = createAdvancedApiClient(config.ebs);
 
 // Authenticate with P6
 const authenticateP6 = async () => {

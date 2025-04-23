@@ -1,0 +1,52 @@
+2025-04-23 15:44:04 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: No response received
+2025-04-23 15:44:04 error: P6 Authentication Error: getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:04 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-23 15:44:04 error: HTTP Error
+2025-04-23 15:44:09 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: No response received
+2025-04-23 15:44:09 error: P6 Authentication Error: getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 15:44:09 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-04-23 15:44:09 error: HTTP Error
+2025-04-23 16:07:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:07:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:07:57 error: No response received
+2025-04-23 16:07:57 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:08:00 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:00 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:00 error: No response received
+2025-04-23 16:08:00 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:08:06 error: HTTP Error
+2025-04-23 16:08:14 error: HTTP Error
+2025-04-23 16:08:26 error: HTTP Error
+2025-04-23 16:08:33 error: HTTP Error
+2025-04-23 16:11:09 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:09 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:09 error: No response received
+2025-04-23 16:11:09 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:11:11 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:11:11 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:11:11 error: No response received
+2025-04-23 16:11:11 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:14:50 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:14:50 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:14:50 error: No response received
+2025-04-23 16:14:50 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:15 error: No response received
+2025-04-23 16:15:15 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-23 16:15:19 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:19 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:19 error: No response received
+2025-04-23 16:15:19 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:26 error: No response received
+2025-04-23 16:15:26 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-23 16:15:28 error: No response received
+2025-04-23 16:15:28 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
