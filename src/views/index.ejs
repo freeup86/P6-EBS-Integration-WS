@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">P6-EBS Integration</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/ebs/projects">EBS Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/p6/projects">P6 Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/status">Sync Status</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12 text-center mb-4">
+        <h1>P6-EBS Integration Portal</h1>
+        <p class="lead">Synchronize project data between Primavera P6 and Oracle EBS</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header bg-primary text-white">
+            EBS to P6 Sync
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Oracle EBS Projects</h5>
+            <p class="card-text">Synchronize project data from Oracle EBS to Primavera P6:</p>
+            <ul>
+              <li>Project Information</li>
+              <li>Tasks to WBS</li>
+            </ul>
+            <a href="/integration/ebs/projects" class="btn btn-primary">View EBS Projects</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header bg-success text-white">
+            P6 to EBS Sync
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Primavera P6 Projects</h5>
+            <p class="card-text">Synchronize project data from Primavera P6 to Oracle EBS:</p>
+            <ul>
+              <li>WBS to Tasks</li>
+              <li>Resource Assignments</li>
+            </ul>
+            <a href="/integration/p6/projects" class="btn btn-success">View P6 Projects</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            Quick Stats
+          </div>
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">3</h5>
+                    <p class="card-text">Recent Syncs</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">5</h5>
+                    <p class="card-text">EBS Projects</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">6</h5>
+                    <p class="card-text">P6 Projects</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

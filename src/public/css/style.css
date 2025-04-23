@@ -1,0 +1,35 @@
+/* Custom styles for P6-EBS Integration */
+
+body {
+    padding-bottom: 40px;
+  }
+  
+  .navbar {
+    margin-bottom: 20px;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+  }
+  
+  .card-header {
+    font-weight: 500;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .progress {
+    height: 20px;
+  }
+  
+  .alert {
+    margin-bottom: 0;
+  }

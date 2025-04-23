@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integration Testing</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">P6-EBS Integration</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/ebs/projects">EBS Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/p6/projects">P6 Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/status">Sync Status</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/test-integration/ui">Testing</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Integration Testing</h1>
+        <p class="lead">Test all integration functions directly from this page</p>
+        
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            Authentication Tests
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header">P6 Authentication</div>
+                  <div class="card-body">
+                    <button class="btn btn-primary" id="testP6AuthBtn">Test P6 Auth</button>
+                    <div class="mt-3" id="p6AuthResult"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header">EBS Authentication</div>
+                  <div class="card-body">
+                    <button class="btn btn-primary" id="testEBSAuthBtn">Test EBS Auth</button>
+                    <div class="mt-3" id="ebsAuthResult"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mb-4">
+          <div class="card-header bg-success text-white">
+            EBS to P6 Integration Tests
+          </div>
+          <div class="card-body">
+            <h5>Project Sync</h5>
+            <div class="mb-3">
+              <label for="ebsProjectSelect" class="form-label">Select EBS Project</label>
+              <select class="form-select" id="ebsProjectSelect">
+                <option value="">-- Select a project --</option>
+              </select>
+            </div>
+            <button class="btn btn-success mb-3" id="syncEbsProjectBtn">Sync Project to P6</button>
+            <div id="ebsProjectSyncResult"></div>
+            
+            <hr>
+            
+            <h5>Tasks Sync</h5>
+            <div class="mb-3">
+              <label for="ebsTasksProjectSelect" class="form-label">Select EBS Project for Tasks</label>
+              <select class="form-select" id="ebsTasksProjectSelect">
+                <option value="">-- Select a project --</option>
+              </select>
+            </div>
+            <button class="btn btn-success mb-3" id="syncEbsTasksBtn">Sync Tasks to P6 WBS</button>
+            <div id="ebsTasksSyncResult"></div>
+          </div>
+        </div>
+        
+        <div class="card mb-4">
+          <div class="card-header bg-info text-white">
+            P6 to EBS Integration Tests
+          </div>
+          <div class="card-body">
+            <h5>WBS Sync</h5>
+            <div class="mb-3">
+              <label for="p6ProjectSelect" class="form-label">Select P6 Project</label>
+              <select class="form-select" id="p6ProjectSelect">
+                <option value="">-- Select a project --</option>
+              </select>
+            </div>
+            <button class="btn btn-info mb-3" id="syncP6WbsBtn">Sync WBS to EBS Tasks</button>
+            <div id="p6WbsSyncResult"></div>
+            
+            <hr>
+            
+            <h5>Resource Assignments Sync</h5>
+            <button class="btn btn-info mb-3" id="syncP6ResourcesBtn">Sync Resources to EBS</button>
+            <div id="p6ResourcesSyncResult"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load projects for select dropdowns
+      loadEBSProjects();
+      loadP6Projects();
+      
+      // Auth test buttons
+      document.getElementById('testP6AuthBtn').addEventListener('click', testP6Auth);
+      document.getElementById('testEBSAuthBtn').addEventListener('click', testEBSAuth);
+      
+      // EBS to P6 sync buttons
+      document.getElementById('syncEbsProjectBtn').addEventListener('click', syncEbsProject);
+      document.getElementById('syncEbsTasksBtn').addEventListener('click', syncEbsTasks);
+      
+      // P6 to EBS sync buttons
+      document.getElementById('syncP6WbsBtn').addEventListener('click', syncP6Wbs);
+      document.getElementById('syncP6ResourcesBtn').addEventListener('click', syncP6Resources);
+    });
+
+    // Load EBS projects
+    async function loadEBSProjects() {
+      try {
+        const response = await fetch('/mock-api/ebs/projects');
+        const projects = await response.json();
+        
+        const ebsProjectSelect = document.getElementById('ebsProjectSelect');
+        const ebsTasksProjectSelect = document.getElementById('ebsTasksProjectSelect');
+        
+        projects.forEach(project => {
+          const option = document.createElement('option');
+          option.value = project.PROJECT_ID;
+          option.textContent = `${project.PROJECT_ID} - ${project.NAME}`;
+          
+          ebsProjectSelect.appendChild(option.cloneNode(true));
+          ebsTasksProjectSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading EBS projects:', error);
+        alert('Failed to load EBS projects');
+      }
+    }
+
+    // Load P6 projects
+    async function loadP6Projects() {
+      try {
+        const response = await fetch('/mock-api/p6/projects');
+        const projects = await response.json();
+        
+        const p6ProjectSelect = document.getElementById('p6ProjectSelect');
+        
+        projects.forEach(project => {
+          const option = document.createElement('option');
+          option.value = project.Id;
+          option.textContent = `${project.Id} - ${project.Name}`;
+          
+          p6ProjectSelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading P6 projects:', error);
+        alert('Failed to load P6 projects');
+      }
+    }
+
+    // Test P6 Authentication
+    async function testP6Auth() {
+      const resultElement = document.getElementById('p6AuthResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Testing...';
+      
+      try {
+        const response = await fetch('/test-integration/test-p6-auth');
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = '<div class="alert alert-success">P6 Authentication successful!</div>';
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">P6 Authentication failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('P6 Auth test error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">P6 Authentication test error: ${error.message}</div>`;
+      }
+    }
+
+    // Test EBS Authentication
+    async function testEBSAuth() {
+      const resultElement = document.getElementById('ebsAuthResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Testing...';
+      
+      try {
+        const response = await fetch('/test-integration/test-ebs-auth');
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = '<div class="alert alert-success">EBS Authentication successful!</div>';
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">EBS Authentication failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('EBS Auth test error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">EBS Authentication test error: ${error.message}</div>`;
+      }
+    }
+
+    // Sync EBS Project to P6
+    async function syncEbsProject() {
+      const projectId = document.getElementById('ebsProjectSelect').value;
+      
+      if (!projectId) {
+        alert('Please select a project');
+        return;
+      }
+      
+      const resultElement = document.getElementById('ebsProjectSyncResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Syncing project...';
+      
+      try {
+        const response = await fetch(`/integration/ebs-to-p6/project/${projectId}`, {
+          method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = `<div class="alert alert-success">Project sync successful! Project ID in P6: ${result.p6ProjectId}</div>`;
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">Project sync failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('Project sync error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">Project sync error: ${error.message}</div>`;
+      }
+    }
+
+    // Sync EBS Tasks to P6 WBS
+    async function syncEbsTasks() {
+      const projectId = document.getElementById('ebsTasksProjectSelect').value;
+      
+      if (!projectId) {
+        alert('Please select a project');
+        return;
+      }
+      
+      const resultElement = document.getElementById('ebsTasksSyncResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Syncing tasks...';
+      
+      try {
+        const response = await fetch(`/integration/ebs-to-p6/tasks/${projectId}`, {
+          method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = `<div class="alert alert-success">Tasks sync successful! ${result.results?.length || 0} tasks processed.</div>`;
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">Tasks sync failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('Tasks sync error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">Tasks sync error: ${error.message}</div>`;
+      }
+    }
+
+    // Sync P6 WBS to EBS Tasks
+    async function syncP6Wbs() {
+      const projectId = document.getElementById('p6ProjectSelect').value;
+      
+      if (!projectId) {
+        alert('Please select a project');
+        return;
+      }
+      
+      const resultElement = document.getElementById('p6WbsSyncResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Syncing WBS...';
+      
+      try {
+        const response = await fetch(`/integration/p6-to-ebs/wbs/${projectId}`, {
+          method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = `<div class="alert alert-success">WBS sync successful! ${result.results?.length || 0} WBS elements processed.</div>`;
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">WBS sync failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('WBS sync error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">WBS sync error: ${error.message}</div>`;
+      }
+    }
+
+    // Sync P6 Resources to EBS
+    async function syncP6Resources() {
+      const resultElement = document.getElementById('p6ResourcesSyncResult');
+      resultElement.innerHTML = '<div class="spinner-border spinner-border-sm text-primary" role="status"><span class="visually-hidden">Loading...</span></div> Syncing resources...';
+      
+      try {
+        const response = await fetch('/integration/p6-to-ebs/resources', {
+          method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          resultElement.innerHTML = `<div class="alert alert-success">Resource assignments sync successful! ${result.results?.length || 0} assignments processed.</div>`;
+        } else {
+          resultElement.innerHTML = `<div class="alert alert-danger">Resource assignments sync failed: ${result.message}</div>`;
+        }
+      } catch (error) {
+        console.error('Resource assignments sync error:', error);
+        resultElement.innerHTML = `<div class="alert alert-danger">Resource assignments sync error: ${error.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+2025-04-23 13:32:13 info: Server running on port 3000
+2025-04-23 13:44:54 info: Server running on port 3000
+2025-04-23 13:45:01 info: Server running on port 3000
+2025-04-23 13:49:59 info: Server running on port 3000
+2025-04-23 14:12:02 info: Server running on port 3000
+2025-04-23 14:44:33 info: Server running on port 3000
+2025-04-23 14:44:55 info: Server running on port 3000
+2025-04-23 14:45:44 info: Server running on port 3000
+2025-04-23 14:46:03 info: Server running on port 3000
+2025-04-23 14:49:57 info: Server running on port 3000
+2025-04-23 14:53:37 info: Server running on port 3000
+2025-04-23 14:58:14 info: Server running on port 3000
+2025-04-23 15:03:05 info: Server running on port 3000
+2025-04-23 15:05:34 info: Server running on port 3000
+2025-04-23 15:06:01 info: Request to sync EBS project to P6: P1001
+2025-04-23 15:06:01 info: Mock EBS Auth API called
+2025-04-23 15:06:01 info: Mock: Authenticating
+2025-04-23 15:06:01 info: Successfully authenticated with EBS
+2025-04-23 15:06:01 info: Mock P6 Auth API called
+2025-04-23 15:06:01 info: Mock: Authenticating
+2025-04-23 15:06:01 info: Successfully authenticated with P6
+2025-04-23 15:06:01 info: Mock EBS Project API called for project: P1001
+2025-04-23 15:06:01 info: Mock: Getting EBS project: P1001
+2025-04-23 15:06:01 info: Mock: Getting EBS projects
+2025-04-23 15:06:01 info: Retrieved EBS project: Office Building Construction
+2025-04-23 15:06:01 info: Mock P6 Projects API called
+2025-04-23 15:06:01 info: Mock: Getting P6 projects
+2025-04-23 15:06:01 info: Project found in P6 with ID: P1001-OBJ
+2025-04-23 15:06:01 info: Mock P6 Update Project API called for project: P1001-OBJ
+2025-04-23 15:06:01 info: Updated project in P6 with ID: P1001-OBJ
+2025-04-23 15:06:01 info: Request to sync EBS tasks to P6 WBS: P1001
+2025-04-23 15:06:01 info: Mock EBS Auth API called
+2025-04-23 15:06:01 info: Mock: Authenticating
+2025-04-23 15:06:01 info: Successfully authenticated with EBS
+2025-04-23 15:06:01 info: Mock P6 Auth API called
+2025-04-23 15:06:01 info: Mock: Authenticating
+2025-04-23 15:06:01 info: Successfully authenticated with P6
+2025-04-23 15:06:01 info: Mock EBS Project API called for project: P1001
+2025-04-23 15:06:01 info: Mock: Getting EBS project: P1001
+2025-04-23 15:06:01 info: Mock: Getting EBS projects
+2025-04-23 15:06:01 info: Mock P6 Projects API called
+2025-04-23 15:06:01 info: Mock: Getting P6 projects
+2025-04-23 15:06:01 info: Mock EBS Tasks API called for project: P1001
+2025-04-23 15:06:01 info: Mock: Getting EBS tasks for project: P1001
+2025-04-23 15:06:01 info: Retrieved 4 tasks from EBS project
+2025-04-23 15:06:01 info: Mock P6 WBS API called for project: P1001-OBJ
+2025-04-23 15:06:01 info: Mock: Getting P6 WBS elements for project: P1001-OBJ
+2025-04-23 15:06:01 info: Mock P6 Update WBS API called for WBS: WBS001-OBJ
+2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1001
+2025-04-23 15:06:01 info: Mock P6 Update WBS API called for WBS: WBS002-OBJ
+2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1002
+2025-04-23 15:06:01 info: Mock P6 Update WBS API called for WBS: WBS003-OBJ
+2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1003
+2025-04-23 15:06:01 info: Mock P6 Update WBS API called for WBS: WBS004-OBJ
+2025-04-23 15:06:01 info: Updated WBS in P6 for EBS task: T1004

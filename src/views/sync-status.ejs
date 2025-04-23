@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">P6-EBS Integration</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/ebs/projects">EBS Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/p6/projects">P6 Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/integration/status">Sync Status</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Integration Status</h1>
+        <p class="lead">View the status of recent synchronization operations</p>
+        
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            Recent Sync Operations
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Source</th>
+                    <th>Timestamp</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (syncOperations && syncOperations.length > 0) { %>
+                    <% syncOperations.forEach(operation => { %>
+                      <tr>
+                        <td><%= operation.id %></td>
+                        <td><%= operation.type %></td>
+                        <td><%= operation.source %></td>
+                        <td><%= new Date(operation.timestamp).toLocaleString() %></td>
+                        <td>
+                          <span class="badge <%= operation.status === 'Completed' ? 'bg-success' : (operation.status === 'In Progress' ? 'bg-warning text-dark' : 'bg-danger') %>">
+                            <%= operation.status %>
+                          </span>
+                        </td>
+                        <td><%= operation.details %></td>
+                      </tr>
+                    <% }); %>
+                  <% } else { %>
+                    <tr>
+                      <td colspan="6" class="text-center">No sync operations found</td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header bg-info text-white">
+            System Status
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header">P6 Connectivity</div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <span class="badge bg-success">Connected</span>
+                      Last checked: <%= new Date().toLocaleString() %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header">EBS Connectivity</div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <span class="badge bg-success">Connected</span>
+                      Last checked: <%= new Date().toLocaleString() %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-header">Integration Service Status</div>
+              <div class="card-body">
+                <p class="card-text">
+                  <span class="badge bg-success">Running</span>
+                  Service started: <%= new Date().toLocaleString() %>
+                </p>
+                <button class="btn btn-primary btn-sm" id="checkConnectionsBtn">Check All Connections</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add event listener to check connections button
+      document.getElementById('checkConnectionsBtn').addEventListener('click', checkConnections);
+    });
+  
+    // Check connections function
+    async function checkConnections() {
+      // In a real application, this would make API calls to check connections
+      // For this demo, we'll just simulate the checks
+      
+      // Change button text to indicate checking
+      const button = document.getElementById('checkConnectionsBtn');
+      const originalText = button.textContent;
+      button.textContent = 'Checking Connections...';
+      button.disabled = true;
+      
+      // Simulate API calls
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Reset button
+      button.textContent = originalText;
+      button.disabled = false;
+      
+      // Show alert with check results
+      alert('All connections are operational.\n\nP6 API: Connected\nEBS API: Connected');
+    }
+  </script>
+  </body>
+  </html>

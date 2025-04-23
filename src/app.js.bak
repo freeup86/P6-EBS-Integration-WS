@@ -1,0 +1,66 @@
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const integrationController = require('./controllers/integration-controller');
+const mockController = require('./controllers/mock-controller');
+
+// Load environment variables
+dotenv.config();
+
+// Import utility modules
+const loggerUtil = require('./utils/logger');
+
+// Import middleware
+const authMiddleware = require('./middleware/auth');
+
+// Create Express app
+const app = express();
+
+// View engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Middleware
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Mock API routes for development
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/mock-api', mockController);
+}
+
+// Routes will be added here
+
+// Home route
+app.get('/', (req, res) => {
+  res.render('index', { title: 'P6-EBS Integration Portal' });
+});
+
+app.use('/integration', integrationController);
+
+// Error handler
+app.use((err, req, res, next) => {
+  loggerUtil.error(`Error: ${err.message}`);
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: app.get('env') === 'development' ? err : {}
+  });
+});
+
+// Define the port
+const port = process.env.PORT || 3000;
+
+// Start the server
+app.listen(port, () => {
+  loggerUtil.info(`Server running on port ${port}`);
+  console.log(`Server running on port ${port}`);
+});
+
+module.exports = app;
