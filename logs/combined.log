@@ -380,3 +380,375 @@
 2025-04-24 10:47:20 error: No response received
 2025-04-24 10:47:20 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
 2025-04-24 10:47:20 debug: GET /integration/p6/projects 200 11.060 ms
+2025-04-24 13:51:42 info: Server running in development mode on port 3000
+2025-04-24 13:51:48 debug: GET / 304 17.676 ms
+2025-04-24 13:51:52 info: API Response: GET /projects
+2025-04-24 13:51:52 error: Error rendering P6 projects page response.data.map is not a function
+2025-04-24 13:51:52 debug: GET /integration/p6/projects 200 154.327 ms
+2025-04-24 13:54:50 info: Server running in development mode on port 3000
+2025-04-24 13:55:25 info: Server running in development mode on port 3000
+2025-04-24 13:55:31 info: API Response: GET /projects
+2025-04-24 13:55:31 error: Error rendering P6 projects page
+2025-04-24 13:55:31 debug: GET /integration/p6/projects 200 167.052 ms
+2025-04-24 13:58:56 info: Server running in development mode on port 3000
+2025-04-24 13:59:01 error: Authentication failed Request failed with status code 404
+2025-04-24 13:59:01 error: Token refresh failed Request failed with status code 404
+2025-04-24 13:59:01 error: API Error Response
+2025-04-24 13:59:01 error: Error rendering P6 projects page
+2025-04-24 13:59:01 debug: GET /integration/p6/projects 200 194.361 ms
+2025-04-24 14:02:20 info: Server running in development mode on port 3000
+2025-04-24 14:02:35 info: Server running in development mode on port 3000
+2025-04-24 14:02:42 info: Server running in development mode on port 3000
+2025-04-24 14:02:51 debug: GET / 304 18.434 ms
+2025-04-24 14:02:53 error: Authentication failed Request failed with status code 404
+2025-04-24 14:02:53 error: Token refresh failed Request failed with status code 404
+2025-04-24 14:02:53 error: API Error Response
+2025-04-24 14:02:53 error: Error rendering P6 projects page
+2025-04-24 14:02:53 debug: GET /integration/p6/projects 304 126.346 ms
+2025-04-24 14:03:18 info: Server running in development mode on port 3000
+2025-04-24 14:03:23 info: Server running in development mode on port 3000
+2025-04-24 14:03:56 info: Server running in development mode on port 3000
+2025-04-24 14:03:59 info: Server running in development mode on port 3000
+2025-04-24 14:04:02 error: Authentication failed Request failed with status code 404
+2025-04-24 14:04:02 error: Token refresh failed Request failed with status code 404
+2025-04-24 14:04:02 error: API Error Response
+2025-04-24 14:04:02 error: Error rendering P6 projects page
+2025-04-24 14:04:02 debug: GET /integration/p6/projects 304 126.271 ms
+2025-04-24 14:08:54 info: Server running in development mode on port 3000
+2025-04-24 14:08:59 debug: GET / 304 19.957 ms
+2025-04-24 14:09:01 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:01 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:03 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:03 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:05 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:05 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:07 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:07 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:09 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:09 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:11 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:11 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:12 debug: GET /integration/p6/projects  undefined ms
+2025-04-24 14:09:13 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:13 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:15 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:15 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:17 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:17 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:19 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:19 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:20 debug: GET / 304 5.181 ms
+2025-04-24 14:09:21 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:21 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:23 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:23 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:26 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:26 error: Token refresh failed Request failed with status code 401
+2025-04-24 15:27:33 info: Server running in development mode on port 3000
+2025-04-24 15:27:39 info: Server running in development mode on port 3000
+2025-04-24 15:27:42 debug: GET / 304 13.633 ms
+2025-04-24 15:27:44 debug: P6 Login required before making request to:
+2025-04-24 15:27:44 info: Attempting P6 login via POST to: /login?DatabaseName=orcl19c using Basic Auth
+2025-04-24 15:27:44 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:27:44 error: API Error Response
+2025-04-24 15:27:44 error: P6 Authentication Error during login request Request failed with status code 401
+2025-04-24 15:27:44 error: Blocking original request due to P6 login failure.
+2025-04-24 15:27:44 error: Error setting up API request
+2025-04-24 15:27:44 error: Error rendering P6 projects page
+2025-04-24 15:27:44 debug: GET /integration/p6/projects 200 376.768 ms
+2025-04-24 15:33:55 info: Server running in development mode on port 3000
+2025-04-24 15:34:00 debug: GET / 304 15.730 ms
+2025-04-24 15:34:03 error: Error setting up API request
+2025-04-24 15:34:03 error: Error rendering P6 projects page
+2025-04-24 15:34:03 debug: GET /integration/p6/projects 200 10.407 ms
+2025-04-24 15:34:37 info: Server running in development mode on port 3000
+2025-04-24 15:34:40 debug: GET / 304 15.770 ms
+2025-04-24 15:34:41 error: Error setting up API request
+2025-04-24 15:34:41 error: Error rendering P6 projects page
+2025-04-24 15:34:41 debug: GET /integration/p6/projects 304 8.006 ms
+2025-04-24 15:36:02 info: Server running in development mode on port 3000
+2025-04-24 15:36:16 info: Server running in development mode on port 3000
+2025-04-24 15:36:21 debug: GET / 304 16.667 ms
+2025-04-24 15:36:23 debug: P6 Login required before making request to:
+2025-04-24 15:36:23 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:36:23 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:36:24 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:36:24 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:36:24 debug: API Request: GET http://10.211.55.5:8206/p6ws/project
+2025-04-24 15:36:24 error: API Error Response
+2025-04-24 15:36:24 error: Error rendering P6 projects page
+2025-04-24 15:36:24 debug: GET /integration/p6/projects 200 607.332 ms
+2025-04-24 15:43:06 info: Server running in development mode on port 3000
+2025-04-24 15:43:09 debug: GET / 304 11.214 ms
+2025-04-24 15:43:11 info: Accessing P6 projects page render function
+2025-04-24 15:43:11 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:43:11 error: Error rendering P6 projects page:
+2025-04-24 15:43:11 debug: GET /integration/p6/projects 200 5.540 ms
+2025-04-24 15:44:42 info: Server running in development mode on port 3000
+2025-04-24 15:44:46 info: Server running in development mode on port 3000
+2025-04-24 15:44:49 debug: GET / 304 12.628 ms
+2025-04-24 15:44:49 debug: GET /css/style.css 304 2.838 ms
+2025-04-24 15:44:53 info: Accessing P6 projects page render function
+2025-04-24 15:44:53 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:44:53 info: Fetching P6 projects for API endpoint...
+2025-04-24 15:44:53 debug: P6 Login required before making request to:
+2025-04-24 15:44:53 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:44:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:44:54 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:44:54 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:44:54 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 15:44:54 error: API Error Response
+2025-04-24 15:44:54 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:44:54 error: Error fetching P6 projects for API
+2025-04-24 15:44:54 error: HTTP Error
+2025-04-24 15:44:54 debug: GET /integration/api/p6/projects 401 506.444 ms
+2025-04-24 15:44:54 error: Error rendering P6 projects page:
+2025-04-24 15:44:54 debug: GET /integration/p6/projects 200 539.975 ms
+2025-04-24 15:48:58 info: Server running in development mode on port 3000
+2025-04-24 15:49:04 debug: GET / 304 12.114 ms
+2025-04-24 15:49:04 debug: GET /css/style.css 304 3.966 ms
+2025-04-24 15:49:06 info: Accessing P6 projects page render function
+2025-04-24 15:49:06 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:49:06 info: Fetching P6 projects for API endpoint...
+2025-04-24 15:49:06 debug: P6 Login required before making request to:
+2025-04-24 15:49:06 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:49:06 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:49:06 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:49:06 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:49:06 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 15:49:06 error: API Error Response
+2025-04-24 15:49:06 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:49:06 error: Error fetching P6 projects for API
+2025-04-24 15:49:06 error: HTTP Error
+2025-04-24 15:49:06 debug: GET /integration/api/p6/projects 401 319.775 ms
+2025-04-24 15:49:06 error: Error rendering P6 projects page:
+2025-04-24 15:49:06 debug: GET /integration/p6/projects 304 345.882 ms
+2025-04-24 15:50:35 info: Server running in development mode on port 3000
+2025-04-24 15:50:39 info: Server running in development mode on port 3000
+2025-04-24 15:50:43 info: Calling internal API: http://localhost:3000/integration/api/ebs/projects
+2025-04-24 15:50:43 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 15:50:43 error: No response received for API request
+2025-04-24 15:50:43 error: Error fetching EBS projects for API getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 15:50:43 error: HTTP Error
+2025-04-24 15:50:43 debug: GET /integration/api/ebs/projects 500 91.428 ms
+2025-04-24 15:50:43 error: Error rendering EBS projects page
+2025-04-24 15:50:43 debug: GET /integration/ebs/projects 200 119.505 ms
+2025-04-24 15:50:46 info: Accessing P6 projects page render function
+2025-04-24 15:50:46 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:50:46 info: Fetching P6 projects for API endpoint...
+2025-04-24 15:50:46 debug: P6 Login required before making request to:
+2025-04-24 15:50:46 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:50:46 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:50:47 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:50:47 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:50:47 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 15:50:47 error: API Error Response
+2025-04-24 15:50:47 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:50:47 error: Error fetching P6 projects for API
+2025-04-24 15:50:47 error: HTTP Error
+2025-04-24 15:50:47 debug: GET /integration/api/p6/projects 401 279.934 ms
+2025-04-24 15:50:47 error: Error rendering P6 projects page:
+2025-04-24 15:50:47 debug: GET /integration/p6/projects 304 290.751 ms
+2025-04-24 15:52:30 info: Server running in development mode on port 3000
+2025-04-24 15:52:36 info: Server running in development mode on port 3000
+2025-04-24 15:52:56 info: Server running in development mode on port 3000
+2025-04-24 15:53:05 info: Server running in development mode on port 3000
+2025-04-24 15:53:16 info: Server running in development mode on port 3000
+2025-04-24 15:53:20 debug: GET / 304 14.428 ms
+2025-04-24 15:53:20 debug: GET /css/style.css 304 1.824 ms
+2025-04-24 15:53:22 info: Accessing P6 projects page render function
+2025-04-24 15:53:22 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:53:22 info: Fetching P6 projects for API endpoint...
+2025-04-24 15:53:22 debug: P6 Login required before making request to:
+2025-04-24 15:53:22 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:53:22 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:53:22 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:53:22 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:53:22 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 15:53:22 error: API Error Response
+2025-04-24 15:53:22 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:53:22 error: Error fetching P6 projects for API
+2025-04-24 15:53:22 error: HTTP Error
+2025-04-24 15:53:22 debug: GET /integration/api/p6/projects 401 271.607 ms
+2025-04-24 15:53:22 error: Error rendering P6 projects page:
+2025-04-24 15:53:22 debug: GET /integration/p6/projects 304 300.767 ms
+2025-04-24 15:53:50 info: Server running in development mode on port 3000
+2025-04-24 15:53:54 info: Server running in development mode on port 3000
+2025-04-24 15:53:56 debug: GET / 304 12.133 ms
+2025-04-24 15:53:56 debug: GET /css/style.css 304 3.155 ms
+2025-04-24 15:53:58 info: Accessing P6 projects page render function
+2025-04-24 15:53:58 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 15:53:58 info: Fetching P6 projects for API endpoint...
+2025-04-24 15:53:58 debug: P6 Login required before making request to:
+2025-04-24 15:53:58 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 15:53:58 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 15:53:58 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 15:53:58 info: P6 login successful (API confirmation). Subsequent requests will use session cookie.
+2025-04-24 15:53:58 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 15:53:58 error: API Error Response
+2025-04-24 15:53:58 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:53:58 error: Error fetching P6 projects for API
+2025-04-24 15:53:58 error: HTTP Error
+2025-04-24 15:53:58 debug: GET /integration/api/p6/projects 401 449.751 ms
+2025-04-24 15:53:58 error: Error rendering P6 projects page:
+2025-04-24 15:53:58 debug: GET /integration/p6/projects 304 489.090 ms
+2025-04-24 16:02:47 info: Server running in development mode on port 3000
+2025-04-24 16:02:51 debug: GET / 304 12.325 ms
+2025-04-24 16:02:51 debug: GET /css/style.css 304 3.875 ms
+2025-04-24 16:02:52 info: Accessing P6 projects page render function
+2025-04-24 16:02:52 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 16:02:52 info: Fetching P6 projects for API endpoint...
+2025-04-24 16:02:52 debug: P6 Login required before making request to:
+2025-04-24 16:02:52 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 16:02:52 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 16:02:53 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 16:02:53 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-04-24 16:02:53 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:02:53 error: API Error Response
+2025-04-24 16:02:53 error: Error fetching P6 projects for API
+2025-04-24 16:02:53 error: HTTP Error
+2025-04-24 16:02:53 debug: GET /integration/api/p6/projects 400 706.094 ms
+2025-04-24 16:02:53 error: Error rendering P6 projects page:
+2025-04-24 16:02:53 debug: GET /integration/p6/projects 200 745.512 ms
+2025-04-24 16:07:42 info: Server running in development mode on port 3000
+2025-04-24 16:07:52 info: Server running in development mode on port 3000
+2025-04-24 16:07:59 info: Server running in development mode on port 3000
+2025-04-24 16:08:04 info: Accessing P6 projects page render function
+2025-04-24 16:08:04 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 16:08:04 info: Fetching P6 projects for API endpoint...
+2025-04-24 16:08:04 debug: P6 Login required before making request to:
+2025-04-24 16:08:04 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 16:08:04 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 16:08:04 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 16:08:04 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-04-24 16:08:04 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:08:04 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:08:04 debug: GET /integration/api/p6/projects 200 707.281 ms
+2025-04-24 16:08:04 info: Rendering p6-projects view with 3 projects.
+2025-04-24 16:08:04 debug: GET /integration/p6/projects 200 783.078 ms
+2025-04-24 16:08:04 debug: GET /css/style.css 304 2.076 ms
+2025-04-24 16:10:01 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 16:10:01 debug: Performing P6 health check...
+2025-04-24 16:10:01 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:10:01 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:10:01 debug: P6 health check successful.
+2025-04-24 16:10:01 debug: Performing EBS health check...
+2025-04-24 16:10:01 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 16:10:01 error: No response received for API request
+2025-04-24 16:10:01 warn: EBS health check failed: getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:10:01 debug: Rendering status page with P6=true, EBS=false, Operations=1
+2025-04-24 16:10:01 debug: GET /integration/status 200 522.804 ms
+2025-04-24 16:10:01 debug: GET /css/style.css 304 0.883 ms
+2025-04-24 16:10:05 debug: GET / 304 5.707 ms
+2025-04-24 16:10:05 debug: GET /css/style.css 304 1.612 ms
+2025-04-24 16:10:11 info: Accessing P6 projects page render function
+2025-04-24 16:10:11 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 16:10:11 info: Fetching P6 projects for API endpoint...
+2025-04-24 16:10:11 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:10:11 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:10:11 debug: GET /integration/api/p6/projects 200 196.747 ms
+2025-04-24 16:10:11 info: Rendering p6-projects view with 3 projects.
+2025-04-24 16:10:11 debug: GET /integration/p6/projects 304 217.232 ms
+2025-04-24 16:10:11 debug: GET /css/style.css 304 0.727 ms
+2025-04-24 16:10:26 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 16:10:27 info: Sync Operation Logged: WBS P6 to EBS - In Progress
+2025-04-24 16:10:27 info: Request to sync P6 WBS to EBS tasks: 378
+2025-04-24 16:10:27 debug: P6 Login required before making request to:
+2025-04-24 16:10:27 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-04-24 16:10:27 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-04-24 16:10:27 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-04-24 16:10:27 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-04-24 16:10:27 debug: API Request: POST http://10.211.55.5:8206/p6ws/auth/login
+2025-04-24 16:10:27 error: API Error Response
+2025-04-24 16:10:27 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:10:27 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-04-24 16:10:27 debug: Executing (default): UPDATE [dbo].[sync_operations] SET [status]=@0,[details]=@1,[completed_at]=@2 OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] WHERE [id] = @3
+2025-04-24 16:10:27 info: Sync Operation Updated: DD4B17FE-82A3-4DDB-A46B-E63091F943F4 - Status: Failed
+2025-04-24 16:10:27 error: HTTP Error
+2025-04-24 16:10:27 debug: POST /integration/p6-to-ebs/wbs/378 500 785.998 ms
+2025-04-24 16:10:40 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 16:10:40 info: Sync Operation Logged: Resource Assignments P6 to EBS - In Progress
+2025-04-24 16:10:40 info: Request to sync P6 resource assignments to EBS
+2025-04-24 16:10:40 debug: API Request: POST http://10.211.55.5:8206/p6ws/auth/login
+2025-04-24 16:10:40 error: API Error Response
+2025-04-24 16:10:40 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:10:40 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-24 16:10:40 debug: Executing (default): UPDATE [dbo].[sync_operations] SET [status]=@0,[details]=@1,[completed_at]=@2 OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] WHERE [id] = @3
+2025-04-24 16:10:40 info: Sync Operation Updated: 4BC09F2E-26BD-4B6F-87F1-30ADE508285C - Status: Failed
+2025-04-24 16:10:40 error: HTTP Error
+2025-04-24 16:10:40 debug: POST /integration/p6-to-ebs/resources 500 132.694 ms
+2025-04-24 16:10:44 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 16:10:44 debug: Performing P6 health check...
+2025-04-24 16:10:44 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:10:44 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:10:44 debug: P6 health check successful.
+2025-04-24 16:10:44 debug: Performing EBS health check...
+2025-04-24 16:10:44 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 16:10:44 error: No response received for API request
+2025-04-24 16:10:44 warn: EBS health check failed: getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:10:44 debug: Rendering status page with P6=true, EBS=false, Operations=3
+2025-04-24 16:10:44 debug: GET /integration/status 200 162.180 ms
+2025-04-24 16:10:44 debug: GET /css/style.css 304 0.381 ms
+2025-04-24 16:10:53 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 16:10:53 debug: Performing P6 health check...
+2025-04-24 16:10:53 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:10:54 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:10:54 debug: P6 health check successful.
+2025-04-24 16:10:54 debug: Performing EBS health check...
+2025-04-24 16:10:54 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 16:10:54 error: No response received for API request
+2025-04-24 16:10:54 warn: EBS health check failed: getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:10:54 debug: Rendering status page with P6=true, EBS=false, Operations=3
+2025-04-24 16:10:54 debug: GET /integration/status 200 156.948 ms
+2025-04-24 16:10:54 debug: GET /css/style.css 304 1.970 ms
+2025-04-24 16:10:56 info: Accessing P6 projects page render function
+2025-04-24 16:10:56 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 16:10:56 info: Fetching P6 projects for API endpoint...
+2025-04-24 16:10:56 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:10:56 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:10:56 debug: GET /integration/api/p6/projects 200 96.458 ms
+2025-04-24 16:10:56 info: Rendering p6-projects view with 3 projects.
+2025-04-24 16:10:56 debug: GET /integration/p6/projects 304 108.452 ms
+2025-04-24 16:10:56 debug: GET /css/style.css 304 0.574 ms
+2025-04-24 16:11:05 info: Calling internal API: http://localhost:3000/integration/api/ebs/projects
+2025-04-24 16:11:05 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 16:11:05 error: No response received for API request
+2025-04-24 16:11:05 error: Error fetching EBS projects for API getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:11:05 error: HTTP Error
+2025-04-24 16:11:05 debug: GET /integration/api/ebs/projects 500 5.737 ms
+2025-04-24 16:11:05 error: Error rendering EBS projects page
+2025-04-24 16:11:05 debug: GET /integration/ebs/projects 200 18.022 ms
+2025-04-24 16:20:12 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 16:20:12 info: Sync Operation Logged: Resource Assignments P6 to EBS - In Progress
+2025-04-24 16:20:12 info: Request to sync P6 resource assignments to EBS
+2025-04-24 16:20:12 debug: API Request: POST http://10.211.55.5:8206/p6ws/auth/login
+2025-04-24 16:20:12 error: API Error Response
+2025-04-24 16:20:12 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:20:12 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-24 16:20:12 debug: Executing (default): UPDATE [dbo].[sync_operations] SET [status]=@0,[details]=@1,[completed_at]=@2 OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] WHERE [id] = @3
+2025-04-24 16:20:12 info: Sync Operation Updated: FA58B167-9DA8-4392-B718-128F8623C0BC - Status: Failed
+2025-04-24 16:20:12 error: HTTP Error
+2025-04-24 16:20:12 debug: POST /integration/p6-to-ebs/resources 500 147.416 ms
+2025-04-24 16:20:42 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 16:20:42 debug: Performing P6 health check...
+2025-04-24 16:20:42 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:20:43 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:20:43 debug: P6 health check successful.
+2025-04-24 16:20:43 debug: Performing EBS health check...
+2025-04-24 16:20:43 debug: API Request: GET https://your-production-ebs-server.com/api/v1/projects
+2025-04-24 16:20:43 error: No response received for API request
+2025-04-24 16:20:43 warn: EBS health check failed: getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:20:43 debug: Rendering status page with P6=true, EBS=false, Operations=4
+2025-04-24 16:20:43 debug: GET /integration/status 200 285.708 ms
+2025-04-24 16:20:43 debug: GET /css/style.css 304 0.428 ms
+2025-04-24 16:21:06 info: Accessing P6 projects page render function
+2025-04-24 16:21:06 info: Calling internal API: http://localhost:3000/integration/api/p6/projects
+2025-04-24 16:21:06 info: Fetching P6 projects for API endpoint...
+2025-04-24 16:21:06 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-04-24 16:21:06 debug: API Response: GET /restapi/project Status: 200
+2025-04-24 16:21:06 debug: GET /integration/api/p6/projects 200 178.671 ms
+2025-04-24 16:21:06 info: Rendering p6-projects view with 3 projects.
+2025-04-24 16:21:06 debug: GET /integration/p6/projects 304 193.660 ms
+2025-04-24 16:21:06 debug: GET /css/style.css 304 0.720 ms
+2025-04-24 16:21:12 debug: GET / 304 12.155 ms
+2025-04-24 16:21:12 debug: GET /css/style.css 304 0.706 ms

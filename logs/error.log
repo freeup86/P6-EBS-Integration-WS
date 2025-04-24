@@ -78,3 +78,108 @@
 2025-04-24 10:47:20 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
 2025-04-24 10:47:20 error: No response received
 2025-04-24 10:47:20 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 13:51:52 error: Error rendering P6 projects page response.data.map is not a function
+2025-04-24 13:55:31 error: Error rendering P6 projects page
+2025-04-24 13:59:01 error: Authentication failed Request failed with status code 404
+2025-04-24 13:59:01 error: Token refresh failed Request failed with status code 404
+2025-04-24 13:59:01 error: API Error Response
+2025-04-24 13:59:01 error: Error rendering P6 projects page
+2025-04-24 14:02:53 error: Authentication failed Request failed with status code 404
+2025-04-24 14:02:53 error: Token refresh failed Request failed with status code 404
+2025-04-24 14:02:53 error: API Error Response
+2025-04-24 14:02:53 error: Error rendering P6 projects page
+2025-04-24 14:04:02 error: Authentication failed Request failed with status code 404
+2025-04-24 14:04:02 error: Token refresh failed Request failed with status code 404
+2025-04-24 14:04:02 error: API Error Response
+2025-04-24 14:04:02 error: Error rendering P6 projects page
+2025-04-24 14:09:01 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:01 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:03 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:03 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:05 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:05 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:07 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:07 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:09 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:09 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:11 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:11 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:13 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:13 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:15 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:15 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:17 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:17 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:19 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:19 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:21 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:21 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:23 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:23 error: Token refresh failed Request failed with status code 401
+2025-04-24 14:09:26 error: Authentication failed Request failed with status code 401
+2025-04-24 14:09:26 error: Token refresh failed Request failed with status code 401
+2025-04-24 15:27:44 error: API Error Response
+2025-04-24 15:27:44 error: P6 Authentication Error during login request Request failed with status code 401
+2025-04-24 15:27:44 error: Blocking original request due to P6 login failure.
+2025-04-24 15:27:44 error: Error setting up API request
+2025-04-24 15:27:44 error: Error rendering P6 projects page
+2025-04-24 15:34:03 error: Error setting up API request
+2025-04-24 15:34:03 error: Error rendering P6 projects page
+2025-04-24 15:34:41 error: Error setting up API request
+2025-04-24 15:34:41 error: Error rendering P6 projects page
+2025-04-24 15:36:24 error: API Error Response
+2025-04-24 15:36:24 error: Error rendering P6 projects page
+2025-04-24 15:43:11 error: Error rendering P6 projects page:
+2025-04-24 15:44:54 error: API Error Response
+2025-04-24 15:44:54 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:44:54 error: Error fetching P6 projects for API
+2025-04-24 15:44:54 error: HTTP Error
+2025-04-24 15:44:54 error: Error rendering P6 projects page:
+2025-04-24 15:49:06 error: API Error Response
+2025-04-24 15:49:06 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:49:06 error: Error fetching P6 projects for API
+2025-04-24 15:49:06 error: HTTP Error
+2025-04-24 15:49:06 error: Error rendering P6 projects page:
+2025-04-24 15:50:43 error: No response received for API request
+2025-04-24 15:50:43 error: Error fetching EBS projects for API getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 15:50:43 error: HTTP Error
+2025-04-24 15:50:43 error: Error rendering EBS projects page
+2025-04-24 15:50:47 error: API Error Response
+2025-04-24 15:50:47 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:50:47 error: Error fetching P6 projects for API
+2025-04-24 15:50:47 error: HTTP Error
+2025-04-24 15:50:47 error: Error rendering P6 projects page:
+2025-04-24 15:53:22 error: API Error Response
+2025-04-24 15:53:22 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:53:22 error: Error fetching P6 projects for API
+2025-04-24 15:53:22 error: HTTP Error
+2025-04-24 15:53:22 error: Error rendering P6 projects page:
+2025-04-24 15:53:58 error: API Error Response
+2025-04-24 15:53:58 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions.
+2025-04-24 15:53:58 error: Error fetching P6 projects for API
+2025-04-24 15:53:58 error: HTTP Error
+2025-04-24 15:53:58 error: Error rendering P6 projects page:
+2025-04-24 16:02:53 error: API Error Response
+2025-04-24 16:02:53 error: Error fetching P6 projects for API
+2025-04-24 16:02:53 error: HTTP Error
+2025-04-24 16:02:53 error: Error rendering P6 projects page:
+2025-04-24 16:10:01 error: No response received for API request
+2025-04-24 16:10:27 error: API Error Response
+2025-04-24 16:10:27 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:10:27 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-04-24 16:10:27 error: HTTP Error
+2025-04-24 16:10:40 error: API Error Response
+2025-04-24 16:10:40 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:10:40 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-24 16:10:40 error: HTTP Error
+2025-04-24 16:10:44 error: No response received for API request
+2025-04-24 16:10:54 error: No response received for API request
+2025-04-24 16:11:05 error: No response received for API request
+2025-04-24 16:11:05 error: Error fetching EBS projects for API getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 16:11:05 error: HTTP Error
+2025-04-24 16:11:05 error: Error rendering EBS projects page
+2025-04-24 16:20:12 error: API Error Response
+2025-04-24 16:20:12 error: P6 Authentication Error: Request failed with status code 404
+2025-04-24 16:20:12 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
+2025-04-24 16:20:12 error: HTTP Error
+2025-04-24 16:20:43 error: No response received for API request

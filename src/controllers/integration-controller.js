@@ -1,6 +1,6 @@
-// src/controllers/integration-controller.js
 const express = require('express');
 const router = express.Router();
+const axios = require('axios'); // <-- ADD THIS LINE
 const { createAdvancedApiClient } = require('../utils/api-client');
 const config = require('../config');
 const logger = require('../utils/logger');
@@ -13,66 +13,50 @@ const p6Client = createAdvancedApiClient(config.p6);
 const ebsClient = createAdvancedApiClient(config.ebs);
 
 // =================================================
-// START: Add Health Check Functions Here
+// START: Health Check Functions (Keep from previous step)
 // =================================================
-
-/**
- * Performs a quick check to see if the P6 API is reachable.
- * @returns {Promise<boolean>} - True if reachable, false otherwise.
- */
 async function checkP6Status() {
-  try {
-      // Make a simple GET request to a basic P6 endpoint.
-      // '/projects' is often a good choice. Adjust if needed.
-      // Use a short timeout (e.g., 5000ms = 5 seconds).
-      logger.debug('Performing P6 health check...'); // Optional: Log check start
-      await p6Client.get('/projects', { timeout: 5000 });
-      logger.debug('P6 health check successful.'); // Optional: Log success
-      return true; // Return true if the request succeeds (doesn't throw an error)
-  } catch (error) {
-      // Log specifics but return a simple boolean
-      logger.warn('P6 health check failed:', {
-          message: error.message,
-          code: error.code, // e.g., 'ECONNREFUSED', 'ETIMEDOUT'
-          status: error.response?.status // e.g., 401, 500
-      });
-      return false; // Return false for any error (timeout, connection error, HTTP error)
-  }
+    try {
+        logger.debug('Performing P6 health check...');
+        await p6Client.get('/restapi/project', { timeout: 5000, params: { Fields: 'ObjectId', PageSize: 1 } });
+        logger.debug('P6 health check successful.');
+        return true;
+    } catch (error) {
+        logger.warn('P6 health check failed:', {
+            message: error.message,
+            code: error.code,
+            status: error.response?.status
+        });
+        return false;
+    }
 }
 
-/**
-* Performs a quick check to see if the EBS API is reachable.
-* @returns {Promise<boolean>} - True if reachable, false otherwise.
-*/
 async function checkEBSStatus() {
-  try {
-      // Make a simple GET request to a basic EBS endpoint.
-      // '/projects' is used here as an example. Adjust if needed.
-      // Use a short timeout.
-      logger.debug('Performing EBS health check...'); // Optional: Log check start
-      await ebsClient.get('/projects', { timeout: 5000 });
-      logger.debug('EBS health check successful.'); // Optional: Log success
-      return true;
-      } catch (error) {
-      logger.warn('EBS health check failed:', {
-          message: error.message,
-          code: error.code,
-          status: error.response?.status
-      });
-      return false;
-  }
+    try {
+        logger.debug('Performing EBS health check...');
+        await ebsClient.get('/projects', { timeout: 5000 });
+        logger.debug('EBS health check successful.');
+        return true;
+        } catch (error) {
+        logger.warn('EBS health check failed:', {
+            message: error.message,
+            code: error.code,
+            status: error.response?.status
+        });
+        return false;
+    }
 }
-
 // =================================================
-// END: Add Health Check Functions Here
+// END: Health Check Functions
 // =================================================
 
-
+// --- Sync operation routes (POST endpoints) ---
+// ... (These remain as they were, including improved logging/await) ...
 /**
  * Sync Project from EBS to P6
  */
 router.post('/ebs-to-p6/project/:projectId', async (req, res) => {
-  const syncOperation = syncTrackingService.logSyncOperation({
+  const syncOperation = await syncTrackingService.logSyncOperation({ // Await the log operation
     type: 'Project EBS to P6',
     source: `Project ${req.params.projectId}`,
     status: 'In Progress'
@@ -81,28 +65,35 @@ router.post('/ebs-to-p6/project/:projectId', async (req, res) => {
   try {
     const projectId = req.params.projectId;
     logger.info(`Request to sync EBS project to P6: ${projectId}`);
-    
+
     const result = await ebsToP6Service.syncProjectFromEBSToP6(projectId);
-    
+
     if (result.success) {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Completed',
-        details: 'Successfully synced project from EBS to P6'
-      });
+      // Make sure syncOperation is available if logging succeeded
+      if(syncOperation?.id) {
+         await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Completed',
+            details: `Successfully synced project from EBS to P6. P6 ObjectId: ${result.p6ProjectId || 'N/A'}`
+         });
+      }
       res.status(200).json(result);
     } else {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Failed',
-        details: result.message
-      });
-      res.status(500).json(result);
+       if(syncOperation?.id) {
+          await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Failed',
+            details: result.message || 'Unknown error during project sync.'
+          });
+       }
+      res.status(result.status || 500).json(result); // Use status from result if available
     }
   } catch (error) {
-    syncTrackingService.updateSyncOperation(syncOperation.id, {
-      status: 'Failed',
-      details: error.message
-    });
     logger.error('Error in EBS to P6 project sync endpoint:', error);
+     if(syncOperation?.id) {
+        await syncTrackingService.updateSyncOperation(syncOperation.id, {
+        status: 'Failed',
+        details: error.message || 'Caught exception during project sync.'
+        });
+     }
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -111,37 +102,45 @@ router.post('/ebs-to-p6/project/:projectId', async (req, res) => {
  * Sync Tasks from EBS to P6 WBS
  */
 router.post('/ebs-to-p6/tasks/:projectId', async (req, res) => {
-  const syncOperation = syncTrackingService.logSyncOperation({
-    type: 'Tasks EBS to P6',
-    source: `Project ${req.params.projectId}`,
-    status: 'In Progress'
-  });
+    const syncOperation = await syncTrackingService.logSyncOperation({
+        type: 'Tasks EBS to P6',
+        source: `Project ${req.params.projectId}`,
+        status: 'In Progress'
+    });
 
   try {
     const projectId = req.params.projectId;
     logger.info(`Request to sync EBS tasks to P6 WBS: ${projectId}`);
-    
+
     const result = await ebsToP6Service.syncTasksFromEBSToP6WBS(projectId);
-    
+
     if (result.success) {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Completed',
-        details: `Successfully synced ${result.results?.length || 0} tasks from EBS to P6`
-      });
+       if(syncOperation?.id) {
+          const successCount = result.results?.filter(r => r.success).length || 0;
+          const failCount = result.results?.filter(r => !r.success).length || 0;
+          await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Completed', // Mark completed even if some tasks failed
+            details: `Task sync finished. Success: ${successCount}, Failed: ${failCount}`
+          });
+       }
       res.status(200).json(result);
     } else {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Failed',
-        details: result.message
-      });
-      res.status(500).json(result);
+      if(syncOperation?.id) {
+         await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Failed',
+            details: result.message || 'Unknown error during task sync.'
+         });
+      }
+      res.status(result.status || 500).json(result);
     }
   } catch (error) {
-    syncTrackingService.updateSyncOperation(syncOperation.id, {
-      status: 'Failed',
-      details: error.message
-    });
     logger.error('Error in EBS to P6 tasks sync endpoint:', error);
+     if(syncOperation?.id) {
+        await syncTrackingService.updateSyncOperation(syncOperation.id, {
+        status: 'Failed',
+        details: error.message || 'Caught exception during task sync.'
+        });
+     }
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -150,37 +149,45 @@ router.post('/ebs-to-p6/tasks/:projectId', async (req, res) => {
  * Sync WBS from P6 to EBS Tasks
  */
 router.post('/p6-to-ebs/wbs/:projectId', async (req, res) => {
-  const syncOperation = syncTrackingService.logSyncOperation({
-    type: 'WBS P6 to EBS',
-    source: `Project ${req.params.projectId}`,
-    status: 'In Progress'
-  });
+    const syncOperation = await syncTrackingService.logSyncOperation({
+        type: 'WBS P6 to EBS',
+        source: `Project ${req.params.projectId}`,
+        status: 'In Progress'
+    });
 
   try {
     const projectId = req.params.projectId;
     logger.info(`Request to sync P6 WBS to EBS tasks: ${projectId}`);
-    
+
     const result = await p6ToEBSService.syncWBSFromP6ToEBSTasks(projectId);
-    
+
     if (result.success) {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Completed',
-        details: `Successfully synced ${result.results?.length || 0} WBS elements to EBS tasks`
-      });
+       if(syncOperation?.id) {
+           const successCount = result.results?.filter(r => r.success).length || 0;
+           const failCount = result.results?.filter(r => !r.success).length || 0;
+           await syncTrackingService.updateSyncOperation(syncOperation.id, {
+                status: 'Completed',
+                details: `WBS sync finished. Success: ${successCount}, Failed: ${failCount}`
+           });
+       }
       res.status(200).json(result);
     } else {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Failed',
-        details: result.message
-      });
-      res.status(500).json(result);
+       if(syncOperation?.id) {
+           await syncTrackingService.updateSyncOperation(syncOperation.id, {
+                status: 'Failed',
+                details: result.message || 'Unknown error during WBS sync.'
+           });
+       }
+      res.status(result.status || 500).json(result);
     }
   } catch (error) {
-    syncTrackingService.updateSyncOperation(syncOperation.id, {
-      status: 'Failed',
-      details: error.message
-    });
     logger.error('Error in P6 to EBS WBS sync endpoint:', error);
+     if(syncOperation?.id) {
+         await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Failed',
+            details: error.message || 'Caught exception during WBS sync.'
+         });
+     }
     res.status(500).json({ success: false, message: error.message });
   }
 });
@@ -189,118 +196,143 @@ router.post('/p6-to-ebs/wbs/:projectId', async (req, res) => {
  * Sync Resource Assignments from P6 to EBS
  */
 router.post('/p6-to-ebs/resources', async (req, res) => {
-  const syncOperation = syncTrackingService.logSyncOperation({
-    type: 'Resource Assignments P6 to EBS',
-    source: 'All Projects',
-    status: 'In Progress'
-  });
+    const syncOperation = await syncTrackingService.logSyncOperation({
+        type: 'Resource Assignments P6 to EBS',
+        source: 'All Projects', // Or adjust if filtered
+        status: 'In Progress'
+    });
 
   try {
     logger.info('Request to sync P6 resource assignments to EBS');
-    
+
     const result = await p6ToEBSService.syncResourceAssignmentsFromP6ToEBS();
-    
+
     if (result.success) {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Completed',
-        details: `Successfully synced ${result.results?.length || 0} resource assignments`
-      });
+       if(syncOperation?.id) {
+          const successCount = result.results?.filter(r => r.success).length || 0;
+          const failCount = result.results?.filter(r => !r.success).length || 0;
+          await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Completed',
+            details: `Resource assignment sync finished. Success: ${successCount}, Failed: ${failCount}`
+          });
+       }
       res.status(200).json(result);
     } else {
-      syncTrackingService.updateSyncOperation(syncOperation.id, {
-        status: 'Failed',
-        details: result.message
-      });
-      res.status(500).json(result);
+       if(syncOperation?.id) {
+          await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Failed',
+            details: result.message || 'Unknown error during resource assignment sync.'
+          });
+       }
+      res.status(result.status || 500).json(result);
     }
   } catch (error) {
-    syncTrackingService.updateSyncOperation(syncOperation.id, {
-      status: 'Failed',
-      details: error.message
-    });
     logger.error('Error in P6 to EBS resource assignments sync endpoint:', error);
+     if(syncOperation?.id) {
+        await syncTrackingService.updateSyncOperation(syncOperation.id, {
+            status: 'Failed',
+            details: error.message || 'Caught exception during resource assignment sync.'
+        });
+     }
     res.status(500).json({ success: false, message: error.message });
   }
 });
 
+
+// ============================================================
+// UI Routes and API Endpoints for listing data
+// ============================================================
+
 /**
- * Get EBS Projects (UI and API)
+ * Get EBS Projects (Simple API for UI)
  */
 router.get('/api/ebs/projects', async (req, res) => {
   try {
-    // Fetch projects from EBS
     const response = await ebsClient.get('/projects');
-    
-    // Transform EBS API response to match existing frontend format
+
+    if (!Array.isArray(response.data)) {
+        logger.error('EBS API /projects did not return an array:', response.data);
+        throw new Error('Unexpected response format from EBS API.');
+    }
+
     const projects = response.data.map(project => ({
-      projectNumber: project.code || project.id,
-      projectName: project.name,
-      projectStatus: project.status || 'UNKNOWN',
-      plannedStart: project.startDate,
-      plannedFinish: project.endDate
+      projectNumber: project.PROJECT_ID || project.code || project.id,
+      projectName: project.NAME || project.name,
+      projectStatus: project.STATUS_CODE || project.status || 'UNKNOWN',
+      plannedStart: project.START_DATE || project.startDate,
+      plannedFinish: project.COMPLETION_DATE || project.endDate
     }));
-    
+
     res.json(projects);
   } catch (error) {
-    logger.error('Error fetching EBS projects', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch projects', 
-      details: error.message 
+    logger.error('Error fetching EBS projects for API', error);
+    res.status(error.response?.status || 500).json({
+      error: 'Failed to fetch EBS projects',
+      details: error.message
     });
   }
 });
 
 /**
- * Get P6 Projects (UI and API)
+ * Get P6 Projects (Simple API for UI)
  */
 router.get('/api/p6/projects', async (req, res) => {
   try {
-    // Fetch projects from P6
-    const response = await p6Client.get('/projects');
-    
-    // Transform P6 API response to match existing frontend format
-    const projects = response.data.map(project => ({
-      id: project.id,
-      name: project.name,
-      status: project.status || 'Unknown',
-      startDate: project.plannedStartDate,
-      finishDate: project.plannedFinishDate
-    }));
-    
-    res.json(projects);
+      logger.info('Fetching P6 projects for API endpoint...');
+      const response = await p6Client.get('/restapi/project', {
+          params: {
+              // Correct the Fields list: Replace PlannedFinishDate with FinishDate
+              Fields: 'Name,ObjectId,Status,PlannedStartDate,FinishDate', // <-- CORRECTED
+              OrderBy: 'ObjectId desc' // Assuming this is valid based on previous tests
+          }
+      });
+
+      // Log for debugging if needed
+      // logger.debug('--- P6 API /restapi/project response.data: ---');
+      // logger.debug(JSON.stringify(response.data, null, 2));
+
+      if (!Array.isArray(response.data)) {
+          logger.error('P6 API did not return an array for projects:', response.data);
+          throw new Error('Unexpected response format from P6 API.');
+      }
+
+      // Adjust the map to use the corrected field name
+      const projects = response.data.map(project => ({
+          id: project.ObjectId,
+          name: project.Name,
+          status: project.Status || 'Unknown',
+          startDate: project.PlannedStartDate,
+          finishDate: project.FinishDate
+      }));
+
+      res.json(projects);
   } catch (error) {
-    logger.error('Error fetching P6 projects', error);
-    res.status(500).json({ 
-      error: 'Failed to fetch projects', 
-      details: error.message 
-    });
+      logger.error('Error fetching P6 projects for API', { /* ... */ });
+      res.status(error.response?.status || 500).json({ /* ... */ });
   }
 });
+
 
 /**
  * Render EBS Projects Page
  */
 router.get('/ebs/projects', async (req, res) => {
   try {
-    const response = await ebsClient.get('/projects');
-    
-    const projects = response.data.map(project => ({
-      projectNumber: project.code || project.id,
-      projectName: project.name,
-      projectStatus: project.status || 'UNKNOWN',
-      plannedStart: project.startDate,
-      plannedFinish: project.endDate
-    }));
-    
-    res.render('ebs-projects', { 
-      title: 'EBS Projects', 
-      projects: projects 
+    // Use the internal API endpoint
+    const port = config.app.port || 3000;
+    const apiUrl = `http://localhost:${port}/integration/api/ebs/projects`;
+    logger.info(`Calling internal API: ${apiUrl}`);
+    const projectsResponse = await axios.get(apiUrl); // <<< axios is used here
+    res.render('ebs-projects', {
+      title: 'EBS Projects',
+      projects: projectsResponse.data
     });
   } catch (error) {
-    logger.error('Error rendering EBS projects page', error);
-    res.render('error', { 
-      message: 'Unable to load EBS projects', 
-      error: process.env.NODE_ENV === 'development' ? error : {} 
+    logger.error('Error rendering EBS projects page', error.message);
+    const apiErrorDetails = error.response?.data?.details || error.message;
+    res.render('error', {
+      message: `Unable to load EBS projects: ${apiErrorDetails}`,
+      error: process.env.NODE_ENV === 'development' ? error : {}
     });
   }
 });
@@ -309,76 +341,59 @@ router.get('/ebs/projects', async (req, res) => {
  * Render P6 Projects Page
  */
 router.get('/p6/projects', async (req, res) => {
-  try {
-    const response = await p6Client.get('/projects');
-    
-    const projects = response.data.map(project => ({
-      id: project.id,
-      name: project.name,
-      status: project.status || 'Unknown',
-      startDate: project.plannedStartDate,
-      finishDate: project.plannedFinishDate
-    }));
-    
-    res.render('p6-projects', { 
-      title: 'P6 Projects', 
-      projects: projects 
-    });
-  } catch (error) {
-    logger.error('Error rendering P6 projects page', error);
-    res.render('error', { 
-      message: 'Unable to load P6 projects', 
-      error: process.env.NODE_ENV === 'development' ? error : {} 
-    });
-  }
+    logger.info("Accessing P6 projects page render function");
+    try {
+        const port = config.app.port || 3000;
+        const apiUrl = `http://localhost:${port}/integration/api/p6/projects`;
+        logger.info(`Calling internal API: ${apiUrl}`);
+        // V-- This was line 360 where the error occurred --V
+        const projectsResponse = await axios.get(apiUrl); // <<< axios is used here
+
+        logger.info(`Rendering p6-projects view with ${projectsResponse.data?.length || 0} projects.`);
+        res.render('p6-projects', {
+            title: 'P6 Projects',
+            projects: projectsResponse.data
+        });
+    } catch (error) {
+        logger.error('Error rendering P6 projects page:', {
+            errorMessage: error.message,
+            apiResponseStatus: error.response?.status,
+            apiResponseData: error.response?.data
+        });
+        const apiErrorDetails = error.response?.data?.details || error.message;
+        // Log the specific error before rendering the error page
+        console.error("--- ERROR in GET /integration/p6/projects (Render Step) ---", error.message);
+         if (error.response) {
+             console.error("--- Internal API Response Status:", error.response.status);
+             console.error("--- Internal API Response Data:", JSON.stringify(error.response.data, null, 2));
+         }
+
+        res.render('error', {
+            message: `Unable to load P6 projects: ${apiErrorDetails}`,
+            error: process.env.NODE_ENV === 'development' ? error : {}
+        });
+    }
 });
 
-// --- Define or import your new health check functions ---
-async function checkP6Status() {
-  try {
-      // Use the existing p6Client instance
-      await p6Client.get('/projects', { timeout: 5000 }); // Example: GET /projects with 5s timeout
-      return true; // Success if no error is thrown
-  } catch (error) {
-      logger.warn('P6 health check failed:', error.message); // Log the failure
-      return false; // Failure on any error
-  }
-}
-
-async function checkEBSStatus() {
-  try {
-      // Use the existing ebsClient instance
-      await ebsClient.get('/projects', { timeout: 5000 }); // Example: GET /projects with 5s timeout
-      return true;
-  } catch (error) {
-      logger.warn('EBS health check failed:', error.message);
-      return false;
-  }
-}
-// ------------------------------------------------------
 
 /**
  * Render Sync Status Page
  */
 router.get('/status', async (req, res) => {
   try {
-    // Fetch recent sync operations
     const resultFromAwait = await syncTrackingService.getRecentSyncOperations(10);
-    const plainSyncOperations = resultFromAwait; // Use plain data
+    const plainSyncOperations = resultFromAwait;
 
-    // --- Perform LIVE status checks ---
     const isP6Connected = await checkP6Status();
     const isEBSConnected = await checkEBSStatus();
-    // ---------------------------------
 
-    // Optional: Log the statuses being sent to the view
-    logger.debug(`Rendering status page with P6=${isP6Connected}, EBS=${isEBSConnected}`);
+    logger.debug(`Rendering status page with P6=${isP6Connected}, EBS=${isEBSConnected}, Operations=${plainSyncOperations?.length}`);
 
     res.render('sync-status', {
       title: 'Integration Status',
       syncOperations: plainSyncOperations,
-      p6Status: isP6Connected ? 'Connected' : 'Disconnected', // Pass status string
-      ebsStatus: isEBSConnected ? 'Connected' : 'Disconnected' // Pass status string
+      p6Status: isP6Connected ? 'Connected' : 'Disconnected',
+      ebsStatus: isEBSConnected ? 'Connected' : 'Disconnected'
     });
   } catch (error) {
      console.error('--- ERROR CAUGHT IN CONTROLLER /integration/status ---');
@@ -387,5 +402,6 @@ router.get('/status', async (req, res) => {
      res.render('error', { /* ... */ });
   }
 });
+
 
 module.exports = router;

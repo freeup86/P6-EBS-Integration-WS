@@ -1,211 +1,210 @@
 const axios = require('axios');
 const logger = require('./logger');
+const config = require('../config');
+// Imports for robust cookie handling
+const { wrapper } = require('axios-cookiejar-support');
+const { CookieJar } = require('tough-cookie');
 
 /**
- * Create an API client with standard configuration
- * @param {Object} config - Configuration object
+ * Create a simple API client with standard configuration (if still needed)
+ * @param {Object} simpleClientConfig - Configuration object (e.g., baseUrl, timeout)
  * @returns {Object} - Configured axios instance
  */
-function createApiClient(config) {
-  // Create axios instance with base configuration
+function createApiClient(simpleClientConfig) {
   const client = axios.create({
-    baseURL: config.baseUrl,
-    timeout: config.timeout || 30000,
+    baseURL: simpleClientConfig.baseUrl,
+    timeout: simpleClientConfig.timeout || 30000,
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
   });
 
-  // Add request interceptor for logging
+  // Optional: Add basic logging interceptors if desired
   client.interceptors.request.use(
     (requestConfig) => {
-      // Don't log authorization headers
-      const sanitizedConfig = { ...requestConfig };
-      if (sanitizedConfig.headers && sanitizedConfig.headers.Authorization) {
-        sanitizedConfig.headers.Authorization = '***REDACTED***';
-      }
-      
-      logger.debug(`API Request: ${requestConfig.method.toUpperCase()} ${requestConfig.baseURL}${requestConfig.url}`, 
-        sanitizedConfig);
+      logger.debug(`Simple API Request: ${requestConfig.method.toUpperCase()} ${requestConfig.url}`);
       return requestConfig;
     },
     (error) => {
-      logger.error('API Request Error:', error);
+      logger.error('Simple API Request Error:', error);
       return Promise.reject(error);
     }
   );
-
-  // Add response interceptor for logging
   client.interceptors.response.use(
     (response) => {
-      logger.debug(`API Response (${response.status}): ${response.config.method.toUpperCase()} ${response.config.url}`);
+      logger.debug(`Simple API Response (${response.status}): ${response.config.method.toUpperCase()} ${response.config.url}`);
       return response;
     },
     (error) => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        logger.error(`API Error Response (${error.response.status}): ${error.config.method.toUpperCase()} ${error.config.url}`, {
-          status: error.response.status,
-          statusText: error.response.statusText,
-          data: error.response.data
-        });
-      } else if (error.request) {
-        // The request was made but no response was received
-        logger.error(`API No Response Error: ${error.config.method.toUpperCase()} ${error.config.url}`, {
-          request: error.request,
-          message: error.message
-        });
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        logger.error(`API Request Setup Error: ${error.message}`);
-      }
-      
+      // Log simple client errors
       return Promise.reject(error);
     }
   );
-
-  // Add retry functionality
-  let retryCount = 0;
-  const maxRetries = config.retryAttempts || 3;
-  
-  // Create a retry handler
-  const retryHandler = async (error) => {
-    const originalRequest = error.config;
-    
-    // If we have a network error or 5xx response and have not reached the max retries
-    if ((error.code === 'ECONNABORTED' || 
-        (error.response && error.response.status >= 500)) && 
-        retryCount < maxRetries) {
-      
-      retryCount++;
-      logger.warn(`Retrying request (attempt ${retryCount}/${maxRetries}): ${originalRequest.method.toUpperCase()} ${originalRequest.url}`);
-      
-      // Exponential backoff
-      const delay = Math.pow(2, retryCount) * 1000;
-      await new Promise(resolve => setTimeout(resolve, delay));
-      
-      return client(originalRequest);
-    }
-    
-    return Promise.reject(error);
-  };
-  
-  // Add retry intercept
-  client.interceptors.response.use(
-    response => response, 
-    error => retryHandler(error)
-  );
-
   return client;
 }
+
 
 /**
- * Advanced API Client with robust error handling and retry mechanisms
- * @param {Object} config - Configuration for the API client
- * @returns {Object} - Configured axios instance
+ * Advanced API Client with P6 Session Login (using custom headers & cookie jar), error handling.
+ * @param {Object} clientConfig - Configuration for the API client (e.g., config.p6 or config.ebs)
+ * @returns {Object} - Configured axios instance wrapped with cookie jar support
  */
-function createAdvancedApiClient(config) {
-  const client = axios.create({
-    baseURL: config.baseUrl,
-    timeout: config.timeout || 30000,
+function createAdvancedApiClient(clientConfig) {
+  // Create a cookie jar instance for this client
+  const cookieJar = new CookieJar();
+
+  // Wrap the Axios instance with the cookie jar support
+  const client = wrapper(axios.create({
+    baseURL: clientConfig.baseUrl,
+    timeout: clientConfig.timeout || 30000,
+    jar: cookieJar, // Associate the cookie jar
     headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json' // Default Accept header
+      // Content-Type will be set as needed per request
     }
-  });
+    // 'withCredentials' is not needed when using the wrapper/jar
+  }));
 
-  // Token management
-  let accessToken = null;
-  let tokenExpiration = null;
+  let loginAttempted = false;
+  let loginSuccessful = false;
+  const loginPath = '/restapi/login'; // P6 Login path
 
-  // Request interceptor for adding authentication
-  client.interceptors.request.use(async (requestConfig) => {
-    try {
-      // Check and refresh token if needed
-      if (!accessToken || Date.now() >= tokenExpiration) {
-        await refreshAccessToken();
-      }
-
-      // Add token to request
-      if (accessToken) {
-        requestConfig.headers['Authorization'] = `Bearer ${accessToken}`;
-      }
-
-      return requestConfig;
-    } catch (error) {
-      logger.error('Token refresh failed', error);
-      throw error;
+  // Performs the P6 login based on POST /restapi/login, custom headers, DatabaseName query param
+  async function performP6Login() {
+    if (loginAttempted) {
+      if (!loginSuccessful) throw new Error('Previous P6 login attempt failed.');
+      logger.debug('Skipping P6 login, already attempted successfully this session.');
+      return true;
     }
-  });
+    loginAttempted = true; // Mark attempt
 
-  // Refresh token method
-  async function refreshAccessToken() {
+    if (!clientConfig.username || !clientConfig.password || !clientConfig.databaseName) {
+      logger.error('P6 login cannot proceed: Missing username, password, or databaseName in config.');
+      throw new Error('Missing P6 login configuration.');
+    }
+
+    const dbName = encodeURIComponent(clientConfig.databaseName);
+    const loginUrl = `${loginPath}?DatabaseName=${dbName}`;
+
+    logger.info(`Attempting P6 login via POST to: ${loginUrl} using custom headers`);
+
     try {
-      // Implement token refresh logic specific to your authentication method
-      const response = await axios.post(`${config.baseUrl}/oauth/token`, {
-        grant_type: 'client_credentials',
-        client_id: config.clientId,
-        client_secret: config.clientSecret
+      const response = await client.post(loginUrl, null, { // POST with null body
+        headers: {
+          'username': clientConfig.username,
+          'password': clientConfig.password,
+          // Let default Accept header ('application/json') be used
+        }
       });
 
-      accessToken = response.data.access_token;
-      // Set expiration to 5 minutes before actual expiration
-      tokenExpiration = Date.now() + (response.data.expires_in - 300) * 1000;
-    } catch (error) {
-      logger.error('Authentication failed', error);
-      throw error;
-    }
-  }
+      // Check for successful response (status code and potentially body message)
+      if (response.status >= 200 && response.status < 300 && response.data?.message === "Login successful.") {
+        logger.info(`P6 login successful (Status: ${response.status}). Cookie Jar active for subsequent requests.`);
+        loginSuccessful = true;
+        return true;
+      } else {
+        logger.error('P6 login returned non-success status or unexpected body:', { status: response.status, body: response.data });
+        loginSuccessful = false;
+        throw new Error(`P6 login failed or returned unexpected response (Status: ${response.status})`);
+      }
 
-  // Response interceptor for logging and error handling
+    } catch (error) {
+      loginSuccessful = false;
+      const status = error.response?.status;
+      const responseData = error.response?.data;
+      logger.error('P6 Authentication Error during login request', {
+        message: error.message,
+        url: loginUrl,
+        status: status,
+        responseData: responseData
+      });
+
+      if (status === 401) {
+        throw new Error('P6 Authentication failed: Invalid username/password headers or DatabaseName (401).');
+      } else if (status === 404) {
+        throw new Error(`P6 Authentication failed: Login endpoint not found (${loginPath}) - Check P6_API_URL base path (404).`);
+      } else {
+        // Include status in generic error if available
+        throw new Error(`Failed to authenticate with P6.${status ? ' Status: ' + status : ''}`);
+      }
+    }
+  } // --- END performP6Login ---
+
+  // Request interceptor: Ensure login happens once before other requests for P6 clients
+  client.interceptors.request.use(async (requestConfig) => {
+    const isP6Client = !!clientConfig.databaseName; // Identify P6 client by databaseName config
+    const isLoginRequest = requestConfig.url.includes(loginPath);
+
+    if (isP6Client && !loginSuccessful && !isLoginRequest) {
+      logger.debug('P6 Login required before making request to:', requestConfig.url);
+      try {
+        await performP6Login(); // This will throw if fails, preventing original request
+      } catch (loginError) {
+        logger.error(`Blocking request to ${requestConfig.url} due to P6 login failure.`);
+        // Propagate a clear error about login failure
+        throw new Error(`P6 Login Required: ${loginError.message}`);
+      }
+    }
+
+    // Log request before sending
+    logger.debug(`API Request: ${requestConfig.method.toUpperCase()} ${requestConfig.baseURL}${requestConfig.url}`);
+    // Consider masking sensitive headers if needed in logs:
+    // const safeHeaders = { ...requestConfig.headers };
+    // if (safeHeaders.password) safeHeaders.password = '***';
+    // logger.debug('Headers:', safeHeaders);
+    return requestConfig;
+
+  }, (error) => {
+    // Handle errors during request setup phase
+    logger.error('API Request Setup Error:', error.message);
+    return Promise.reject(error);
+  });
+
+  // Response interceptor: Log errors, potentially handle retries or specific statuses
   client.interceptors.response.use(
     response => {
-      logger.info(`API Response: ${response.config.method.toUpperCase()} ${response.config.url}`);
-      return response;
+      // Log basic success info
+      logger.debug(`API Response: ${response.config.method.toUpperCase()} ${response.config.url} Status: ${response.status}`);
+      return response; // Pass successful response through
     },
     async error => {
-      const originalRequest = error.config;
-
-      // Retry mechanism for certain status codes
-      if (error.response && [401, 403, 500, 502, 503, 504].includes(error.response.status)) {
-        if (!originalRequest._retryCount) {
-          originalRequest._retryCount = 0;
-        }
-
-        if (originalRequest._retryCount < (config.retryAttempts || 3)) {
-          originalRequest._retryCount++;
-          
-          // Exponential backoff
-          const backoffDelay = Math.pow(2, originalRequest._retryCount) * 1000;
-          await new Promise(resolve => setTimeout(resolve, backoffDelay));
-
-          return client(originalRequest);
-        }
-      }
-
-      // Detailed error logging
+      // Log detailed errors on failure
       if (error.response) {
+        // Server responded with a status code outside the 2xx range
         logger.error('API Error Response', {
           status: error.response.status,
-          data: error.response.data,
-          headers: error.response.headers
+          statusText: error.response.statusText,
+          url: error.config?.url,
+          method: error.config?.method,
+          responseData: error.response.data, // Log response body on error
         });
+        // Check if it was a permission error after a successful login attempt
+        if ((error.response.status === 401 || error.response.status === 403) && loginSuccessful) {
+          logger.error(`Authorization error (${error.response.status}) on request to ${error.config?.url} despite successful login. Check P6 user permissions for this specific action/resource.`);
+        }
       } else if (error.request) {
-        logger.error('No response received', error.request);
+        // The request was made but no response was received
+        logger.error('No response received for API request', {
+            url: error.config?.url,
+            method: error.config?.method,
+            code: error.code, // e.g., ECONNABORTED, ECONNREFUSED, ETIMEDOUT
+            error: error.message
+            });
       } else {
-        logger.error('Error setting up request', error.message);
+        // Something happened in setting up the request that triggered an Error
+        logger.error('Error setting up API request', error.message);
       }
 
+      // Reject the promise so the calling function's catch block can handle it
       return Promise.reject(error);
     }
   );
 
-  return client;
-}
+  return client; // Return the wrapped client instance
+} // end createAdvancedApiClient
 
 module.exports = {
-  createApiClient,
+  createApiClient,          // Export simple client if used elsewhere
   createAdvancedApiClient
 };

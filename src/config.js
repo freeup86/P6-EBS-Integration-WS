@@ -34,9 +34,9 @@ module.exports = {
     baseUrl: process.env.P6_API_URL,
     username: process.env.P6_USERNAME,
     password: process.env.P6_PASSWORD,
-    clientId: process.env.P6_CLIENT_ID,
-    clientSecret: process.env.P6_CLIENT_SECRET,
-    authType: process.env.P6_AUTH_TYPE || 'oauth',
+    databaseName: process.env.P6_DATABASE_NAME,
+    // clientId: process.env.P6_CLIENT_ID,
+    // clientSecret: process.env.P6_CLIENT_SECRET,
     timeout: parseInt(process.env.P6_API_TIMEOUT) || 30000,
     retryAttempts: parseInt(process.env.P6_RETRY_ATTEMPTS) || 3
   },
