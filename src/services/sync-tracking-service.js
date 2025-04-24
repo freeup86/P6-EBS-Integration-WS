@@ -1,84 +1,109 @@
+const SyncOperation = require('../models/sync-operation');
 const logger = require('../utils/logger');
+const { Op } = require('sequelize');
 
 class SyncTrackingService {
-  constructor() {
-    // In-memory storage for sync operations (replace with database in production)
-    this.syncOperations = [];
-  }
-
   /**
-   * Log a sync operation
-   * @param {Object} syncOperation - Sync operation details
+   * Log a new sync operation
+   * @param {Object} syncOperationData - Sync operation details
+   * @returns {Promise<Object>} - Created sync operation
    */
-  logSyncOperation(syncOperation) {
-    const defaultOperation = {
-      id: `sync-${Date.now()}`,
-      type: 'Unknown',
-      source: 'N/A',
-      timestamp: new Date().toISOString(),
-      status: 'In Progress',
-      details: ''
-    };
-
-    const fullOperation = { ...defaultOperation, ...syncOperation };
-    
+  async logSyncOperation(syncOperationData) {
     try {
-      // In production, this would insert into a database
-      this.syncOperations.push(fullOperation);
+      const defaultOperation = {
+        type: 'Unknown',
+        source: 'N/A',
+        status: 'In Progress',
+        details: ''
+      };
+
+      const fullOperationData = { ...defaultOperation, ...syncOperationData };
+
+      const syncOperation = await SyncOperation.create(fullOperationData);
       
-      logger.info(`Sync Operation Logged: ${fullOperation.type} - ${fullOperation.status}`);
+      logger.info(`Sync Operation Logged: ${syncOperation.type} - ${syncOperation.status}`);
       
-      // Keep only the last 50 sync operations to prevent memory growth
-      if (this.syncOperations.length > 50) {
-        this.syncOperations.shift();
-      }
-      
-      return fullOperation;
+      return syncOperation;
     } catch (error) {
       logger.error('Error logging sync operation', error);
-      return null;
+      throw error;
     }
   }
 
   /**
-   * Update status of a sync operation
+   * Update an existing sync operation
    * @param {string} operationId - ID of the sync operation
    * @param {Object} updateData - Updated operation details
+   * @returns {Promise<Object>} - Updated sync operation
    */
-  updateSyncOperation(operationId, updateData) {
+  async updateSyncOperation(operationId, updateData) {
     try {
-      const index = this.syncOperations.findIndex(op => op.id === operationId);
-      
-      if (index !== -1) {
-        this.syncOperations[index] = {
-          ...this.syncOperations[index],
-          ...updateData
-        };
-        
-        logger.info(`Sync Operation Updated: ${operationId}`);
-        return this.syncOperations[index];
+      const [updatedRowsCount, [updatedOperation]] = await SyncOperation.update(
+        {
+          ...updateData,
+          completedAt: updateData.status !== 'In Progress' ? new Date() : null
+        },
+        {
+          where: { id: operationId },
+          returning: true
+        }
+      );
+
+      if (updatedRowsCount === 0) {
+        logger.warn(`No sync operation found with ID: ${operationId}`);
+        return null;
       }
-      
-      return null;
+
+      logger.info(`Sync Operation Updated: ${operationId}`);
+      return updatedOperation;
     } catch (error) {
       logger.error('Error updating sync operation', error);
-      return null;
+      throw error;
     }
   }
 
   /**
    * Get recent sync operations
    * @param {number} limit - Number of operations to retrieve
+   * @param {Object} [filters] - Optional filters
+   * @returns {Promise<Array>} - Recent sync operations
    */
-  getRecentSyncOperations(limit = 10) {
+  async getRecentSyncOperations(limit = 10, filters = {}) {
     try {
-      // In production, this would query a database
-      return this.syncOperations
-        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-        .slice(0, limit);
+      const options = {
+        limit,
+        order: [['startedAt', 'DESC']],
+        where: filters
+      };
+
+      const syncOperations = await SyncOperation.findAll(options);
+      return syncOperations;
     } catch (error) {
       logger.error('Error retrieving sync operations', error);
-      return [];
+      throw error;
+    }
+  }
+
+  /**
+   * Clean up old sync operations
+   * @param {number} daysToRetain - Number of days to retain sync operations
+   */
+  async cleanupOldSyncOperations(daysToRetain = 30) {
+    try {
+      const thresholdDate = new Date();
+      thresholdDate.setDate(thresholdDate.getDate() - daysToRetain);
+
+      const deletedCount = await SyncOperation.destroy({
+        where: {
+          startedAt: {
+            [Op.lt]: thresholdDate
+          }
+        }
+      });
+
+      logger.info(`Cleaned up ${deletedCount} old sync operations`);
+    } catch (error) {
+      logger.error('Error cleaning up old sync operations', error);
     }
   }
 }

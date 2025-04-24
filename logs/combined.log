@@ -174,3 +174,66 @@
 2025-04-23 16:15:28 error: No response received
 2025-04-23 16:15:28 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
 2025-04-23 16:15:28 info: GET /integration/p6/projects 304 7.085 ms
+2025-04-24 09:09:04 error: Unable to connect to the database: Login failed for user 'sa'.
+2025-04-24 09:10:40 error: Unable to connect to the database: Login failed for user 'sa'.
+2025-04-24 09:11:20 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:11:20 info: SQL Server connection has been established successfully.
+2025-04-24 09:11:20 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:11:20 info: All models were synchronized successfully.
+2025-04-24 09:20:02 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:20:02 info: SQL Server connection has been established successfully.
+2025-04-24 09:20:02 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:20:02 info: All models were synchronized successfully.
+2025-04-24 09:20:19 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:20:19 info: SQL Server connection has been established successfully.
+2025-04-24 09:20:19 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:20:19 info: All models were synchronized successfully.
+2025-04-24 09:28:43 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:28:43 info: SQL Server connection established successfully.
+2025-04-24 09:28:43 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:28:43 info: Database models synchronized successfully.
+2025-04-24 09:28:43 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:28:43 info: Current Database Time:
+2025-04-24 09:30:14 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:30:14 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:30:14 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:30:19 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:30:19 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:30:19 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:31:15 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:31:15 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:31:15 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:36:49 info: Server running in development mode on port 3000
+2025-04-24 09:36:53 debug: GET / 304 18.451 ms
+2025-04-24 09:36:55 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:36:55 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:36:55 error: No response received
+2025-04-24 09:36:55 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:36:55 debug: GET /integration/ebs/projects 200 156.178 ms
+2025-04-24 09:36:59 debug: GET /integration/status 200 74.767 ms
+2025-04-24 09:37:00 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 09:37:00 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
+2025-04-24 09:38:03 info: Server running in development mode on port 3000
+2025-04-24 09:38:06 debug: GET / 304 21.643 ms
+2025-04-24 09:38:07 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:38:07 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:38:07 error: No response received
+2025-04-24 09:38:07 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 09:38:07 debug: GET /integration/ebs/projects 304 49.097 ms
+2025-04-24 09:38:11 debug: GET /integration/status 200 30.441 ms
+2025-04-24 09:38:11 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 09:38:11 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
+2025-04-24 09:38:45 info: Server running in development mode on port 3000
+2025-04-24 09:38:49 debug: GET / 304 12.470 ms
+2025-04-24 09:38:56 debug: GET /integration/status 200 36.483 ms
+2025-04-24 09:38:56 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 09:38:56 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
