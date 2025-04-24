@@ -12,6 +12,62 @@ const syncTrackingService = require('../services/sync-tracking-service');
 const p6Client = createAdvancedApiClient(config.p6);
 const ebsClient = createAdvancedApiClient(config.ebs);
 
+// =================================================
+// START: Add Health Check Functions Here
+// =================================================
+
+/**
+ * Performs a quick check to see if the P6 API is reachable.
+ * @returns {Promise<boolean>} - True if reachable, false otherwise.
+ */
+async function checkP6Status() {
+  try {
+      // Make a simple GET request to a basic P6 endpoint.
+      // '/projects' is often a good choice. Adjust if needed.
+      // Use a short timeout (e.g., 5000ms = 5 seconds).
+      logger.debug('Performing P6 health check...'); // Optional: Log check start
+      await p6Client.get('/projects', { timeout: 5000 });
+      logger.debug('P6 health check successful.'); // Optional: Log success
+      return true; // Return true if the request succeeds (doesn't throw an error)
+  } catch (error) {
+      // Log specifics but return a simple boolean
+      logger.warn('P6 health check failed:', {
+          message: error.message,
+          code: error.code, // e.g., 'ECONNREFUSED', 'ETIMEDOUT'
+          status: error.response?.status // e.g., 401, 500
+      });
+      return false; // Return false for any error (timeout, connection error, HTTP error)
+  }
+}
+
+/**
+* Performs a quick check to see if the EBS API is reachable.
+* @returns {Promise<boolean>} - True if reachable, false otherwise.
+*/
+async function checkEBSStatus() {
+  try {
+      // Make a simple GET request to a basic EBS endpoint.
+      // '/projects' is used here as an example. Adjust if needed.
+      // Use a short timeout.
+      logger.debug('Performing EBS health check...'); // Optional: Log check start
+      await ebsClient.get('/projects', { timeout: 5000 });
+      logger.debug('EBS health check successful.'); // Optional: Log success
+      return true;
+      } catch (error) {
+      logger.warn('EBS health check failed:', {
+          message: error.message,
+          code: error.code,
+          status: error.response?.status
+      });
+      return false;
+  }
+}
+
+// =================================================
+// END: Add Health Check Functions Here
+// =================================================
+
+
 /**
  * Sync Project from EBS to P6
  */
@@ -277,24 +333,58 @@ router.get('/p6/projects', async (req, res) => {
   }
 });
 
+// --- Define or import your new health check functions ---
+async function checkP6Status() {
+  try {
+      // Use the existing p6Client instance
+      await p6Client.get('/projects', { timeout: 5000 }); // Example: GET /projects with 5s timeout
+      return true; // Success if no error is thrown
+  } catch (error) {
+      logger.warn('P6 health check failed:', error.message); // Log the failure
+      return false; // Failure on any error
+  }
+}
+
+async function checkEBSStatus() {
+  try {
+      // Use the existing ebsClient instance
+      await ebsClient.get('/projects', { timeout: 5000 }); // Example: GET /projects with 5s timeout
+      return true;
+  } catch (error) {
+      logger.warn('EBS health check failed:', error.message);
+      return false;
+  }
+}
+// ------------------------------------------------------
+
 /**
  * Render Sync Status Page
  */
 router.get('/status', async (req, res) => {
   try {
-    // Fetch recent sync operations 
-    const syncOperations = syncTrackingService.getRecentSyncOperations(10);
-    
-    res.render('sync-status', { 
-      title: 'Integration Status', 
-      syncOperations: syncOperations 
+    // Fetch recent sync operations
+    const resultFromAwait = await syncTrackingService.getRecentSyncOperations(10);
+    const plainSyncOperations = resultFromAwait; // Use plain data
+
+    // --- Perform LIVE status checks ---
+    const isP6Connected = await checkP6Status();
+    const isEBSConnected = await checkEBSStatus();
+    // ---------------------------------
+
+    // Optional: Log the statuses being sent to the view
+    logger.debug(`Rendering status page with P6=${isP6Connected}, EBS=${isEBSConnected}`);
+
+    res.render('sync-status', {
+      title: 'Integration Status',
+      syncOperations: plainSyncOperations,
+      p6Status: isP6Connected ? 'Connected' : 'Disconnected', // Pass status string
+      ebsStatus: isEBSConnected ? 'Connected' : 'Disconnected' // Pass status string
     });
   } catch (error) {
-    logger.error('Error rendering sync status page', error);
-    res.render('error', { 
-      message: 'Unable to load sync status', 
-      error: process.env.NODE_ENV === 'development' ? error : {} 
-    });
+     console.error('--- ERROR CAUGHT IN CONTROLLER /integration/status ---');
+     console.error(error);
+     logger.error('Error rendering sync status page', { /* ... */ });
+     res.render('error', { /* ... */ });
   }
 });
 

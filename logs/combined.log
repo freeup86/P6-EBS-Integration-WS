@@ -237,3 +237,146 @@
 2025-04-24 09:38:56 debug: GET /integration/status 200 36.483 ms
 2025-04-24 09:38:56 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
 2025-04-24 09:38:56 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
+2025-04-24 09:50:42 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:50:42 info: SQL Server connection established successfully.
+2025-04-24 09:50:42 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:50:42 info: Database models synchronized successfully.
+2025-04-24 09:50:42 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:50:42 info: Current Database Time:
+2025-04-24 09:51:24 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:51:24 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:51:24 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:52:35 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:52:35 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:52:35 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:53:44 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:53:44 info: SQL Server connection established successfully.
+2025-04-24 09:53:44 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:53:44 info: Database models synchronized successfully.
+2025-04-24 09:53:44 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:53:44 info: Current Database Time:
+2025-04-24 09:55:12 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:55:12 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:55:12 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 09:57:08 debug: Executing (default): SELECT 1+1 AS result
+2025-04-24 09:57:08 info: SQL Server connection established successfully.
+2025-04-24 09:57:08 info: Database models synchronized successfully.
+2025-04-24 09:57:08 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:57:08 info: Current Database Time:
+2025-04-24 09:59:07 debug: Executing (default): SELECT GETDATE() as currentTime
+2025-04-24 09:59:07 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-04-24 09:59:07 debug: Executing (default): SELECT TABLE_NAME 
+         FROM INFORMATION_SCHEMA.TABLES 
+         WHERE TABLE_SCHEMA = 'dbo' 
+         AND TABLE_NAME = 'sync_operations'
+2025-04-24 10:00:18 info: Server running in development mode on port 3000
+2025-04-24 10:00:30 debug: GET / 304 13.972 ms
+2025-04-24 10:00:33 debug: GET /integration/status 200 67.570 ms
+2025-04-24 10:00:33 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:04:38 info: Server running in development mode on port 3000
+2025-04-24 10:04:43 debug: GET / 304 18.588 ms
+2025-04-24 10:04:45 debug: GET /integration/status 200 69.175 ms
+2025-04-24 10:04:45 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:07:50 info: Server running in development mode on port 3000
+2025-04-24 10:08:15 debug: GET / 304 15.449 ms
+2025-04-24 10:08:18 debug: GET /integration/status 200 32.241 ms
+2025-04-24 10:08:18 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:08:29 info: Server running in development mode on port 3000
+2025-04-24 10:08:33 debug: GET / 304 12.998 ms
+2025-04-24 10:08:35 debug: GET /integration/status 200 29.686 ms
+2025-04-24 10:08:35 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:09:36 info: Server running in development mode on port 3000
+2025-04-24 10:09:39 debug: GET / 304 12.553 ms
+2025-04-24 10:09:40 debug: GET /integration/status 200 32.416 ms
+2025-04-24 10:09:40 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:12:33 info: Server running in development mode on port 3000
+2025-04-24 10:12:41 debug: GET / 304 15.742 ms
+2025-04-24 10:12:45 debug: GET /integration/status 200 34.114 ms
+2025-04-24 10:12:45 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:19:31 info: Server running in development mode on port 3000
+2025-04-24 10:19:43 info: Server running in development mode on port 3000
+2025-04-24 10:19:50 info: Server running in development mode on port 3000
+2025-04-24 10:19:55 debug: GET / 304 18.736 ms
+2025-04-24 10:19:56 debug: GET /integration/status 200 96.329 ms
+2025-04-24 10:19:57 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation];
+2025-04-24 10:21:50 info: Server running in development mode on port 3000
+2025-04-24 10:21:55 info: Server running in development mode on port 3000
+2025-04-24 10:22:44 info: Server running in development mode on port 3000
+2025-04-24 10:22:47 debug: GET /integration/status 200 35.010 ms
+2025-04-24 10:22:47 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation];
+2025-04-24 10:23:01 info: Server running in development mode on port 3000
+2025-04-24 10:23:03 debug: GET /integration/status 200 39.078 ms
+2025-04-24 10:23:03 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation];
+2025-04-24 10:23:57 info: Server running in development mode on port 3000
+2025-04-24 10:24:02 info: Server running in development mode on port 3000
+2025-04-24 10:24:10 info: Server running in development mode on port 3000
+2025-04-24 10:24:13 info: Server running in development mode on port 3000
+2025-04-24 10:24:29 info: Server running in development mode on port 3000
+2025-04-24 10:24:31 debug: GET /integration/status 200 42.383 ms
+2025-04-24 10:24:31 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation];
+2025-04-24 10:24:31 error: Error retrieving sync operations getRecentSyncOperations is not defined
+2025-04-24 10:25:06 info: Server running in development mode on port 3000
+2025-04-24 10:25:10 info: Server running in development mode on port 3000
+2025-04-24 10:25:17 info: Server running in development mode on port 3000
+2025-04-24 10:25:20 debug: GET /integration/status 200 40.600 ms
+2025-04-24 10:25:20 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation];
+2025-04-24 10:27:14 info: Server running in development mode on port 3000
+2025-04-24 10:27:18 debug: GET / 304 13.948 ms
+2025-04-24 10:27:20 debug: GET /integration/status 200 34.425 ms
+2025-04-24 10:27:20 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:29:02 info: Server running in development mode on port 3000
+2025-04-24 10:29:17 info: Server running in development mode on port 3000
+2025-04-24 10:29:27 info: Server running in development mode on port 3000
+2025-04-24 10:29:30 info: Server running in development mode on port 3000
+2025-04-24 10:29:34 debug: GET /integration/status 200 36.234 ms
+2025-04-24 10:29:34 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:32:20 info: Server running in development mode on port 3000
+2025-04-24 10:32:33 info: Server running in development mode on port 3000
+2025-04-24 10:32:36 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:32:36 debug: GET /integration/status 200 140.293 ms
+2025-04-24 10:34:45 info: Server running in development mode on port 3000
+2025-04-24 10:34:50 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:34:50 debug: GET /integration/status 200 114.223 ms
+2025-04-24 10:34:56 info: Server running in development mode on port 3000
+2025-04-24 10:34:59 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:34:59 debug: GET /integration/status 200 86.149 ms
+2025-04-24 10:40:59 info: Server running in development mode on port 3000
+2025-04-24 10:41:37 info: Server running in development mode on port 3000
+2025-04-24 10:41:47 info: Server running in development mode on port 3000
+2025-04-24 10:41:49 info: Server running in development mode on port 3000
+2025-04-24 10:44:09 info: Server running in development mode on port 3000
+2025-04-24 10:44:41 info: Server running in development mode on port 3000
+2025-04-24 10:44:43 info: Server running in development mode on port 3000
+2025-04-24 10:46:52 info: Server running in development mode on port 3000
+2025-04-24 10:46:55 debug: GET / 304 14.093 ms
+2025-04-24 10:46:57 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-04-24 10:46:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:46:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:46:57 error: No response received
+2025-04-24 10:46:57 warn: P6 health check failed:
+2025-04-24 10:46:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:46:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:46:57 error: No response received
+2025-04-24 10:46:57 warn: EBS health check failed:
+2025-04-24 10:46:57 debug: Rendering status page with P6=false, EBS=false
+2025-04-24 10:46:57 debug: GET /integration/status 200 319.697 ms
+2025-04-24 10:47:12 debug: GET / 304 3.300 ms
+2025-04-24 10:47:15 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:15 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:15 error: No response received
+2025-04-24 10:47:15 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:15 debug: GET /integration/ebs/projects 200 20.392 ms
+2025-04-24 10:47:20 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:47:20 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:47:20 error: No response received
+2025-04-24 10:47:20 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:47:20 debug: GET /integration/p6/projects 200 11.060 ms

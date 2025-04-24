@@ -63,3 +63,18 @@
 2025-04-24 09:38:07 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
 2025-04-24 09:38:11 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
 2025-04-24 09:38:56 error: Error retrieving sync operations Invalid object name 'dbo.sync_operations'.
+2025-04-24 10:24:31 error: Error retrieving sync operations getRecentSyncOperations is not defined
+2025-04-24 10:46:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:46:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:46:57 error: No response received
+2025-04-24 10:46:57 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:46:57 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:46:57 error: No response received
+2025-04-24 10:47:15 error: Authentication failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:15 error: Token refresh failed getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:15 error: No response received
+2025-04-24 10:47:15 error: Error rendering EBS projects page getaddrinfo ENOTFOUND your-production-ebs-server.com
+2025-04-24 10:47:20 error: Authentication failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:47:20 error: Token refresh failed getaddrinfo ENOTFOUND your-production-p6-server.com
+2025-04-24 10:47:20 error: No response received
+2025-04-24 10:47:20 error: Error rendering P6 projects page getaddrinfo ENOTFOUND your-production-p6-server.com

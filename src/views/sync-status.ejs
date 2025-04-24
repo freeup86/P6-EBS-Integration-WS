@@ -35,9 +35,33 @@
       <div class="col-md-12">
         <h1>Integration Status</h1>
         <p class="lead">View the status of recent synchronization operations</p>
-        
+
         <div class="card mb-4">
-          <div class="card-header bg-primary text-white">
+          <div class="card-header bg-info text-white"> System Connectivity Status
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-2 mb-md-0"> <strong>P6 API Status:</strong>
+                 <% if (typeof p6Status !== 'undefined' && p6Status === 'Connected') { %>
+                  <span class="badge bg-success">Connected</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Disconnected</span>
+                <% } %>
+                <small class="text-muted">(Checked: <%= new Date().toLocaleString() %>)</small>
+              </div>
+              <div class="col-md-6">
+                <strong>EBS API Status:</strong>
+                 <% if (typeof ebsStatus !== 'undefined' && ebsStatus === 'Connected') { %>
+                  <span class="badge bg-success">Connected</span>
+                <% } else { %>
+                  <span class="badge bg-danger">Disconnected</span>
+                <% } %>
+                 <small class="text-muted">(Checked: <%= new Date().toLocaleString() %>)</small>
+              </div>
+            </div>
+             </div>
+        </div>
+        <div class="card mb-4"> <div class="card-header bg-primary text-white">
             Recent Sync Operations
           </div>
           <div class="card-body">
@@ -48,30 +72,35 @@
                     <th>ID</th>
                     <th>Type</th>
                     <th>Source</th>
-                    <th>Timestamp</th>
+                    <th>Started At</th>
                     <th>Status</th>
                     <th>Details</th>
+                    <th>Completed At</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <% if (syncOperations && syncOperations.length > 0) { %>
-                    <% syncOperations.forEach(operation => { %>
+                  <% const operations = typeof plainSyncOperations !== 'undefined' ? plainSyncOperations : (typeof syncOperations !== 'undefined' ? syncOperations : []); %>
+                  <% if (operations && operations.length > 0) { %>
+                    <% operations.forEach(operation => { %>
                       <tr>
-                        <td><%= operation.id %></td>
-                        <td><%= operation.type %></td>
-                        <td><%= operation.source %></td>
-                        <td><%= new Date(operation.timestamp).toLocaleString() %></td>
+                        <td><%= operation?.id %></td>
+                        <td><%= operation?.type %></td>
+                        <td><%= operation?.source %></td>
+                        <td><%= operation?.startedAt ? new Date(operation.startedAt).toLocaleString() : '' %></td>
                         <td>
-                          <span class="badge <%= operation.status === 'Completed' ? 'bg-success' : (operation.status === 'In Progress' ? 'bg-warning text-dark' : 'bg-danger') %>">
-                            <%= operation.status %>
-                          </span>
+                          <% if(operation?.status) { %>
+                            <span class="badge <%= operation.status === 'Completed' ? 'bg-success' : (operation.status === 'In Progress' ? 'bg-warning text-dark' : 'bg-danger') %>">
+                              <%= operation.status %>
+                            </span>
+                          <% } %>
                         </td>
-                        <td><%= operation.details %></td>
+                        <td><%= operation?.details %></td>
+                        <td><%= operation?.completedAt ? new Date(operation.completedAt).toLocaleString() : '' %></td>
                       </tr>
                     <% }); %>
                   <% } else { %>
                     <tr>
-                      <td colspan="6" class="text-center">No sync operations found</td>
+                      <td colspan="7" class="text-center">No sync operations found</td>
                     </tr>
                   <% } %>
                 </tbody>
@@ -79,82 +108,11 @@
             </div>
           </div>
         </div>
-        
-        <div class="card">
-          <div class="card-header bg-info text-white">
-            System Status
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="card mb-3">
-                  <div class="card-header">P6 Connectivity</div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      <span class="badge bg-success">Connected</span>
-                      Last checked: <%= new Date().toLocaleString() %>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="card mb-3">
-                  <div class="card-header">EBS Connectivity</div>
-                  <div class="card-body">
-                    <p class="card-text">
-                      <span class="badge bg-success">Connected</span>
-                      Last checked: <%= new Date().toLocaleString() %>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card">
-              <div class="card-header">Integration Service Status</div>
-              <div class="card-body">
-                <p class="card-text">
-                  <span class="badge bg-success">Running</span>
-                  Service started: <%= new Date().toLocaleString() %>
-                </p>
-                <button class="btn btn-primary btn-sm" id="checkConnectionsBtn">Check All Connections</button>
-              </div>
-            </div>
-          </div>
+
         </div>
-      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      // Add event listener to check connections button
-      document.getElementById('checkConnectionsBtn').addEventListener('click', checkConnections);
-    });
-  
-    // Check connections function
-    async function checkConnections() {
-      // In a real application, this would make API calls to check connections
-      // For this demo, we'll just simulate the checks
-      
-      // Change button text to indicate checking
-      const button = document.getElementById('checkConnectionsBtn');
-      const originalText = button.textContent;
-      button.textContent = 'Checking Connections...';
-      button.disabled = true;
-      
-      // Simulate API calls
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Reset button
-      button.textContent = originalText;
-      button.disabled = false;
-      
-      // Show alert with check results
-      alert('All connections are operational.\n\nP6 API: Connected\nEBS API: Connected');
-    }
-  </script>
   </body>
   </html>

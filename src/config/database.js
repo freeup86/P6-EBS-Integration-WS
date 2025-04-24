@@ -88,7 +88,8 @@ async function testDatabaseConnection() {
     // Sync models with additional options
     await sequelize.sync({ 
       alter: process.env.NODE_ENV === 'development',
-      logging: (msg) => logger.debug(msg)
+      //logging: (msg) => logger.debug(msg)
+      logging: console.log
     });
     logger.info('Database models synchronized successfully.');
     
