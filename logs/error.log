@@ -183,3 +183,112 @@
 2025-04-24 16:20:12 error: Error syncing resource assignments from P6 to EBS: Failed to authenticate with P6
 2025-04-24 16:20:12 error: HTTP Error
 2025-04-24 16:20:43 error: No response received for API request
+2025-04-28 10:07:30 error: No response received for API request
+2025-04-28 10:07:30 error: P6 Authentication Error during login request timeout of 30000ms exceeded
+2025-04-28 10:07:30 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:07:30 error: Error setting up API request
+2025-04-28 10:07:30 error: Error fetching P6 projects for API
+2025-04-28 10:07:30 error: HTTP Error
+2025-04-28 10:07:30 error: Error rendering P6 projects page:
+2025-04-28 10:17:49 error: No response received for API request
+2025-04-28 10:17:49 error: P6 Authentication Error during login request connect ECONNREFUSED 10.211.55.5:8206
+2025-04-28 10:17:49 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:17:49 error: Error setting up API request
+2025-04-28 10:17:49 error: Error fetching P6 projects for API
+2025-04-28 10:17:49 error: HTTP Error
+2025-04-28 10:17:49 error: Error rendering P6 projects page:
+2025-04-28 10:17:56 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:17:56 error: Error setting up API request
+2025-04-28 10:17:56 error: Error fetching P6 projects for API
+2025-04-28 10:17:56 error: HTTP Error
+2025-04-28 10:17:56 error: Error rendering P6 projects page:
+2025-04-28 10:18:17 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:18:17 error: Error setting up API request
+2025-04-28 10:18:17 error: Error fetching P6 projects for API
+2025-04-28 10:18:17 error: HTTP Error
+2025-04-28 10:18:17 error: Error rendering P6 projects page:
+2025-04-28 10:18:27 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:18:27 error: Error setting up API request
+2025-04-28 10:18:27 error: Error fetching P6 projects for API
+2025-04-28 10:18:27 error: HTTP Error
+2025-04-28 10:18:27 error: Error rendering P6 projects page:
+2025-04-28 10:18:34 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:18:34 error: Error setting up API request
+2025-04-28 10:18:34 error: Error fetching P6 projects for API
+2025-04-28 10:18:34 error: HTTP Error
+2025-04-28 10:18:34 error: Error rendering P6 projects page:
+2025-04-28 10:19:27 error: No response received for API request
+2025-04-28 10:19:27 error: P6 Authentication Error during login request connect ECONNREFUSED 10.211.55.5:8206
+2025-04-28 10:19:27 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:19:27 error: Error setting up API request
+2025-04-28 10:19:27 error: Error fetching P6 projects for API
+2025-04-28 10:19:27 error: HTTP Error
+2025-04-28 10:19:27 error: Error rendering P6 projects page:
+2025-04-28 10:23:51 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:23:51 error: Error setting up API request
+2025-04-28 10:23:51 error: Error fetching P6 projects for API
+2025-04-28 10:23:51 error: HTTP Error
+2025-04-28 10:23:51 error: Error rendering P6 projects page:
+2025-04-28 10:23:54 error: Blocking request to /restapi/project due to P6 login failure.
+2025-04-28 10:23:54 error: Error setting up API request
+2025-04-28 10:23:54 error: Error fetching P6 projects for API
+2025-04-28 10:23:54 error: HTTP Error
+2025-04-28 10:23:54 error: Error rendering P6 projects page:
+2025-04-28 10:24:23 error: No response received for API request
+2025-04-28 10:34:08 error: HTTP Error
+2025-04-28 10:34:08 error: API Error Response
+2025-04-28 10:34:08 error: Error fetching EBS projects for API Request failed with status code 404
+2025-04-28 10:34:08 error: HTTP Error
+2025-04-28 10:34:08 error: Error rendering EBS projects page
+2025-04-28 10:34:20 error: HTTP Error
+2025-04-28 10:34:20 error: API Error Response
+2025-04-28 10:34:20 error: Error fetching EBS projects for API Request failed with status code 404
+2025-04-28 10:34:20 error: HTTP Error
+2025-04-28 10:34:20 error: Error rendering EBS projects page
+2025-04-28 10:40:07 error: HTTP Error
+2025-04-28 10:40:07 error: Error fetching EBS projects for API Request failed with status code 404
+2025-04-28 10:40:07 error: HTTP Error
+2025-04-28 10:40:07 error: Error rendering EBS projects page
+2025-04-28 10:47:06 error: API Error Response
+2025-04-28 10:47:06 error: API Error Response
+2025-04-28 10:47:06 error: Project sync error
+2025-04-28 10:47:06 error: HTTP Error
+2025-04-28 10:47:25 error: API Error Response
+2025-04-28 10:47:25 error: API Error Response
+2025-04-28 10:47:25 error: Project sync error
+2025-04-28 10:47:25 error: HTTP Error
+2025-04-28 10:57:15 error: API Error Response
+2025-04-28 10:57:15 error: API Error Response
+2025-04-28 10:57:15 error: Project sync error
+2025-04-28 10:57:15 error: HTTP Error
+2025-04-28 10:57:28 error: API Error Response
+2025-04-28 10:57:28 error: API Error Response
+2025-04-28 10:57:28 error: Project sync error
+2025-04-28 10:57:28 error: HTTP Error
+2025-04-28 11:04:39 error: API Error Response
+2025-04-28 11:04:39 error: Error creating P6 project
+2025-04-28 11:04:39 error: Project sync error
+2025-04-28 11:04:39 error: HTTP Error
+2025-04-28 11:04:55 error: API Error Response
+2025-04-28 11:04:55 error: Error creating P6 project
+2025-04-28 11:04:55 error: Project sync error
+2025-04-28 11:04:55 error: HTTP Error
+2025-04-28 11:08:57 error: API Error Response
+2025-04-28 11:08:57 error: Error creating P6 project
+2025-04-28 11:08:57 error: Project sync error
+2025-04-28 11:08:57 error: HTTP Error
+2025-04-28 11:31:22 error: API Error Response
+2025-04-28 11:31:22 error: Error finding/creating WBS for task T1001 Request failed with status code 400
+2025-04-28 11:31:22 error: Task sync error for task T1002 Request failed with status code 400
+2025-04-28 11:31:22 error: API Error Response
+2025-04-28 11:31:22 error: Error finding/creating WBS for task T1001 Request failed with status code 400
+2025-04-28 11:31:22 error: Task sync error for task T1003 Request failed with status code 400
+2025-04-28 11:31:22 error: API Error Response
+2025-04-28 11:31:22 error: Error finding/creating WBS for task T1003 Request failed with status code 400
+2025-04-28 11:31:22 error: Task sync error for task T1004 Request failed with status code 400
+2025-04-28 11:31:22 error: API Error Response
+2025-04-28 11:31:22 error: Task sync error for task T1001 Request failed with status code 400
+2025-04-28 11:34:16 error: API Error Response
+2025-04-28 11:34:16 error: P6 Authentication Error: Request failed with status code 404
+2025-04-28 11:34:16 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-04-28 11:34:16 error: HTTP Error

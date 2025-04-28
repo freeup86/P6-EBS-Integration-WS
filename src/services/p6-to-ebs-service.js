@@ -2,10 +2,23 @@ const { createAdvancedApiClient } = require('../utils/api-client');
 const config = require('../config');
 const logger = require('../utils/logger');
 const dataMapping = require('./data-mapping-service');
+const useMockServices = require('../utils/service-switch');
 
-// Create advanced API clients for P6 and EBS
+// Import mock service
+const mockEBSService = require('./mock/mock-ebs-service');
+
+// Create advanced API clients for P6 - always use real P6 in your case
 const p6Client = createAdvancedApiClient(config.p6);
-const ebsClient = createAdvancedApiClient(config.ebs);
+
+// For EBS, decide which client to use based on the service switch
+let ebsClient;
+if (useMockServices.ebs) {
+  logger.info('Using MOCK EBS service in p6-to-ebs-service');
+  // No need to create an actual API client for mock
+} else {
+  logger.info('Using REAL EBS service in p6-to-ebs-service');
+  ebsClient = createAdvancedApiClient(config.ebs);
+}
 
 // Authenticate with P6
 const authenticateP6 = async () => {
@@ -27,13 +40,23 @@ const authenticateP6 = async () => {
 // Authenticate with EBS
 const authenticateEBS = async () => {
   try {
-    const response = await ebsClient.post('/auth', {
-      username: config.ebs.username,
-      password: config.ebs.password
-    });
+    let response;
     
-    ebsClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-    logger.info('Successfully authenticated with EBS');
+    if (useMockServices.ebs) {
+      // Use mock authentication
+      response = { data: mockEBSService.authenticate() };
+      logger.info('Successfully authenticated with Mock EBS');
+    } else {
+      // Use real authentication
+      response = await ebsClient.post('/auth', {
+        username: config.ebs.username,
+        password: config.ebs.password
+      });
+      
+      ebsClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      logger.info('Successfully authenticated with EBS');
+    }
+    
     return response.data.token;
   } catch (error) {
     logger.error('EBS Authentication Error:', error);
@@ -49,7 +72,9 @@ const syncWBSFromP6ToEBSTasks = async (p6ProjectId) => {
   try {
     // 1. Authenticate with both systems
     await authenticateP6();
-    await authenticateEBS();
+    if (!useMockServices.ebs) {
+      await authenticateEBS();
+    }
     
     // 2. Get project details from P6
     const p6ProjectResponse = await p6Client.get(`/projects/${p6ProjectId}`);
@@ -110,8 +135,24 @@ const syncWBSFromP6ToEBSTasks = async (p6ProjectId) => {
         
         // Only update if we have data to update
         if (earliestStart || latestFinish || activityCount > 0) {
-          await ebsClient.put(`/projects/${ebsProjectId}/tasks/${ebsTaskId}`, updateData);
-          logger.info(`Updated EBS task ${ebsTaskId} with data from P6 WBS`);
+          if (useMockServices.ebs) {
+            // Use mock EBS service
+            try {
+              mockEBSService.updateTask(ebsProjectId, ebsTaskId, {
+                START_DATE: earliestStart,
+                COMPLETION_DATE: latestFinish,
+                PHYSICAL_PERCENT_COMPLETE: Math.round(averagePercentComplete)
+              });
+              logger.info(`Updated EBS task ${ebsTaskId} with data from P6 WBS (mock)`);
+            } catch (mockError) {
+              throw new Error(`Mock EBS task update failed: ${mockError.message}`);
+            }
+          } else {
+            // Use real EBS service
+            await ebsClient.put(`/projects/${ebsProjectId}/tasks/${ebsTaskId}`, updateData);
+            logger.info(`Updated EBS task ${ebsTaskId} with data from P6 WBS`);
+          }
+          
           results.push({ 
             wbsId: wbs.Id, 
             success: true,
@@ -155,7 +196,9 @@ const syncResourceAssignmentsFromP6ToEBS = async () => {
   try {
     // 1. Authenticate with both systems
     await authenticateP6();
-    await authenticateEBS();
+    if (!useMockServices.ebs) {
+      await authenticateEBS();
+    }
     
     // 2. Get all resource assignments from P6
     const resourceAssignmentsResponse = await p6Client.get('/resourceassignments');
@@ -170,11 +213,20 @@ const syncResourceAssignmentsFromP6ToEBS = async () => {
         // Resource ID in P6 matches Resource ID in EBS
         let assignmentExistsInEBS = false;
         
-        try {
-          const ebsResponse = await ebsClient.get(`/resourceassignments?resourceId=${assignment.ResourceId}&activityId=${assignment.ActivityId}`);
-          assignmentExistsInEBS = ebsResponse.data && ebsResponse.data.length > 0;
-        } catch (checkError) {
-          logger.warn(`Error checking if resource assignment exists in EBS: ${checkError.message}`);
+        if (useMockServices.ebs) {
+          // Use mock service to check existence
+          const mockAssignments = mockEBSService.getResourceAssignments();
+          assignmentExistsInEBS = mockAssignments.some(
+            a => a.resourceId === assignment.ResourceId && a.activityId === assignment.ActivityId
+          );
+        } else {
+          // Use real service
+          try {
+            const ebsResponse = await ebsClient.get(`/resourceassignments?resourceId=${assignment.ResourceId}&activityId=${assignment.ActivityId}`);
+            assignmentExistsInEBS = ebsResponse.data && ebsResponse.data.length > 0;
+          } catch (checkError) {
+            logger.warn(`Error checking if resource assignment exists in EBS: ${checkError.message}`);
+          }
         }
         
         // 5. Create or update resource assignment in EBS
@@ -188,8 +240,20 @@ const syncResourceAssignmentsFromP6ToEBS = async () => {
             actualFinish: assignment.ActualFinishDate
           };
           
-          await ebsClient.put(`/resourceassignments/${assignment.ResourceId}/${assignment.ActivityId}`, updateData);
-          logger.info(`Updated resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId}`);
+          if (useMockServices.ebs) {
+            // Use mock service
+            mockEBSService.updateResourceAssignment(
+              assignment.ResourceId, 
+              assignment.ActivityId, 
+              updateData
+            );
+            logger.info(`Updated resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId} (mock)`);
+          } else {
+            // Use real service
+            await ebsClient.put(`/resourceassignments/${assignment.ResourceId}/${assignment.ActivityId}`, updateData);
+            logger.info(`Updated resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId}`);
+          }
+          
           results.push({
             resourceId: assignment.ResourceId,
             activityId: assignment.ActivityId,
@@ -208,8 +272,16 @@ const syncResourceAssignmentsFromP6ToEBS = async () => {
             actualFinish: assignment.ActualFinishDate
           };
           
-          await ebsClient.post('/resourceassignments', newAssignment);
-          logger.info(`Created new resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId}`);
+          if (useMockServices.ebs) {
+            // Use mock service
+            mockEBSService.createResourceAssignment(newAssignment);
+            logger.info(`Created new resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId} (mock)`);
+          } else {
+            // Use real service
+            await ebsClient.post('/resourceassignments', newAssignment);
+            logger.info(`Created new resource assignment in EBS for Resource: ${assignment.ResourceId}, Activity: ${assignment.ActivityId}`);
+          }
+          
           results.push({
             resourceId: assignment.ResourceId,
             activityId: assignment.ActivityId,

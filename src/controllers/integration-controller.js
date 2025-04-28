@@ -7,6 +7,8 @@ const logger = require('../utils/logger');
 const ebsToP6Service = require('../services/ebs-to-p6-service');
 const p6ToEBSService = require('../services/p6-to-ebs-service');
 const syncTrackingService = require('../services/sync-tracking-service');
+const mockEBSService = require('../services/mock/mock-ebs-service');
+const useMockServices = require('../utils/service-switch');
 
 // Create API clients
 const p6Client = createAdvancedApiClient(config.p6);
@@ -248,21 +250,32 @@ router.post('/p6-to-ebs/resources', async (req, res) => {
  */
 router.get('/api/ebs/projects', async (req, res) => {
   try {
-    const response = await ebsClient.get('/projects');
+    // Direct mock data (temporary solution)
+    const projects = [
+      {
+        projectNumber: 'EBS1001',
+        projectName: 'Office Building Construction',
+        projectStatus: 'APPROVED',
+        plannedStart: '2025-05-01',
+        plannedFinish: '2026-01-15'
+      },
+      {
+        projectNumber: 'EBS1002',
+        projectName: 'Data Center Renovation',
+        projectStatus: 'PENDING',
+        plannedStart: '2025-06-15',
+        plannedFinish: '2025-12-31'
+      },
+      {
+        projectNumber: 'EBS1003',
+        projectName: 'Campus Expansion',
+        projectStatus: 'APPROVED',
+        plannedStart: '2025-07-01',
+        plannedFinish: '2026-05-30'
+      }
+    ];
 
-    if (!Array.isArray(response.data)) {
-        logger.error('EBS API /projects did not return an array:', response.data);
-        throw new Error('Unexpected response format from EBS API.');
-    }
-
-    const projects = response.data.map(project => ({
-      projectNumber: project.PROJECT_ID || project.code || project.id,
-      projectName: project.NAME || project.name,
-      projectStatus: project.STATUS_CODE || project.status || 'UNKNOWN',
-      plannedStart: project.START_DATE || project.startDate,
-      plannedFinish: project.COMPLETION_DATE || project.endDate
-    }));
-
+    logger.info(`Returning ${projects.length} hard-coded mock EBS projects`);
     res.json(projects);
   } catch (error) {
     logger.error('Error fetching EBS projects for API', error);
@@ -318,14 +331,30 @@ router.get('/api/p6/projects', async (req, res) => {
  */
 router.get('/ebs/projects', async (req, res) => {
   try {
-    // Use the internal API endpoint
-    const port = config.app.port || 3000;
-    const apiUrl = `http://localhost:${port}/integration/api/ebs/projects`;
-    logger.info(`Calling internal API: ${apiUrl}`);
-    const projectsResponse = await axios.get(apiUrl); // <<< axios is used here
+    let projectsData;
+    
+    if (useMockServices.ebs) {
+      // Get data directly from mock service
+      const projects = mockEBSService.getProjects();
+      projectsData = projects.map(project => ({
+        projectNumber: project.PROJECT_ID,
+        projectName: project.NAME,
+        projectStatus: project.STATUS_CODE,
+        plannedStart: project.START_DATE,
+        plannedFinish: project.COMPLETION_DATE
+      }));
+    } else {
+      // Use the internal API endpoint
+      const port = config.app.port || 3000;
+      const apiUrl = `http://localhost:${port}/integration/api/ebs/projects`;
+      logger.info(`Calling internal API: ${apiUrl}`);
+      const projectsResponse = await axios.get(apiUrl);
+      projectsData = projectsResponse.data;
+    }
+    
     res.render('ebs-projects', {
       title: 'EBS Projects',
-      projects: projectsResponse.data
+      projects: projectsData
     });
   } catch (error) {
     logger.error('Error rendering EBS projects page', error.message);

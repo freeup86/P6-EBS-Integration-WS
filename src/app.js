@@ -23,6 +23,7 @@ dotenv.config({
 // Import routes
 const integrationController = require('./controllers/integration-controller');
 const testIntegrationController = require('./controllers/test-integration-controller');
+const mockEBSController = require('./controllers/mock-ebs-controller');
 
 // Create Express app
 const app = express();
@@ -74,6 +75,13 @@ app.use(express.static(path.join(__dirname, 'public'), {
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// Mock EBS API routes - add this BEFORE your normal routes
+if (process.env.USE_MOCK_EBS === 'true') {
+  app.use('/ebs-api', mockEBSController);
+  app.use('/mock-ebs', mockEBSController);
+  logger.info('Mock EBS API routes enabled at /ebs-api and /mock-ebs');
+}
 
 // Routes
 app.use('/test-integration', testIntegrationController);
