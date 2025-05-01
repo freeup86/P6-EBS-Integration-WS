@@ -42,16 +42,17 @@ async function findOrCreateWBS(p6ProjectId, task) {
 
     // If not found, create new WBS
     const p6WBSData = dataMapping.mapEBSTaskToP6WBS(task);
-    const wbsData = {
-      Name: p6WBSData.WBS_NAME,
-      Id: p6WBSData.WBS_ID,
+    const wbsData = [{
+      Name: p6WBSData.WBS_NAME || task.TASK_NAME,
+      Id: p6WBSData.WBS_ID || task.TASK_ID,
+      Code: task.TASK_NUMBER || `WBS-${task.TASK_ID}`, // Required Code field
       ProjectObjectId: p6ProjectId,
       ParentObjectId: null, // Will be set if there's a parent
-      Status: p6WBSData.STATUS_CODE
-    };
+      Status: p6WBSData.STATUS_CODE || "Active"
+    }];
     
     const wbsResponse = await p6Client.post('/restapi/wbs', wbsData);
-    return wbsResponse.data.ObjectId;
+    return wbsResponse.data[0].ObjectId;
   } catch (error) {
     logger.error(`Error finding/creating WBS for task ${task.TASK_ID}`, error);
     throw error;
@@ -116,71 +117,113 @@ const syncProjectFromEBSToP6 = async (ebsProjectId) => {
       }
     }
 
-    // Get EPS And OBS for the Project
-    // First, get available EPS nodes
-    const epsResponse = await p6Client.get('/restapi/eps', {
-      params: {
-        Fields: 'ObjectId,Id,Name'
-      }
-    });
-
-    if (!epsResponse.data || !epsResponse.data.length) {
-      throw new Error('No EPS nodes found. Cannot create project without a parent EPS.');
-    }
-
-    const parentEpsObjectId = epsResponse.data[0].ObjectId;
-    logger.info(`Using EPS node: ${epsResponse.data[0].Name} (ObjectId: ${parentEpsObjectId})`);
-
-    // Next, get available OBS nodes
-    const obsResponse = await p6Client.get('/restapi/obs', {
-      params: {
-        Fields: 'ObjectId,GUID,Name'
-      }
-    });
-
-    if (!obsResponse.data || !obsResponse.data.length) {
-      throw new Error('No OBS nodes found. Cannot create project without an OBS.');
-    }
-
-    const obsObjectId = obsResponse.data[0].ObjectId;
-    logger.info(`Using OBS node: ${obsResponse.data[0].Name} (ObjectId: ${obsObjectId})`);
-
-
     // 4. Create or update project in P6
     let p6ProjectId;
     if (existingP6Project) {
       // Update existing project
-      const updateResponse = await p6Client.patch(`/restapi/project/id=${existingP6Project.ObjectId}`, {
+      const updateData = [{
+        ObjectId: existingP6Project.ObjectId,
         Name: p6ProjectData.WBS_NAME || ebsProject.NAME,
-        AnticipatedStartDate: p6ProjectData.ANTICIPATED_START_DATE || ebsProject.START_DATE,
-        AnticipatedFinishDate: p6ProjectData.ANTICIPATED_FINISH_DATE || ebsProject.COMPLETION_DATE,
         Status: p6ProjectData.STATUS_CODE || "Active"
-      });
-      p6ProjectId = existingP6Project.ObjectId;
-      logger.info(`Updated existing project in P6: ${p6ProjectId}`);
-    } else {
-      // Create new project
-      const createP6ProjectData = [{
-        Name: p6ProjectData.WBS_NAME || ebsProject.NAME,
-        Id: p6ProjectData.PROJ_ID || ebsProjectId,
-        ParentEPSObjectId: parentEpsObjectId,
-        OBSObjectId: obsObjectId,
-        Status: p6ProjectData.STATUS_CODE || "Active",
-        Description: `Synchronized from EBS Project ${ebsProjectId}`
       }];
       
       try {
-        const createResponse = await p6Client.post('/restapi/project', createP6ProjectData);
-        p6ProjectId = createResponse.data[0].ObjectId;
-        logger.info(`Created new project in P6: ${p6ProjectId}`);
-      } catch (createError) {
-        logger.error('Error creating P6 project', {
-          errorMessage: createError.message,
-          requestData: JSON.stringify(createP6ProjectData),
-          responseStatus: createError.response?.status,
-          responseData: JSON.stringify(createError.response?.data)
+        await p6Client.put('/restapi/project', updateData);
+        p6ProjectId = existingP6Project.ObjectId;
+        logger.info(`Updated existing project in P6: ${p6ProjectId}`);
+      } catch (updateError) {
+        logger.error('Error updating P6 project', {
+          errorMessage: updateError.message,
+          requestData: JSON.stringify(updateData),
+          responseStatus: updateError.response?.status,
+          responseData: updateError.response?.data
         });
-        throw new Error(`Failed to create P6 project: ${createError.message}`);
+        throw new Error(`Failed to update P6 project: ${updateError.message}`);
+      }
+    } else {
+      // Create new project
+      try {
+        // First, get available EPS nodes
+        const epsResponse = await p6Client.get('/restapi/eps', {
+          params: {
+            Fields: 'ObjectId,Id,Name'
+          }
+        });
+
+        if (!epsResponse.data || !epsResponse.data.length) {
+          throw new Error('No EPS nodes found. Cannot create project without a parent EPS.');
+        }
+
+        const parentEpsObjectId = epsResponse.data[0].ObjectId;
+        logger.info(`Using EPS node: ${epsResponse.data[0].Name} (ObjectId: ${parentEpsObjectId})`);
+
+        // Create minimal project data with just the required fields
+        const createP6ProjectData = [{
+          Name: p6ProjectData.WBS_NAME || ebsProject.NAME,
+          Id: p6ProjectData.PROJ_ID || ebsProjectId,
+          ParentEPSObjectId: parentEpsObjectId,
+          Status: p6ProjectData.STATUS_CODE || "Active",
+          Description: `Synchronized from EBS Project ${ebsProjectId}`
+        }];
+        
+        // Try to create with minimal data first
+        logger.info(`Attempting to create P6 project with data: ${JSON.stringify(createP6ProjectData)}`);
+        
+        try {
+          const createResponse = await p6Client.post('/restapi/project', createP6ProjectData);
+          p6ProjectId = createResponse.data[0].ObjectId;
+          logger.info(`Created new project in P6: ${p6ProjectId}`);
+        } catch (createError) {
+          logger.error('Error creating P6 project', {
+            errorMessage: createError.message,
+            requestData: JSON.stringify(createP6ProjectData),
+            responseStatus: createError.response?.status,
+            responseData: JSON.stringify(createError.response?.data)
+          });
+          
+          // If the error mentions OBS is required, try to find a default OBS node
+          if (createError.response?.data && 
+              (createError.response.data.message || "").includes("OBS")) {
+            logger.info("OBS appears to be required. Attempting to use default OBS node...");
+            
+            try {
+              // Try to get OBS nodes
+              const obsResponse = await p6Client.get('/restapi/obs', {
+                params: {
+                  Fields: 'ObjectId,Id,Name'
+                }
+              });
+              
+              if (obsResponse.data && obsResponse.data.length > 0) {
+                const obsObjectId = obsResponse.data[0].ObjectId;
+                logger.info(`Using OBS node: ${obsResponse.data[0].Name} (ObjectId: ${obsObjectId})`);
+                
+                // Add OBS to the project data
+                createP6ProjectData[0].OBSObjectId = obsObjectId;
+              } else {
+                // If no OBS nodes found, try with a default value
+                logger.warn("No OBS nodes found. Trying with default OBS ID 1...");
+                createP6ProjectData[0].OBSObjectId = 1;
+              }
+              
+              // Try creating again with OBS
+              const retryResponse = await p6Client.post('/restapi/project', createP6ProjectData);
+              p6ProjectId = retryResponse.data[0].ObjectId;
+              logger.info(`Created new project in P6 with OBS: ${p6ProjectId}`);
+            } catch (retryError) {
+              logger.error('Error creating P6 project with OBS', {
+                errorMessage: retryError.message,
+                responseData: JSON.stringify(retryError.response?.data)
+              });
+              throw new Error(`Failed to create P6 project: ${retryError.message}`);
+            }
+          } else {
+            throw new Error(`Failed to create P6 project: ${createError.message}`);
+          }
+        }
+      } catch (error) {
+        logger.error('Error in project creation process', error);
+        throw error;
       }
     }
 
@@ -239,69 +282,136 @@ const syncTasksFromEBSToP6WBS = async (ebsProjectId) => {
     
     const p6Project = p6ProjectsResponse.data[0];
     const p6ProjectId = p6Project.ObjectId;
+    logger.info(`Found P6 project with ObjectId: ${p6ProjectId}`);
 
-    // 3. Process tasks
-    const syncResults = await Promise.all(
-      ebsTasks.map(async (task) => {
+    // Create a map to store WBS ObjectIds by task ID
+    const wbsObjectIdMap = {};
+    let successCount = 0;
+    let failCount = 0;
+
+    // 3. Process root tasks first (tasks with no parent)
+    const rootTasks = ebsTasks.filter(task => !task.PARENT_TASK_ID);
+    const childTasks = ebsTasks.filter(task => task.PARENT_TASK_ID);
+    
+    logger.info(`Processing ${rootTasks.length} root tasks and ${childTasks.length} child tasks`);
+    
+    // Process root tasks
+    for (const task of rootTasks) {
+      try {
+        const p6WBSData = dataMapping.mapEBSTaskToP6WBS(task);
+        
+        // Create WBS data
+        const rootWbsData = [{
+          Name: p6WBSData.WBS_NAME || task.TASK_NAME,
+          Id: task.TASK_ID,
+          Code: task.TASK_NUMBER || `WBS-${task.TASK_ID}`,
+          ProjectObjectId: p6ProjectId,
+          Status: p6WBSData.STATUS_CODE || "Active"
+        }];
+        
+        logger.info(`Creating WBS for root task ${task.TASK_ID}: ${JSON.stringify(rootWbsData)}`);
+        
         try {
-          const p6WBSData = dataMapping.mapEBSTaskToP6WBS(task);
-
-          // Find parent WBS if applicable
-          let parentWBSId = null;
-          if (p6WBSData.PARENT_WBS_ID) {
-            const parentTask = ebsTasks.find(t => t.TASK_ID === p6WBSData.PARENT_WBS_ID);
-            if (parentTask) {
-              parentWBSId = await findOrCreateWBS(p6ProjectId, parentTask);
-            }
-          }
-
-          // Create or update WBS
-          const wbsData = {
-            Name: p6WBSData.WBS_NAME,
-            Id: p6WBSData.WBS_ID,
-            ProjectObjectId: p6ProjectId,
-            ParentObjectId: parentWBSId,
-            Status: p6WBSData.STATUS_CODE
-          };
+          // Create the WBS element
+          const response = await p6Client.post('/restapi/wbs', rootWbsData);
           
-          // Check if WBS already exists
-          const existingWBSResponse = await p6Client.get('/restapi/wbs', {
-            params: { 
-              Fields: 'ObjectId',
-              Filter: `ProjectObjectId = ${p6ProjectId} and Id = '${task.TASK_ID}'`
-            }
+          // Log the complete response data
+          logger.info(`WBS creation response: ${JSON.stringify(response.data)}`);
+          
+          // The response is an array of strings containing the ObjectIds
+          const wbsObjectId = response.data[0]; // Just take the first item directly
+          
+          // Verify we got a valid ObjectId
+          if (!wbsObjectId) {
+            logger.error(`Failed to get WBS ObjectId from response for task ${task.TASK_ID}, response: ${JSON.stringify(response.data)}`);
+            failCount++;
+            continue;
+          }
+          
+          // Store the WBS ObjectId for this task
+          wbsObjectIdMap[task.TASK_ID] = wbsObjectId;
+          successCount++;
+          
+          logger.info(`Created WBS for task ${task.TASK_ID} with ObjectId ${wbsObjectId}`);
+        } catch (postError) {
+          // More detailed error logging
+          logger.error(`Error posting WBS for task ${task.TASK_ID}:`, {
+            errorMessage: postError.message,
+            responseStatus: postError.response?.status,
+            responseData: JSON.stringify(postError.response?.data),
+            requestData: JSON.stringify(rootWbsData)
           });
-          
-          let wbsObjectId;
-          if (existingWBSResponse.data && existingWBSResponse.data.length > 0) {
-            // Update existing WBS
-            wbsObjectId = existingWBSResponse.data[0].ObjectId;
-            await p6Client.patch(`/restapi/wbs/id=${wbsObjectId}`, wbsData);
-          } else {
-            // Create new WBS
-            const response = await p6Client.post('/restapi/wbs', wbsData);
-            wbsObjectId = response.data.ObjectId;
-          }
-
-          return {
-            taskId: task.TASK_ID,
-            wbsId: wbsObjectId,
-            success: true
-          };
-        } catch (taskSyncError) {
-          logger.error(`Task sync error for task ${task.TASK_ID}`, taskSyncError);
-          return {
-            taskId: task.TASK_ID,
-            success: false,
-            error: taskSyncError.message
-          };
+          failCount++;
         }
-      })
-    );
+      } catch (taskError) {
+        logger.error(`Error mapping task ${task.TASK_ID} to WBS:`, {
+          error: taskError.message
+        });
+        failCount++;
+      }
+    }
+    
+    // Process child tasks after root tasks (ensures parents exist first)
+    for (const task of childTasks) {
+      try {
+        const p6WBSData = dataMapping.mapEBSTaskToP6WBS(task);
+        const parentObjectId = wbsObjectIdMap[task.PARENT_TASK_ID];
+        
+        if (!parentObjectId) {
+          logger.warn(`Parent WBS not found for task ${task.TASK_ID}, parent task ID: ${task.PARENT_TASK_ID}`);
+          failCount++;
+          continue; // Skip this task if parent not found
+        }
+        
+        // Create WBS data
+        const childWbsData = [{
+          Name: p6WBSData.WBS_NAME || task.TASK_NAME,
+          Id: task.TASK_ID,
+          Code: task.TASK_NUMBER || `WBS-${task.TASK_ID}`, // Required Code field
+          ProjectObjectId: p6ProjectId,
+          ParentObjectId: parentObjectId,
+          Status: p6WBSData.STATUS_CODE || "Active"
+        }];
+        
+        logger.info(`Creating WBS for child task ${task.TASK_ID} with parent ${task.PARENT_TASK_ID}: ${JSON.stringify(childWbsData)}`);
+        
+        try {
+          // Create the WBS element
+          const response = await p6Client.post('/restapi/wbs', childWbsData);
+          
+          // The response is an array of strings containing the ObjectIds
+          const wbsObjectId = response.data[0]; // Just take the first item directly
+          
+          // Store the WBS ObjectId for this task
+          wbsObjectIdMap[task.TASK_ID] = wbsObjectId;
+          successCount++;
+          
+          logger.info(`Created WBS for task ${task.TASK_ID} with parent ${task.PARENT_TASK_ID}, ObjectId ${wbsObjectId}`);
+        } catch (postError) {
+          logger.error(`Error posting WBS for child task ${task.TASK_ID}:`, {
+            errorMessage: postError.message,
+            responseStatus: postError.response?.status,
+            responseData: JSON.stringify(postError.response?.data),
+            requestData: JSON.stringify(childWbsData)
+          });
+          failCount++;
+        }
+      } catch (taskError) {
+        logger.error(`Error mapping child task ${task.TASK_ID} to WBS:`, {
+          error: taskError.message
+        });
+        failCount++;
+      }
+    }
 
     return { 
       success: true, 
-      results: syncResults 
+      message: `Synchronized ${successCount} tasks as WBS elements, ${failCount} failed`,
+      results: {
+        success: successCount,
+        failed: failCount,
+        wbsMap: wbsObjectIdMap
+      }
     };
 
   } catch (error) {

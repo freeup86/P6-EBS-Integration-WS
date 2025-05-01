@@ -8,28 +8,16 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">P6-EBS Integration</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="/integration/ebs/projects">EBS Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/integration/p6/projects">P6 Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/integration/status">Sync Status</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <%- include('partials/header') %>
 
+  <div class="alert alert-info">
+    <strong>Debug info:</strong><br>
+    projects type: <%= typeof projects %><br>
+    projects is array: <%= Array.isArray(projects) %><br>
+    <% if (typeof projects !== 'undefined') { %>
+      projects content: <%= JSON.stringify(projects) %>
+    <% } %>
+  </div>
   <div class="container mt-4">
     <div class="row">
       <div class="col-md-12">
@@ -54,35 +42,19 @@
                   </tr>
                 </thead>
                 <tbody id="p6ProjectsTable">
-                  <% if (projects && projects.length > 0) { %>
+                  <% if (projects && Array.isArray(projects) && projects.length > 0) { %>
                     <% projects.forEach(project => { %>
                       <tr>
                         <td><%= project.id %></td>
                         <td><%= project.name %></td>
-                        <td>
-                          <span class="badge <%= 
-                            project.status === 'Active' ? 'bg-success' : 
-                            (project.status === 'Planned' ? 'bg-warning text-dark' : 'bg-secondary') 
-                          %>">
-                            <%= project.status %>
-                          </span>
-                        </td>
-                        <td><%= project.startDate ? new Date(project.startDate).toLocaleDateString() : 'N/A' %></td>
-                        <td><%= project.finishDate ? new Date(project.finishDate).toLocaleDateString() : 'N/A' %></td>
-                        <td>
-                          <button class="btn btn-primary btn-sm sync-wbs-btn" 
-                                  data-project-id="<%= project.id %>" 
-                                  data-project-name="<%= project.name %>">
-                            Sync WBS to EBS
-                          </button>
-                        </td>
+                        <!-- Rest of your table row -->
                       </tr>
                     <% }); %>
                   <% } else { %>
                     <tr>
                       <td colspan="6" class="text-center">
                         <div class="alert alert-info">
-                          No projects found. Please check your connection or API configuration.
+                          No projects found or data format is incorrect. Please check your connection or API configuration.
                         </div>
                       </td>
                     </tr>

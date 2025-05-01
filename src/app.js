@@ -4,6 +4,9 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+const authController = require('./controllers/auth-controller');
+const { authenticateJWT } = require('./middleware/auth-middleware');
 
 // Logging and monitoring
 const logger = require('./utils/logger');
@@ -51,6 +54,9 @@ app.use(cors({
 // Performance Middleware
 app.use(compression());
 
+// Add cookie parsing middleware
+app.use(cookieParser());
+
 // Parsing Middleware
 app.use(express.json({
   limit: '10kb',  // Limit payload size
@@ -62,6 +68,9 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Logging Middleware
 app.use(morganMiddleware);
+
+// Apply authentication middleware to all routes
+app.use(authenticateJWT);
 
 // Rate Limiting
 app.use('/api/', rateLimiter.apiLimiter);
@@ -86,12 +95,14 @@ if (process.env.USE_MOCK_EBS === 'true') {
 // Routes
 app.use('/test-integration', testIntegrationController);
 app.use('/integration', integrationController);
+app.use('/auth', authController);
 
 // Home route
 app.get('/', (req, res) => {
   res.render('index', { 
     title: 'P6-EBS Integration Portal',
-    environment: process.env.NODE_ENV
+    environment: process.env.NODE_ENV,
+    user: req.user 
   });
 });
 
@@ -100,23 +111,15 @@ app.use(ErrorHandler.handle404);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    return res.status(400).json({
-      success: false,
-      error: {
-        message: 'Invalid JSON payload',
-        code: 'INVALID_JSON'
-      }
-    });
-  }
+  const status = err.status || 500;
+  const errorDetails = process.env.NODE_ENV === 'development' ? err : {};
   
-  // Operational errors
-  if (err.isOperational) {
-    ErrorHandler.handleOperationalError(err, req, res, next);
-  } else {
-    // Unexpected errors
-    ErrorHandler.handleUnexpectedError(err, req, res, next);
-  }
+  res.status(status);
+  res.render('error', {
+    message: err.message || 'An error occurred',
+    error: errorDetails,
+    user: req.user
+  });
 });
 
 // Graceful shutdown

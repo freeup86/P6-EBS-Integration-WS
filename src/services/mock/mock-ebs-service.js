@@ -164,57 +164,112 @@ class MockEBSService {
 
   _createTasks() {
     return [
-      // Project EBS1001 tasks
+      // Project EBS1001 - Office Building Construction
       {
         TASK_ID: 'T1001',
         TASK_NUMBER: 'TASK-001',
-        TASK_NAME: 'Planning Phase',
+        TASK_NAME: 'Project Initiation',
         PARENT_TASK_ID: null,
         STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1001',
         START_DATE: '2025-05-01',
-        COMPLETION_DATE: '2025-06-15',
+        COMPLETION_DATE: '2025-05-31',
         PHYSICAL_PERCENT_COMPLETE: 100
       },
       {
         TASK_ID: 'T1002',
         TASK_NUMBER: 'TASK-002',
-        TASK_NAME: 'Design Phase',
+        TASK_NAME: 'Site Preparation',
         PARENT_TASK_ID: 'T1001',
         STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1001',
-        START_DATE: '2025-06-16',
-        COMPLETION_DATE: '2025-08-30',
-        PHYSICAL_PERCENT_COMPLETE: 75
+        START_DATE: '2025-06-01',
+        COMPLETION_DATE: '2025-07-15',
+        PHYSICAL_PERCENT_COMPLETE: 85
       },
       {
         TASK_ID: 'T1003',
         TASK_NUMBER: 'TASK-003',
-        TASK_NAME: 'Construction Phase',
-        PARENT_TASK_ID: 'T1001',
-        STATUS_CODE: 'PENDING',
+        TASK_NAME: 'Foundation Work',
+        PARENT_TASK_ID: 'T1002',
+        STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1001',
-        START_DATE: '2025-09-01',
-        COMPLETION_DATE: '2025-12-31',
-        PHYSICAL_PERCENT_COMPLETE: 0
+        START_DATE: '2025-07-16',
+        COMPLETION_DATE: '2025-08-30',
+        PHYSICAL_PERCENT_COMPLETE: 60
       },
       {
         TASK_ID: 'T1004',
         TASK_NUMBER: 'TASK-004',
-        TASK_NAME: 'Interior Design',
-        PARENT_TASK_ID: 'T1003',
-        STATUS_CODE: 'PENDING',
+        TASK_NAME: 'Structural Framework',
+        PARENT_TASK_ID: 'T1001',
+        STATUS_CODE: 'IN_PROGRESS',
         PROJECT_ID: 'EBS1001',
-        START_DATE: '2025-11-01',
+        START_DATE: '2025-09-01',
+        COMPLETION_DATE: '2025-11-15',
+        PHYSICAL_PERCENT_COMPLETE: 25
+      },
+      {
+        TASK_ID: 'T1005',
+        TASK_NUMBER: 'TASK-005',
+        TASK_NAME: 'External Walls and Roof',
+        PARENT_TASK_ID: 'T1004',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1001',
+        START_DATE: '2025-11-16',
         COMPLETION_DATE: '2026-01-15',
         PHYSICAL_PERCENT_COMPLETE: 0
       },
+      {
+        TASK_ID: 'T1006',
+        TASK_NUMBER: 'TASK-006',
+        TASK_NAME: 'Internal Systems',
+        PARENT_TASK_ID: 'T1001',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1001',
+        START_DATE: '2026-01-16',
+        COMPLETION_DATE: '2026-03-31',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T1007',
+        TASK_NUMBER: 'TASK-007',
+        TASK_NAME: 'Electrical Systems',
+        PARENT_TASK_ID: 'T1006',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1001',
+        START_DATE: '2026-01-16',
+        COMPLETION_DATE: '2026-02-28',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T1008',
+        TASK_NUMBER: 'TASK-008',
+        TASK_NAME: 'Plumbing Systems',
+        PARENT_TASK_ID: 'T1006',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1001',
+        START_DATE: '2026-02-01',
+        COMPLETION_DATE: '2026-03-15',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T1009',
+        TASK_NUMBER: 'TASK-009',
+        TASK_NAME: 'HVAC Installation',
+        PARENT_TASK_ID: 'T1006',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1001',
+        START_DATE: '2026-02-15',
+        COMPLETION_DATE: '2026-03-31',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
       
-      // Project EBS1002 tasks
+      // Project EBS1002 - Data Center Renovation
       {
         TASK_ID: 'T2001',
         TASK_NUMBER: 'TASK-101',
-        TASK_NAME: 'Infrastructure Assessment',
+        TASK_NAME: 'Assessment Phase',
         PARENT_TASK_ID: null,
         STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1002',
@@ -225,26 +280,125 @@ class MockEBSService {
       {
         TASK_ID: 'T2002',
         TASK_NUMBER: 'TASK-102',
-        TASK_NAME: 'Network Redesign',
+        TASK_NAME: 'Design Phase',
         PARENT_TASK_ID: 'T2001',
-        STATUS_CODE: 'PENDING',
+        STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1002',
         START_DATE: '2025-07-16',
+        COMPLETION_DATE: '2025-08-30',
+        PHYSICAL_PERCENT_COMPLETE: 90
+      },
+      {
+        TASK_ID: 'T2003',
+        TASK_NUMBER: 'TASK-103',
+        TASK_NAME: 'Procurement',
+        PARENT_TASK_ID: 'T2001',
+        STATUS_CODE: 'IN_PROGRESS',
+        PROJECT_ID: 'EBS1002',
+        START_DATE: '2025-08-15',
         COMPLETION_DATE: '2025-09-30',
-        PHYSICAL_PERCENT_COMPLETE: 25
+        PHYSICAL_PERCENT_COMPLETE: 65
+      },
+      {
+        TASK_ID: 'T2004',
+        TASK_NUMBER: 'TASK-104',
+        TASK_NAME: 'Network Infrastructure',
+        PARENT_TASK_ID: 'T2001',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1002',
+        START_DATE: '2025-10-01',
+        COMPLETION_DATE: '2025-11-15',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T2005',
+        TASK_NUMBER: 'TASK-105',
+        TASK_NAME: 'Server Installation',
+        PARENT_TASK_ID: 'T2004',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1002',
+        START_DATE: '2025-11-16',
+        COMPLETION_DATE: '2025-12-15',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T2006',
+        TASK_NUMBER: 'TASK-106',
+        TASK_NAME: 'Testing and Validation',
+        PARENT_TASK_ID: 'T2001',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1002',
+        START_DATE: '2025-12-16',
+        COMPLETION_DATE: '2025-12-31',
+        PHYSICAL_PERCENT_COMPLETE: 0
       },
       
-      // Project EBS1003 tasks
+      // Project EBS1003 - Campus Expansion
       {
         TASK_ID: 'T3001',
         TASK_NUMBER: 'TASK-201',
-        TASK_NAME: 'Site Preparation',
+        TASK_NAME: 'Feasibility Study',
         PARENT_TASK_ID: null,
         STATUS_CODE: 'APPROVED',
         PROJECT_ID: 'EBS1003',
         START_DATE: '2025-07-01',
-        COMPLETION_DATE: '2025-08-31',
-        PHYSICAL_PERCENT_COMPLETE: 50
+        COMPLETION_DATE: '2025-08-15',
+        PHYSICAL_PERCENT_COMPLETE: 100
+      },
+      {
+        TASK_ID: 'T3002',
+        TASK_NUMBER: 'TASK-202',
+        TASK_NAME: 'Land Acquisition',
+        PARENT_TASK_ID: 'T3001',
+        STATUS_CODE: 'APPROVED',
+        PROJECT_ID: 'EBS1003',
+        START_DATE: '2025-08-16',
+        COMPLETION_DATE: '2025-10-31',
+        PHYSICAL_PERCENT_COMPLETE: 75
+      },
+      {
+        TASK_ID: 'T3003',
+        TASK_NUMBER: 'TASK-203',
+        TASK_NAME: 'Master Planning',
+        PARENT_TASK_ID: 'T3001',
+        STATUS_CODE: 'IN_PROGRESS',
+        PROJECT_ID: 'EBS1003',
+        START_DATE: '2025-10-01',
+        COMPLETION_DATE: '2025-12-31',
+        PHYSICAL_PERCENT_COMPLETE: 40
+      },
+      {
+        TASK_ID: 'T3004',
+        TASK_NUMBER: 'TASK-204',
+        TASK_NAME: 'Building Design',
+        PARENT_TASK_ID: 'T3003',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1003',
+        START_DATE: '2026-01-01',
+        COMPLETION_DATE: '2026-03-31',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T3005',
+        TASK_NUMBER: 'TASK-205',
+        TASK_NAME: 'Permitting',
+        PARENT_TASK_ID: 'T3001',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1003',
+        START_DATE: '2026-01-15',
+        COMPLETION_DATE: '2026-03-15',
+        PHYSICAL_PERCENT_COMPLETE: 0
+      },
+      {
+        TASK_ID: 'T3006',
+        TASK_NUMBER: 'TASK-206',
+        TASK_NAME: 'Phase 1 Construction',
+        PARENT_TASK_ID: 'T3001',
+        STATUS_CODE: 'PLANNED',
+        PROJECT_ID: 'EBS1003',
+        START_DATE: '2026-04-01',
+        COMPLETION_DATE: '2026-05-30',
+        PHYSICAL_PERCENT_COMPLETE: 0
       }
     ];
   }

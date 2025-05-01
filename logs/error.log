@@ -292,3 +292,79 @@
 2025-04-28 11:34:16 error: P6 Authentication Error: Request failed with status code 404
 2025-04-28 11:34:16 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
 2025-04-28 11:34:16 error: HTTP Error
+2025-05-01 09:33:06 error: HTTP Error
+2025-05-01 09:33:38 error: No response received for API request
+2025-05-01 09:33:38 error: P6 Authentication Error during login request timeout of 30000ms exceeded
+2025-05-01 09:33:38 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-01 09:33:38 error: Error setting up API request
+2025-05-01 09:33:38 error: Error fetching P6 projects for API
+2025-05-01 09:33:38 error: HTTP Error
+2025-05-01 09:33:38 error: Error rendering P6 projects page:
+2025-05-01 09:35:16 error: Error logging sync operation Failed to connect to localhost:1433 - Could not connect (sequence)
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1002 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1003 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1004 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1005 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Task sync error for task T1001 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1006 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1008 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1001 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1002 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1001 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1004 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1001 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1006 Request failed with status code 400
+2025-05-01 09:41:37 error: API Error Response
+2025-05-01 09:41:37 error: Error finding/creating WBS for task T1006 Request failed with status code 400
+2025-05-01 09:41:37 error: Task sync error for task T1009 Request failed with status code 400
+2025-05-01 09:41:38 error: API Error Response
+2025-05-01 09:41:38 error: Error finding/creating WBS for task T1006 Request failed with status code 400
+2025-05-01 09:41:38 error: Task sync error for task T1007 Request failed with status code 400
+2025-05-01 09:53:03 error: API Error Response
+2025-05-01 09:53:03 error: Error creating WBS for task T1001:
+2025-05-01 09:53:03 error: Error in EBS to P6 tasks sync endpoint: result.results?.filter is not a function
+2025-05-01 09:53:03 error: HTTP Error
+2025-05-01 09:55:57 error: API Error Response
+2025-05-01 09:55:57 error: Tasks sync error wbsData is not defined
+2025-05-01 09:55:57 error: HTTP Error
+2025-05-01 09:58:10 error: API Error Response
+2025-05-01 09:58:10 error: Error creating WBS for task T1001:
+2025-05-01 09:59:14 error: API Error Response
+2025-05-01 09:59:14 error: Error creating WBS for task T1001:
+2025-05-01 10:05:22 error: API Error Response
+2025-05-01 10:05:22 error: Project sync error
+2025-05-01 10:05:22 error: HTTP Error
+2025-05-01 10:07:24 error: API Error Response
+2025-05-01 10:07:24 error: Project sync error
+2025-05-01 10:07:24 error: HTTP Error
+2025-05-01 10:17:20 error: Failed to get WBS ObjectId from response for task T1001, response: ["3708"]
+2025-05-01 10:18:36 error: Failed to get WBS ObjectId from response for task T1001, response: ["3710"]
+2025-05-01 12:10:39 error: Unexpected Error /Users/cortez/Documents/Projects/p6-ebs-integration/src/views/p6-projects.ejs:39
+    37|                 <tbody id="p6ProjectsTable">
+    38|                   <% if (projects && projects.length > 0) { %>
+ >> 39|                     <% projects.forEach(project => { %>
+    40|                       <tr>
+    41|                         <td><%= project.id %></td>
+    42|                         <td><%= project.name %></td>
+
+projects.forEach is not a function
+2025-05-01 12:11:28 error: Unexpected Error /Users/cortez/Documents/Projects/p6-ebs-integration/src/views/p6-projects.ejs:39
+    37|                 <tbody id="p6ProjectsTable">
+    38|                   <% if (projects && projects.length > 0) { %>
+ >> 39|                     <% projects.forEach(project => { %>
+    40|                       <tr>
+    41|                         <td><%= project.id %></td>
+    42|                         <td><%= project.name %></td>
+
+projects.forEach is not a function
+2025-05-01 12:18:25 error: P6 connection test failed: p6Client is not defined
+2025-05-01 12:18:25 error: HTTP Error
+2025-05-01 12:20:27 error: Error creating test project: p6Client is not defined
+2025-05-01 12:20:27 error: HTTP Error

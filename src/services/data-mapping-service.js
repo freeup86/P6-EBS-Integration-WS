@@ -59,13 +59,23 @@ class DataMappingService {
    */
   mapEBSTaskToP6WBS(ebsTask) {
     try {
-      // Based on the mapping document
+      // Check the mapping for STATUS_CODE
+      let status = 'Active'; // Default status
+      if (ebsTask.STATUS_CODE === 'APPROVED') {
+        status = 'Active';
+      } else if (ebsTask.STATUS_CODE === 'IN_PROGRESS') {
+        status = 'Active';
+      } else if (ebsTask.STATUS_CODE === 'PLANNED') {
+        status = 'Planned';
+      }
+      
+      // Map other fields...
       return {
         WBS_ID: ebsTask.TASK_ID,
         WBS_SHORT_NAME: ebsTask.TASK_NUMBER,
         WBS_NAME: ebsTask.TASK_NAME,
         PARENT_WBS_ID: ebsTask.PARENT_TASK_ID,
-        STATUS_CODE: ebsTask.STATUS_CODE
+        STATUS_CODE: status // Use mapped status
       };
     } catch (error) {
       logger.error('Error mapping EBS Task to P6 WBS:', error);
