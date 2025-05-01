@@ -8,7 +8,7 @@ const p6ToEBSService = require('../services/p6-to-ebs-service');
 const syncTrackingService = require('../services/sync-tracking-service');
 const useMockServices = require('../utils/service-switch');
 const mockEBSService = require('./mock/mock-ebs-service');
-const mockEBSController = require('../m')
+const mockEBSController = require('./mock-controller')
 
 // Create API clients
 const p6Client = createAdvancedApiClient(config.p6);
