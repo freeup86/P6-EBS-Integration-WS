@@ -368,3 +368,22 @@ projects.forEach is not a function
 2025-05-01 12:18:25 error: HTTP Error
 2025-05-01 12:20:27 error: Error creating test project: p6Client is not defined
 2025-05-01 12:20:27 error: HTTP Error
+2025-05-01 12:36:50 error: API Error Response
+2025-05-01 12:36:50 error: P6 Authentication Error: Request failed with status code 404
+2025-05-01 12:36:50 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-05-01 12:36:50 error: HTTP Error
+2025-05-01 12:37:28 error: API Error Response
+2025-05-01 12:37:28 error: P6 Authentication Error: Request failed with status code 404
+2025-05-01 12:37:28 error: Error syncing WBS from P6 to EBS Tasks: Failed to authenticate with P6
+2025-05-01 12:37:28 error: HTTP Error
+2025-05-05 07:48:56 error: Login form error: Failed to connect to localhost:1433 in 15000ms
+2025-05-05 07:49:05 error: Login form error: Failed to connect to localhost:1433 in 15000ms
+2025-05-05 07:49:11 error: Login form error: Failed to connect to localhost:1433 in 15000ms
+2025-05-05 07:49:14 error: HTTP Error
+2025-05-05 07:49:54 error: Login form error: Failed to connect to localhost:1433 in 15000ms
+2025-05-05 08:02:06 error: HTTP Error
+2025-05-05 08:02:40 error: No response received for API request
+2025-05-05 08:02:40 error: P6 Authentication Error during login request timeout of 30000ms exceeded
+2025-05-05 08:02:40 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-05 08:02:40 error: Error setting up API request
+2025-05-05 08:02:40 error: Error rendering P6 projects page:
