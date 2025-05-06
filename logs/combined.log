@@ -2719,3 +2719,202 @@
 2025-05-05 08:02:40 error: Blocking request to /restapi/project due to P6 login failure.
 2025-05-05 08:02:40 error: Error setting up API request
 2025-05-05 08:02:40 error: Error rendering P6 projects page:
+2025-05-05 08:12:41 info: Accessing P6 projects page render function
+2025-05-05 08:12:41 debug: P6 Login required before making request to:
+2025-05-05 08:12:41 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-05 08:12:41 error: Error setting up API request
+2025-05-05 08:12:41 error: Error rendering P6 projects page:
+2025-05-05 08:12:41 debug: GET /integration/p6/projects 200 11.521 ms
+2025-05-05 08:12:46 debug: GET / 304 4.614 ms
+2025-05-05 08:12:46 debug: GET /css/style.css 304 0.779 ms
+2025-05-05 08:12:47 info: Mock EBS: Getting all projects
+2025-05-05 08:12:47 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-05 08:12:47 debug: GET /integration/ebs/projects 304 7.239 ms
+2025-05-05 08:12:47 debug: GET /css/style.css 304 1.843 ms
+2025-05-05 08:12:48 info: Accessing P6 projects page render function
+2025-05-05 08:12:48 debug: P6 Login required before making request to:
+2025-05-05 08:12:48 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-05 08:12:48 error: Error setting up API request
+2025-05-05 08:12:48 error: Error rendering P6 projects page:
+2025-05-05 08:12:48 debug: GET /integration/p6/projects 304 5.002 ms
+2025-05-05 08:13:05 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-05 08:13:05 info: Using MOCK EBS service
+2025-05-05 08:13:05 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-05 08:13:05 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-05 08:13:05 info: Server running in development mode on port 3000
+2025-05-05 08:13:11 debug: GET / 304 21.102 ms
+2025-05-05 08:13:11 debug: GET /css/style.css 304 10.664 ms
+2025-05-05 08:13:13 info: Mock EBS: Getting all projects
+2025-05-05 08:13:13 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-05 08:13:13 debug: GET /integration/ebs/projects 304 37.539 ms
+2025-05-05 08:13:13 debug: GET /css/style.css 304 0.614 ms
+2025-05-05 08:13:14 info: Accessing P6 projects page render function
+2025-05-05 08:13:14 debug: P6 Login required before making request to:
+2025-05-05 08:13:14 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-05 08:13:14 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-05 08:13:24 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-05 08:13:24 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-05 08:13:24 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:13:28 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 08:13:28 info: Rendering p6-projects view with 3 projects.
+2025-05-05 08:13:28 debug: GET /integration/p6/projects 200 13829.301 ms
+2025-05-05 08:13:28 debug: GET /css/style.css 304 0.826 ms
+2025-05-05 08:13:44 info: Mock EBS: Getting all projects
+2025-05-05 08:13:44 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-05 08:13:44 debug: GET /integration/ebs/projects 304 15.544 ms
+2025-05-05 08:13:44 debug: GET /css/style.css 304 0.989 ms
+2025-05-05 08:13:50 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-05-05 08:13:50 info: Sync Operation Logged: Project EBS to P6 - In Progress
+2025-05-05 08:13:50 info: Request to sync EBS project to P6: EBS1001
+2025-05-05 08:13:50 info: Mock EBS: Getting project EBS1001
+2025-05-05 08:13:50 info: Retrieved EBS project: Office Building Construction
+2025-05-05 08:13:50 debug: P6 Login required before making request to:
+2025-05-05 08:13:50 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-05 08:13:50 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-05 08:13:50 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-05 08:13:50 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-05 08:13:50 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:13:50 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 08:13:50 info: No matching P6 project found for EBS project EBS1001
+2025-05-05 08:13:50 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/eps
+2025-05-05 08:13:51 debug: API Response: GET /restapi/eps Status: 200
+2025-05-05 08:13:51 info: Using EPS node: TPC Group (ObjectId: 3667)
+2025-05-05 08:13:51 info: Attempting to create P6 project with data: [{"Name":"Office Building Construction","Id":"EBS1001","ParentEPSObjectId":"3667","Status":"Active","Description":"Synchronized from EBS Project EBS1001"}]
+2025-05-05 08:13:51 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:13:52 debug: API Response: POST /restapi/project Status: 201
+2025-05-05 08:13:52 info: Created new project in P6: undefined
+2025-05-05 08:13:52 debug: Executing (default): UPDATE [dbo].[sync_operations] SET [status]=@0,[details]=@1,[completed_at]=@2 OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] WHERE [id] = @3
+2025-05-05 08:13:52 info: Sync Operation Updated: 1DB042B9-A6AD-405C-982B-36505F46FB16 - Status: Completed
+2025-05-05 08:13:52 debug: POST /integration/ebs-to-p6/project/EBS1001 200 2458.940 ms
+2025-05-05 08:13:52 debug: Executing (default): INSERT INTO [dbo].[sync_operations] ([id],[sync_type],[source],[status],[details],[started_at]) OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] VALUES (@0,@1,@2,@3,@4,@5);
+2025-05-05 08:13:52 info: Sync Operation Logged: Tasks EBS to P6 - In Progress
+2025-05-05 08:13:52 info: Request to sync EBS tasks to P6 WBS: EBS1001
+2025-05-05 08:13:52 info: Mock EBS: Getting tasks for project EBS1001
+2025-05-05 08:13:52 info: Retrieved 9 tasks from EBS project
+2025-05-05 08:13:52 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:13:52 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 08:13:52 info: Found P6 project with ObjectId: 398
+2025-05-05 08:13:52 info: Processing 1 root tasks and 8 child tasks
+2025-05-05 08:13:52 info: Creating WBS for root task T1001: [{"Name":"Project Initiation","Id":"T1001","Code":"TASK-001","ProjectObjectId":"398","Status":"Active"}]
+2025-05-05 08:13:52 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:52 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:52 info: WBS creation response: ["3741"]
+2025-05-05 08:13:52 info: Created WBS for task T1001 with ObjectId 3741
+2025-05-05 08:13:52 info: Creating WBS for child task T1002 with parent T1001: [{"Name":"Site Preparation","Id":"T1002","Code":"TASK-002","ProjectObjectId":"398","ParentObjectId":"3741","Status":"Active"}]
+2025-05-05 08:13:52 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:52 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:52 info: Created WBS for task T1002 with parent T1001, ObjectId 3742
+2025-05-05 08:13:52 info: Creating WBS for child task T1003 with parent T1002: [{"Name":"Foundation Work","Id":"T1003","Code":"TASK-003","ProjectObjectId":"398","ParentObjectId":"3742","Status":"Active"}]
+2025-05-05 08:13:52 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1003 with parent T1002, ObjectId 3743
+2025-05-05 08:13:53 info: Creating WBS for child task T1004 with parent T1001: [{"Name":"Structural Framework","Id":"T1004","Code":"TASK-004","ProjectObjectId":"398","ParentObjectId":"3741","Status":"Active"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1004 with parent T1001, ObjectId 3744
+2025-05-05 08:13:53 info: Creating WBS for child task T1005 with parent T1004: [{"Name":"External Walls and Roof","Id":"T1005","Code":"TASK-005","ProjectObjectId":"398","ParentObjectId":"3744","Status":"Planned"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1005 with parent T1004, ObjectId 3745
+2025-05-05 08:13:53 info: Creating WBS for child task T1006 with parent T1001: [{"Name":"Internal Systems","Id":"T1006","Code":"TASK-006","ProjectObjectId":"398","ParentObjectId":"3741","Status":"Planned"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1006 with parent T1001, ObjectId 3746
+2025-05-05 08:13:53 info: Creating WBS for child task T1007 with parent T1006: [{"Name":"Electrical Systems","Id":"T1007","Code":"TASK-007","ProjectObjectId":"398","ParentObjectId":"3746","Status":"Planned"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1007 with parent T1006, ObjectId 3747
+2025-05-05 08:13:53 info: Creating WBS for child task T1008 with parent T1006: [{"Name":"Plumbing Systems","Id":"T1008","Code":"TASK-008","ProjectObjectId":"398","ParentObjectId":"3746","Status":"Planned"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1008 with parent T1006, ObjectId 3748
+2025-05-05 08:13:53 info: Creating WBS for child task T1009 with parent T1006: [{"Name":"HVAC Installation","Id":"T1009","Code":"TASK-009","ProjectObjectId":"398","ParentObjectId":"3746","Status":"Planned"}]
+2025-05-05 08:13:53 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/wbs
+2025-05-05 08:13:53 debug: API Response: POST /restapi/wbs Status: 201
+2025-05-05 08:13:53 info: Created WBS for task T1009 with parent T1006, ObjectId 3749
+2025-05-05 08:13:53 debug: Executing (default): UPDATE [dbo].[sync_operations] SET [status]=@0,[details]=@1,[completed_at]=@2 OUTPUT INSERTED.[id],INSERTED.[sync_type],INSERTED.[source],INSERTED.[status],INSERTED.[details],INSERTED.[started_at],INSERTED.[completed_at] WHERE [id] = @3
+2025-05-05 08:13:53 info: Sync Operation Updated: 39425071-ABAC-4A9D-B53A-AF6222AE9B66 - Status: Completed
+2025-05-05 08:13:53 debug: POST /integration/ebs-to-p6/tasks/EBS1001 200 1433.718 ms
+2025-05-05 08:13:55 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-05 08:13:55 debug: Performing P6 health check...
+2025-05-05 08:13:55 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:13:55 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 08:13:55 debug: P6 health check successful.
+2025-05-05 08:13:55 debug: Performing EBS health check...
+2025-05-05 08:13:55 info: Mock EBS: Getting all projects
+2025-05-05 08:13:55 debug: Mock EBS health check successful.
+2025-05-05 08:13:55 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-05 08:13:55 debug: GET /integration/status 200 167.589 ms
+2025-05-05 08:13:55 debug: GET /css/style.css 304 0.788 ms
+2025-05-05 08:17:29 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-05 08:17:29 debug: Performing P6 health check...
+2025-05-05 08:17:29 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 08:17:29 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 08:17:29 debug: P6 health check successful.
+2025-05-05 08:17:29 debug: Performing EBS health check...
+2025-05-05 08:17:29 info: Mock EBS: Getting all projects
+2025-05-05 08:17:29 debug: Mock EBS health check successful.
+2025-05-05 08:17:29 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-05 08:17:29 debug: GET /integration/status 200 270.742 ms
+2025-05-05 08:17:29 debug: GET /css/style.css 304 0.753 ms
+2025-05-05 11:59:17 info: Mock EBS: Getting all projects
+2025-05-05 11:59:17 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-05 11:59:17 debug: GET /integration/ebs/projects 304 39.797 ms
+2025-05-05 11:59:17 debug: GET /css/style.css 304 0.336 ms
+2025-05-05 11:59:18 info: Accessing P6 projects page render function
+2025-05-05 11:59:18 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 11:59:18 error: API Error Response
+2025-05-05 11:59:18 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions for this specific action/resource.
+2025-05-05 11:59:18 error: Error rendering P6 projects page:
+2025-05-05 11:59:18 debug: GET /integration/p6/projects 200 184.647 ms
+2025-05-05 11:59:59 debug: GET /auth/logout 302 20.742 ms
+2025-05-05 11:59:59 warn: Not Found
+2025-05-05 11:59:59 error: HTTP Error
+2025-05-05 11:59:59 debug: GET /login 404 1.144 ms
+2025-05-05 12:00:20 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-05 12:00:20 info: Using MOCK EBS service
+2025-05-05 12:00:20 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-05 12:00:20 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-05 12:00:20 info: Server running in development mode on port 3000
+2025-05-05 12:00:23 warn: Not Found
+2025-05-05 12:00:23 error: HTTP Error
+2025-05-05 12:00:23 debug: GET /login 404 7.560 ms
+2025-05-05 12:00:27 debug: GET / 302 2.236 ms
+2025-05-05 12:00:27 debug: GET /auth/login 304 25.540 ms
+2025-05-05 12:00:27 debug: GET /css/style.css 304 0.841 ms
+2025-05-05 12:00:30 debug: Executing (default): SELECT [id], [username], [password], [email], [name], [isActive], [createdAt], [updatedAt] FROM [dbo].[users] AS [User] WHERE [User].[username] = N'lcortez' AND [User].[isActive] = 1;
+2025-05-05 12:00:30 debug: POST /auth/login-form 302 154.589 ms
+2025-05-05 12:00:30 debug: GET / 200 3.589 ms
+2025-05-05 12:00:30 debug: GET /css/style.css 304 0.341 ms
+2025-05-05 12:00:33 info: Accessing P6 projects page render function
+2025-05-05 12:00:33 debug: P6 Login required before making request to:
+2025-05-05 12:00:33 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-05 12:00:33 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-05 12:00:33 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-05 12:00:33 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-05 12:00:33 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 12:00:33 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 12:00:33 info: Rendering p6-projects view with 3 projects.
+2025-05-05 12:00:33 debug: GET /integration/p6/projects 200 735.794 ms
+2025-05-05 12:00:33 debug: GET /css/style.css 304 1.071 ms
+2025-05-05 12:00:35 info: Mock EBS: Getting all projects
+2025-05-05 12:00:35 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-05 12:00:35 debug: GET /integration/ebs/projects 304 12.317 ms
+2025-05-05 12:00:35 debug: GET /css/style.css 304 0.698 ms
+2025-05-05 12:00:37 info: Accessing P6 projects page render function
+2025-05-05 12:00:37 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 12:00:37 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 12:00:37 info: Rendering p6-projects view with 3 projects.
+2025-05-05 12:00:37 debug: GET /integration/p6/projects 304 126.739 ms
+2025-05-05 12:00:37 debug: GET /css/style.css 304 0.748 ms
+2025-05-05 12:00:38 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-05 12:00:38 debug: Performing P6 health check...
+2025-05-05 12:00:38 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-05 12:00:38 debug: API Response: GET /restapi/project Status: 200
+2025-05-05 12:00:38 debug: P6 health check successful.
+2025-05-05 12:00:38 debug: Performing EBS health check...
+2025-05-05 12:00:38 info: Mock EBS: Getting all projects
+2025-05-05 12:00:38 debug: Mock EBS health check successful.
+2025-05-05 12:00:38 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-05 12:00:38 debug: GET /integration/status 200 85.603 ms
+2025-05-05 12:00:38 debug: GET /css/style.css 304 0.381 ms

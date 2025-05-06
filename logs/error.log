@@ -387,3 +387,14 @@ projects.forEach is not a function
 2025-05-05 08:02:40 error: Blocking request to /restapi/project due to P6 login failure.
 2025-05-05 08:02:40 error: Error setting up API request
 2025-05-05 08:02:40 error: Error rendering P6 projects page:
+2025-05-05 08:12:41 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-05 08:12:41 error: Error setting up API request
+2025-05-05 08:12:41 error: Error rendering P6 projects page:
+2025-05-05 08:12:48 error: Blocking request to /restapi/project due to P6 login failure.
+2025-05-05 08:12:48 error: Error setting up API request
+2025-05-05 08:12:48 error: Error rendering P6 projects page:
+2025-05-05 11:59:18 error: API Error Response
+2025-05-05 11:59:18 error: Authorization error (401) on request to /restapi/project despite successful login. Check P6 user permissions for this specific action/resource.
+2025-05-05 11:59:18 error: Error rendering P6 projects page:
+2025-05-05 11:59:59 error: HTTP Error
+2025-05-05 12:00:23 error: HTTP Error
