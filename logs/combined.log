@@ -2918,3 +2918,40 @@
 2025-05-05 12:00:38 debug: Rendering status page with P6=true, EBS=true, Operations=10
 2025-05-05 12:00:38 debug: GET /integration/status 200 85.603 ms
 2025-05-05 12:00:38 debug: GET /css/style.css 304 0.381 ms
+2025-05-06 09:21:30 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-06 09:21:30 info: Using MOCK EBS service
+2025-05-06 09:21:30 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-06 09:21:30 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-06 09:21:30 info: Server running in development mode on port 3000
+2025-05-06 09:21:34 debug: GET / 200 19.834 ms
+2025-05-06 09:21:34 debug: GET /css/style.css 304 2.196 ms
+2025-05-06 09:21:36 info: Mock EBS: Getting all projects
+2025-05-06 09:21:36 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-06 09:21:36 debug: GET /integration/ebs/projects 304 58.411 ms
+2025-05-06 09:21:36 debug: GET /css/style.css 304 0.481 ms
+2025-05-06 09:21:37 info: Mock EBS: Getting all projects
+2025-05-06 09:21:37 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-06 09:21:37 debug: GET /integration/ebs/projects 304 4.985 ms
+2025-05-06 09:21:37 debug: GET /css/style.css 304 0.663 ms
+2025-05-06 09:21:38 info: Accessing P6 projects page render function
+2025-05-06 09:21:38 debug: P6 Login required before making request to:
+2025-05-06 09:21:38 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-06 09:21:38 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-06 09:21:39 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-06 09:21:39 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-06 09:21:39 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-06 09:21:40 debug: API Response: GET /restapi/project Status: 200
+2025-05-06 09:21:40 info: Rendering p6-projects view with 3 projects.
+2025-05-06 09:21:40 debug: GET /integration/p6/projects 304 1531.450 ms
+2025-05-06 09:21:40 debug: GET /css/style.css 304 0.675 ms
+2025-05-06 09:21:42 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-06 09:21:42 debug: Performing P6 health check...
+2025-05-06 09:21:42 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-06 09:21:42 debug: API Response: GET /restapi/project Status: 200
+2025-05-06 09:21:42 debug: P6 health check successful.
+2025-05-06 09:21:42 debug: Performing EBS health check...
+2025-05-06 09:21:42 info: Mock EBS: Getting all projects
+2025-05-06 09:21:42 debug: Mock EBS health check successful.
+2025-05-06 09:21:42 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-06 09:21:42 debug: GET /integration/status 200 167.761 ms
+2025-05-06 09:21:42 debug: GET /css/style.css 304 0.376 ms
