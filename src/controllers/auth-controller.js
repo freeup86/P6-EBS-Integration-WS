@@ -148,7 +148,7 @@ router.post('/login-form', async (req, res) => {
 // Logout route
 router.get('/logout', (req, res) => {
   res.clearCookie('token');
-  res.redirect('/login');
+  res.redirect('/auth/login');
 });
 
 module.exports = router;

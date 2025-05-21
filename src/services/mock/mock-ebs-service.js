@@ -50,7 +50,18 @@ class MockEBSService {
    */
   getTasks(projectId) {
     logger.info(`Mock EBS: Getting tasks for project ${projectId}`);
-    return this._tasks.filter(t => t.PROJECT_ID === projectId);
+    
+    // Debug logging
+    console.log(`Searching for tasks with PROJECT_ID: ${projectId}`);
+    console.log(`Available tasks:`, this._tasks.slice(0, 3)); // Log a sample to avoid too much output
+    console.log(`Task IDs available:`, this._tasks.map(t => t.PROJECT_ID).slice(0, 10));
+    
+    const filteredTasks = this._tasks.filter(t => t.PROJECT_ID === projectId);
+    
+    // More debug info
+    console.log(`Found ${filteredTasks.length} tasks for project ${projectId}`);
+    
+    return filteredTasks;
   }
 
   /**

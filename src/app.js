@@ -27,6 +27,7 @@ dotenv.config({
 const integrationController = require('./controllers/integration-controller');
 const testIntegrationController = require('./controllers/test-integration-controller');
 const mockEBSController = require('./controllers/mock-ebs-controller');
+const externalIntegrationController = require('./controllers/external-integration-controller');
 
 // Create Express app
 const app = express();
@@ -74,6 +75,7 @@ app.use(authenticateJWT);
 
 // Rate Limiting
 app.use('/api/', rateLimiter.apiLimiter);
+app.use('/api/v1/integration/', rateLimiter.integrationLimiter);
 app.use('/auth/', rateLimiter.authLimiter);
 
 // Static file serving
@@ -96,6 +98,7 @@ if (process.env.USE_MOCK_EBS === 'true') {
 app.use('/test-integration', testIntegrationController);
 app.use('/integration', integrationController);
 app.use('/auth', authController);
+app.use('/api/v1/integration', externalIntegrationController);
 
 // Home route
 app.get('/', (req, res) => {

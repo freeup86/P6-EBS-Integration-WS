@@ -16,6 +16,10 @@ const useMockServices = {
   ebs: process.env.USE_MOCK_EBS === 'true' || true // Forcing true for now to ensure it works
 };
 
+// Log the actual values
+console.log('USE_MOCK_EBS environment variable:', process.env.USE_MOCK_EBS);
+console.log('USE_MOCK_P6 environment variable:', process.env.USE_MOCK_P6);
+
 logger.info(`Service Configuration: P6 Mock: ${useMockServices.p6}, EBS Mock: ${useMockServices.ebs}`);
 
 module.exports = useMockServices;

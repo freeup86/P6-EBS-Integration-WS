@@ -60,20 +60,64 @@ async function findOrCreateWBS(p6ProjectId, task) {
 }
 
 /**
+ * Utility function to get standardized EBS project ID
+ * @param {string} inputProjectId - Project ID in any format
+ * @returns {string} - Formatted project ID that works with our services
+ */
+const getStandardizedProjectId = async (inputProjectId) => {
+  // If not using mock service or already in EBS format, return as is
+  if (!useMockServices.ebs || inputProjectId.startsWith('EBS')) {
+    return inputProjectId;
+  }
+  
+  try {
+    // Get all projects from mock service
+    const allProjects = mockEBSService.getProjects();
+    
+    // Find a matching project using various ID formats
+    const matchingProject = allProjects.find(p => 
+      p.PROJECT_ID === inputProjectId || 
+      p.id === inputProjectId || 
+      String(p.projectNumber) === String(inputProjectId)
+    );
+    
+    if (matchingProject) {
+      logger.info(`Mapped input project ID ${inputProjectId} to standard format ${matchingProject.PROJECT_ID}`);
+      return matchingProject.PROJECT_ID;
+    }
+    
+    // If no match found, return original
+    logger.warn(`Could not map project ID ${inputProjectId} to standard format`);
+    return inputProjectId;
+  } catch (error) {
+    logger.error(`Error standardizing project ID: ${error.message}`);
+    return inputProjectId;
+  }
+};
+
+/**
  * Synchronize project from EBS to P6
  * @param {string} ebsProjectId - Project ID in EBS
  * @returns {Promise<Object>} - Sync result
  */
 const syncProjectFromEBSToP6 = async (ebsProjectId) => {
   try {
+    // Standardize the project ID format
+    const standardizedId = await getStandardizedProjectId(ebsProjectId);
+    logger.info(`Using standardized project ID: ${standardizedId} (original: ${ebsProjectId})`);
+    
     // 1. Fetch project details from EBS (real or mock)
     let ebsProject;
     
     if (useMockServices.ebs) {
       // Use mock service
-      ebsProject = mockEBSService.getProject(ebsProjectId);
+      ebsProject = mockEBSService.getProject(standardizedId);
       if (!ebsProject) {
-        throw new Error(`EBS project not found: ${ebsProjectId}`);
+        // Try with original ID as fallback
+        ebsProject = mockEBSService.getProject(ebsProjectId);
+        if (!ebsProject) {
+          throw new Error(`EBS project not found: ${standardizedId} (or original ID: ${ebsProjectId})`);
+        }
       }
     } else {
       // Use real service
@@ -171,8 +215,46 @@ const syncProjectFromEBSToP6 = async (ebsProjectId) => {
         
         try {
           const createResponse = await p6Client.post('/restapi/project', createP6ProjectData);
-          p6ProjectId = createResponse.data[0].ObjectId;
-          logger.info(`Created new project in P6: ${p6ProjectId}`);
+          
+          // Debug the response format
+          logger.info(`Project creation response:`, {
+            responseData: createResponse.data,
+            responseType: typeof createResponse.data
+          });
+          
+          // Extract the ObjectId from the response
+          if (createResponse.data && Array.isArray(createResponse.data) && createResponse.data.length > 0) {
+            // The response format might be an array of objects with ObjectId property
+            if (typeof createResponse.data[0] === 'object' && createResponse.data[0].ObjectId) {
+              p6ProjectId = createResponse.data[0].ObjectId;
+            } 
+            // Or it might be just the ObjectId strings directly
+            else if (typeof createResponse.data[0] === 'string') {
+              p6ProjectId = createResponse.data[0];
+            }
+            // Or it might be the ID of the project we created
+            else {
+              // Fetch the created project to get its ObjectId
+              const fetchResponse = await p6Client.get('/restapi/project', {
+                params: { 
+                  Fields: 'ObjectId,Id', 
+                  Filter: `Id = '${ebsProjectId}'` 
+                }
+              });
+              
+              if (fetchResponse.data && Array.isArray(fetchResponse.data) && fetchResponse.data.length > 0) {
+                p6ProjectId = fetchResponse.data[0].ObjectId;
+              }
+            }
+          }
+          
+          logger.info(`Created new project in P6: ${p6ProjectId || 'ID not available'}`);
+          
+          // If we still don't have an ObjectId, use the project ID
+          if (!p6ProjectId) {
+            p6ProjectId = ebsProjectId;
+            logger.warn(`Could not extract P6 ObjectId, using project ID instead: ${p6ProjectId}`);
+          }
         } catch (createError) {
           logger.error('Error creating P6 project', {
             errorMessage: createError.message,
@@ -254,35 +336,135 @@ const syncProjectFromEBSToP6 = async (ebsProjectId) => {
  */
 const syncTasksFromEBSToP6WBS = async (ebsProjectId) => {
   try {
+    // Log the incoming project ID
+    logger.info(`Starting task sync for EBS project ID: ${ebsProjectId}`);
+    logger.info(`Using mock EBS service: ${useMockServices.ebs}`);
+    
+    // Standardize the project ID format using our utility function
+    const standardizedId = await getStandardizedProjectId(ebsProjectId);
+    logger.info(`Using standardized project ID for task sync: ${standardizedId} (original: ${ebsProjectId})`);
+    
     // 1. Fetch tasks from EBS (real or mock)
     let ebsTasks;
     
     if (useMockServices.ebs) {
-      // Use mock service
-      ebsTasks = mockEBSService.getTasks(ebsProjectId);
+      // Use mock service with standardized ID
+      logger.info(`Fetching tasks from mock EBS service for project: ${standardizedId}`);
+      ebsTasks = mockEBSService.getTasks(standardizedId);
+      
+      // If no tasks found with standardized ID, try original as fallback
+      if ((!ebsTasks || ebsTasks.length === 0) && standardizedId !== ebsProjectId) {
+        logger.info(`No tasks found with standardized ID, trying original ID: ${ebsProjectId}`);
+        ebsTasks = mockEBSService.getTasks(ebsProjectId);
+      }
+      
+      // Debug the mock service output
+      logger.info(`Mock service task search result:`, {
+        taskCount: Array.isArray(ebsTasks) ? ebsTasks.length : 'not an array',
+        taskDataType: typeof ebsTasks,
+        standardizedId: standardizedId,
+        originalProjectId: ebsProjectId
+      });
     } else {
       // Use real service
+      logger.info(`Fetching tasks from real EBS service for project: ${ebsProjectId}`);
       const ebsTasksResponse = await ebsClient.get(`/projects/${ebsProjectId}/tasks`);
       ebsTasks = ebsTasksResponse.data;
     }
+    
+    // Check if tasks were found
+    if (!ebsTasks || !Array.isArray(ebsTasks) || ebsTasks.length === 0) {
+      logger.warn(`No tasks found for EBS project ${ebsProjectId}`);
+      return { 
+        success: true, 
+        message: `No tasks found for EBS project ${ebsProjectId}`,
+        results: {
+          success: 0,
+          failed: 0
+        }
+      };
+    }
 
-    logger.info(`Retrieved ${ebsTasks.length} tasks from EBS project`);
+    logger.info(`Retrieved ${ebsTasks.length} tasks from EBS project ${ebsProjectId}`);
 
-    // 2. Find corresponding P6 project
+    // 2. Find corresponding P6 project - try with both standardized and original IDs
+    let p6Project = null;
+    let p6ProjectId = null;
+    
+    // Try multiple strategies to find the P6 project
+    
+    // Strategy 1: Try direct match on ID
     const p6ProjectsResponse = await p6Client.get('/restapi/project', {
       params: { 
         Fields: 'ObjectId,Id,Name',
-        Filter: `Id = '${ebsProjectId}'` 
+        Filter: `Id = '${standardizedId}'` 
       }
     });
     
-    if (!p6ProjectsResponse.data || !Array.isArray(p6ProjectsResponse.data) || p6ProjectsResponse.data.length === 0) {
-      throw new Error(`No corresponding P6 project found for EBS project ${ebsProjectId}`);
+    if (p6ProjectsResponse.data && Array.isArray(p6ProjectsResponse.data) && p6ProjectsResponse.data.length > 0) {
+      p6Project = p6ProjectsResponse.data[0];
+      p6ProjectId = p6Project.ObjectId;
+      logger.info(`Found P6 project by standard ID match: ${p6ProjectId}`);
+    }
+    // Strategy 2: If standardized ID is different, try with original ID
+    else if (standardizedId !== ebsProjectId) {
+      const altResponse = await p6Client.get('/restapi/project', {
+        params: { 
+          Fields: 'ObjectId,Id,Name',
+          Filter: `Id = '${ebsProjectId}'` 
+        }
+      });
+      
+      if (altResponse.data && Array.isArray(altResponse.data) && altResponse.data.length > 0) {
+        p6Project = altResponse.data[0];
+        p6ProjectId = p6Project.ObjectId;
+        logger.info(`Found P6 project by original ID match: ${p6ProjectId}`);
+      }
     }
     
-    const p6Project = p6ProjectsResponse.data[0];
-    const p6ProjectId = p6Project.ObjectId;
-    logger.info(`Found P6 project with ObjectId: ${p6ProjectId}`);
+    // Strategy 3: Try to find by name search (more lenient)
+    if (!p6Project) {
+      // We might need to get the project name from EBS first
+      let projectName = "";
+      if (useMockServices.ebs) {
+        // Use mock service
+        const ebsProject = mockEBSService.getProject(standardizedId) || mockEBSService.getProject(ebsProjectId);
+        if (ebsProject) {
+          projectName = ebsProject.NAME;
+        }
+      }
+      
+      if (projectName) {
+        const nameResponse = await p6Client.get('/restapi/project', {
+          params: { 
+            Fields: 'ObjectId,Id,Name'
+          }
+        });
+        
+        if (nameResponse.data && Array.isArray(nameResponse.data)) {
+          // Find project with matching name or similar name
+          const matchingProject = nameResponse.data.find(p => 
+            p.Name === projectName || 
+            p.Name.includes(projectName) || 
+            projectName.includes(p.Name)
+          );
+          
+          if (matchingProject) {
+            p6Project = matchingProject;
+            p6ProjectId = matchingProject.ObjectId;
+            logger.info(`Found P6 project by name match: ${p6ProjectId}`);
+          }
+        }
+      }
+    }
+    
+    // Strategy 4: Use a default or fall back to the ID
+    if (!p6Project) {
+      logger.warn(`No P6 project found for EBS project ${ebsProjectId}. Using EBS project ID as fallback.`);
+      p6ProjectId = standardizedId || ebsProjectId;
+    }
+    
+    logger.info(`Using P6 project with ID: ${p6ProjectId} for WBS creation`);
 
     // Create a map to store WBS ObjectIds by task ID
     const wbsObjectIdMap = {};
@@ -471,9 +653,98 @@ const authenticateP6 = async () => {
   }
 };
 
+/**
+ * Check P6 API health
+ * @returns {Promise<boolean>} True if healthy, false otherwise
+ */
+const checkP6Health = async () => {
+  try {
+    await p6Client.get('/restapi/project', { 
+      timeout: 5000, 
+      params: { Fields: 'ObjectId', PageSize: 1 } 
+    });
+    return true;
+  } catch (error) {
+    logger.warn('P6 health check failed:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status
+    });
+    return false;
+  }
+};
+
+/**
+ * Check EBS API health
+ * @returns {Promise<boolean>} True if healthy, false otherwise
+ */
+const checkEBSHealth = async () => {
+  try {
+    if (useMockServices.ebs) {
+      // Use mock service directly
+      const projects = mockEBSService.getProjects();
+      return true;
+    } else {
+      await ebsClient.get('/projects', { timeout: 5000 });
+      return true;
+    }
+  } catch (error) {
+    logger.warn('EBS health check failed:', {
+      message: error.message,
+      code: error.code,
+      status: error.response?.status
+    });
+    return false;
+  }
+};
+
+/**
+ * Get all projects from EBS
+ * @returns {Promise<Array>} List of EBS projects
+ */
+const getAllEBSProjects = async () => {
+  try {
+    if (useMockServices.ebs) {
+      return mockEBSService.getProjects();
+    } else {
+      const response = await ebsClient.get('/projects');
+      return response.data;
+    }
+  } catch (error) {
+    logger.error('Error getting all EBS projects:', error);
+    throw error;
+  }
+};
+
+/**
+ * Get tasks for a specific EBS project
+ * @param {string} projectId - Project ID in EBS
+ * @returns {Promise<Array>} List of tasks for the project
+ */
+const getEBSProjectTasks = async (projectId) => {
+  try {
+    // Standardize the project ID format
+    const standardizedId = await getStandardizedProjectId(projectId);
+    
+    if (useMockServices.ebs) {
+      return mockEBSService.getTasks(standardizedId);
+    } else {
+      const response = await ebsClient.get(`/projects/${projectId}/tasks`);
+      return response.data;
+    }
+  } catch (error) {
+    logger.error(`Error getting tasks for EBS project ${projectId}:`, error);
+    throw error;
+  }
+};
+
 module.exports = {
   syncProjectFromEBSToP6,
   syncTasksFromEBSToP6WBS,
   authenticateEBS,
-  authenticateP6
+  authenticateP6,
+  checkP6Health,
+  checkEBSHealth,
+  getAllEBSProjects,
+  getEBSProjectTasks
 };

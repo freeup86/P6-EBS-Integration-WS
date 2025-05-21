@@ -62,5 +62,14 @@ module.exports = {
     corsOrigin: process.env.CORS_ORIGIN || '*',
     rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
     rateLimitMax: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || 100
+  },
+  
+  // Integration API settings
+  integration: {
+    // Comma-separated list of valid API keys for external integration
+    apiKeys: process.env.INTEGRATION_API_KEYS || 'test-integration-key',
+    // Rate limiting for integration API (higher than normal API)
+    rateLimitWindowMs: parseInt(process.env.INTEGRATION_RATE_LIMIT_WINDOW_MS) || 60 * 60 * 1000,
+    rateLimitMax: parseInt(process.env.INTEGRATION_RATE_LIMIT_MAX_REQUESTS) || 1000
   }
 };

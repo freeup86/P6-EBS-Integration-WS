@@ -20,6 +20,9 @@ const createRateLimiter = (options = {}) => {
   return limiter;
 };
 
+// Get config
+const config = require('../config');
+
 module.exports = {
   // General API rate limiter
   apiLimiter: createRateLimiter(),
@@ -34,5 +37,15 @@ module.exports = {
   publicLimiter: createRateLimiter({
     windowMs: 15 * 60 * 1000,
     max: 50
+  }),
+  
+  // Special rate limiter for integration API with higher limits
+  integrationLimiter: createRateLimiter({
+    windowMs: config.integration?.rateLimitWindowMs || 60 * 60 * 1000, // Default 60 minutes
+    max: config.integration?.rateLimitMax || 1000, // Higher limit for integration services
+    keyGenerator: (req) => {
+      // Use API key as rate limit key if available, otherwise fallback to IP
+      return req.headers['x-api-key'] || req.ip;
+    }
   })
 };

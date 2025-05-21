@@ -60,6 +60,276 @@ async function checkEBSStatus() {
 
 // --- Sync operation routes (POST endpoints) ---
 /**
+ * Sync All Projects from EBS to P6
+ */
+router.post('/ebs-to-p6/all-projects', async (req, res) => {
+  try {
+    logger.info('Request to sync all EBS projects to P6');
+    
+    // Get configuration options from request body
+    const { syncTasks = false } = req.body;
+    
+    logger.info(`Sync tasks option: ${syncTasks}`);
+    
+    // Get all EBS projects
+    let projects;
+    if (useMockServices.ebs) {
+      // Use mock service
+      projects = mockEBSService.getProjects();
+    } else {
+      // Use real EBS service
+      const response = await ebsClient.get('/projects');
+      projects = response.data;
+    }
+
+    // Filter to only active/approved projects if needed
+    const projectsToSync = projects.filter(project => {
+      const status = project.STATUS_CODE || project.status;
+      return status === 'APPROVED' || status === 'ACTIVE';
+    });
+
+    logger.info(`Found ${projectsToSync.length} eligible projects to sync`);
+
+    // Keep track of results
+    const results = {
+      total: projectsToSync.length,
+      succeeded: 0,
+      failed: 0,
+      details: [],
+      taskSync: {
+        total: 0,
+        succeeded: 0,
+        failed: 0
+      }
+    };
+
+    // Create a sync operation record for the overall process
+    const syncOperation = await syncTrackingService.logSyncOperation({
+      type: syncTasks ? 'Bulk EBS to P6 Projects and Tasks' : 'Bulk EBS to P6 Projects',
+      source: 'All Projects',
+      status: 'In Progress'
+    });
+
+    // Process each project
+    for (const project of projectsToSync) {
+      try {
+        // Get the project ID in the correct format - EBS projects use PROJECT_ID
+        const projectId = project.PROJECT_ID || project.id || project.projectNumber;
+        logger.info(`Processing project ${projectId}: ${project.NAME || project.name || project.projectName}`);
+        
+        // Debug project format
+        logger.info('Project object structure:', {
+          project: project,
+          extractedId: projectId,
+          availableProps: Object.keys(project)
+        });
+        
+        // Sync project
+        const result = await ebsToP6Service.syncProjectFromEBSToP6(projectId);
+        
+        if (result.success) {
+          results.succeeded++;
+          const projectDetail = {
+            projectId,
+            name: project.NAME || project.name,
+            success: true,
+            p6ProjectId: result.p6ProjectId,
+            tasks: { success: false }
+          };
+          
+          // Sync tasks if requested
+          if (syncTasks) {
+            try {
+              // Log the result structure to debug
+              logger.info(`Sync result for project ${projectId}:`, {
+                resultStructure: result,
+                hasP6ProjectId: !!result.p6ProjectId
+              });
+              
+              // Get project's standardized ID if available 
+              // (Could be EBS1001 in mock service, but projectNumber in our formatted data)
+              let effectiveProjectId = projectId;
+              
+              // If we have a matching P6ProjectId, try to use it
+              if (result.p6ProjectId) {
+                logger.info(`Using P6 project ID for task lookup: ${result.p6ProjectId}`);
+                effectiveProjectId = result.p6ProjectId;
+              }
+              
+              // Try another format - this helps match our UI projectNumber with mock service PROJECT_ID
+              if (project.PROJECT_ID && project.PROJECT_ID !== projectId) {
+                logger.info(`Using PROJECT_ID from project object: ${project.PROJECT_ID}`);
+                effectiveProjectId = project.PROJECT_ID;
+              }
+              
+              // Get tasks for this project to verify there are tasks to sync
+              let projectTasks = [];
+              if (useMockServices.ebs) {
+                // Try multiple ID formats for mock service
+                logger.info(`Looking up tasks with ID: ${effectiveProjectId}`);
+                projectTasks = mockEBSService.getTasks(effectiveProjectId);
+                
+                // If no tasks found and using different IDs, try original ID as fallback
+                if ((!projectTasks || projectTasks.length === 0) && effectiveProjectId !== projectId) {
+                  logger.info(`No tasks found with effective ID, trying original ID: ${projectId}`);
+                  projectTasks = mockEBSService.getTasks(projectId);
+                  
+                  // Try standardized ID format if we still have no tasks
+                  if (!projectTasks || projectTasks.length === 0) {
+                    // Project IDs in mock service are in format "EBS1001" - try that pattern
+                    if (typeof projectId === 'string' && !projectId.startsWith('EBS')) {
+                      const mockId = `EBS${projectId}`;
+                      logger.info(`Trying mock ID format: ${mockId}`);
+                      projectTasks = mockEBSService.getTasks(mockId);
+                    }
+                  }
+                }
+              } else {
+                const tasksResponse = await ebsClient.get(`/projects/${projectId}/tasks`);
+                projectTasks = tasksResponse.data;
+              }
+              
+              // Check actual task data
+              logger.info(`Task lookup results for project ${projectId}:`, {
+                taskCount: Array.isArray(projectTasks) ? projectTasks.length : 'not an array',
+                taskDataSample: Array.isArray(projectTasks) && projectTasks.length > 0 
+                  ? projectTasks.slice(0, 2) 
+                  : projectTasks,
+                effectiveProjectId
+              });
+              
+              // Only attempt to sync if there are tasks
+              if (projectTasks && Array.isArray(projectTasks) && projectTasks.length > 0) {
+                logger.info(`Syncing ${projectTasks.length} tasks for project ${projectId}`);
+                
+                // Log the actual task data for debugging
+                logger.info(`Task data sample for project ${projectId}:`, {
+                  taskSample: projectTasks.slice(0, 2),
+                  taskCount: projectTasks.length,
+                  projectId: projectId
+                });
+                
+                try {
+                  const taskResult = await ebsToP6Service.syncTasksFromEBSToP6WBS(projectId);
+                  
+                  // Log the complete task result for debugging
+                  logger.info(`Task sync result for project ${projectId}:`, {
+                    success: taskResult.success,
+                    message: taskResult.message,
+                    resultsDetails: taskResult.results
+                  });
+                  
+                  // Update task sync results
+                  if (taskResult.success) {
+                    results.taskSync.total += (taskResult.results?.success || 0) + (taskResult.results?.failed || 0);
+                    results.taskSync.succeeded += taskResult.results?.success || 0;
+                    results.taskSync.failed += taskResult.results?.failed || 0;
+                    
+                    projectDetail.tasks = {
+                      success: true,
+                      synced: taskResult.results?.success || 0,
+                      failed: taskResult.results?.failed || 0
+                    };
+                    
+                    logger.info(`Successfully synced tasks for project ${projectId}: ${taskResult.results?.success || 0} succeeded, ${taskResult.results?.failed || 0} failed`);
+                  } else {
+                    logger.error(`Failed to sync tasks for project ${projectId}: ${taskResult.message}`);
+                    projectDetail.tasks = {
+                      success: false,
+                      error: taskResult.message
+                    };
+                    results.taskSync.failed++;
+                  }
+                } catch (syncError) {
+                  logger.error(`Exception during task sync for project ${projectId}:`, syncError);
+                  projectDetail.tasks = {
+                    success: false,
+                    error: syncError.message
+                  };
+                  results.taskSync.failed++;
+                }
+              } else {
+                logger.info(`No tasks found for project ${projectId}, skipping task sync. Task data:`, {
+                  projectId: projectId,
+                  taskDataType: typeof projectTasks,
+                  taskCount: Array.isArray(projectTasks) ? projectTasks.length : 'not an array',
+                  taskData: projectTasks
+                });
+                projectDetail.tasks = {
+                  success: true,
+                  synced: 0,
+                  failed: 0,
+                  message: "No tasks found for this project"
+                };
+              }
+            } catch (taskError) {
+              logger.error(`Error syncing tasks for project ${projectId}:`, taskError);
+              projectDetail.tasks = {
+                success: false,
+                error: taskError.message
+              };
+              results.taskSync.failed++;
+            }
+          }
+          
+          results.details.push(projectDetail);
+        } else {
+          results.failed++;
+          results.details.push({
+            projectId,
+            name: project.NAME || project.name,
+            success: false,
+            error: result.message
+          });
+        }
+      } catch (error) {
+        logger.error(`Error syncing project ${project.PROJECT_ID || project.id}:`, error);
+        results.failed++;
+        results.details.push({
+          projectId: project.PROJECT_ID || project.id,
+          name: project.NAME || project.name,
+          success: false,
+          error: error.message
+        });
+      }
+    }
+
+    // Update the sync operation record
+    if (syncOperation?.id) {
+      let detailsMessage = `Bulk project sync: ${results.succeeded} succeeded, ${results.failed} failed`;
+      if (syncTasks) {
+        detailsMessage += `. Tasks: ${results.taskSync.succeeded} succeeded, ${results.taskSync.failed} failed`;
+      }
+      
+      await syncTrackingService.updateSyncOperation(syncOperation.id, {
+        status: 'Completed',
+        details: detailsMessage
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Completed syncing ${results.total} projects: ${results.succeeded} succeeded, ${results.failed} failed`,
+      results
+    });
+  } catch (error) {
+    logger.error('Error in bulk EBS to P6 project sync endpoint:', error);
+    
+    const syncOperation = await syncTrackingService.logSyncOperation({
+      type: 'Bulk EBS to P6 Projects',
+      source: 'All Projects',
+      status: 'Failed',
+      details: error.message
+    });
+    
+    res.status(500).json({ 
+      success: false, 
+      message: `Bulk sync failed: ${error.message}` 
+    });
+  }
+});
+
+/**
  * Sync Project from EBS to P6
  */
 router.post('/ebs-to-p6/project/:projectId', async (req, res) => {

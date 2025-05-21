@@ -398,3 +398,20 @@ projects.forEach is not a function
 2025-05-05 11:59:18 error: Error rendering P6 projects page:
 2025-05-05 11:59:59 error: HTTP Error
 2025-05-05 12:00:23 error: HTTP Error
+2025-05-06 11:42:43 error: HTTP Error
+2025-05-06 11:42:55 error: HTTP Error
+2025-05-06 12:15:48 error: HTTP Error
+2025-05-06 12:15:58 error: HTTP Error
+2025-05-06 12:16:07 error: HTTP Error
+2025-05-06 12:16:14 error: HTTP Error
+2025-05-06 12:16:23 error: HTTP Error
+2025-05-06 12:16:27 error: HTTP Error
+2025-05-06 12:16:33 error: HTTP Error
+2025-05-06 12:18:14 error: HTTP Error
+2025-05-06 12:19:12 error: HTTP Error
+2025-05-12 13:06:51 error: Login form error: Failed to connect to localhost:1433 - Could not connect (sequence)
+2025-05-12 13:07:00 error: Login form error: Failed to connect to localhost:1433 - Could not connect (sequence)
+2025-05-12 13:07:04 error: Login form error: Failed to connect to localhost:1433 - Could not connect (sequence)
+2025-05-12 13:07:07 error: Login form error: Failed to connect to localhost:1433 - Could not connect (sequence)
+2025-05-12 13:07:12 error: HTTP Error
+2025-05-12 13:08:53 error: HTTP Error

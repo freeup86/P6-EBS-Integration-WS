@@ -124,6 +124,33 @@ class SyncTrackingService {
   }
 
   /**
+   * Get a specific sync operation by ID
+   * @param {string} operationId - ID of the sync operation to retrieve
+   * @returns {Promise<Object|null>} - Plain JavaScript object representing the sync operation, or null if not found
+   */
+  async getSyncOperation(operationId) {
+    try {
+      // Find the operation by ID
+      const syncOperation = await SyncOperation.findByPk(operationId);
+      
+      if (!syncOperation) {
+        logger.warn(`Sync operation not found with ID: ${operationId}`);
+        return null;
+      }
+      
+      // Convert to plain JavaScript object
+      return syncOperation.get({ plain: true });
+    } catch (error) {
+      logger.error('Error retrieving sync operation', {
+        operationId,
+        errorMessage: error.message,
+        errorStack: error.stack
+      });
+      throw error;
+    }
+  }
+
+  /**
    * Clean up old sync operations based on startedAt date
    * @param {number} daysToRetain - Number of days to retain sync operations (default: 30)
    * @returns {Promise<number>} - Number of deleted operations

@@ -11,7 +11,8 @@ const authenticateJWT = (req, res, next) => {
     // Skip authentication for public routes
     if (req.path === '/login' || 
         req.path === '/auth/login' || 
-        req.path === '/auth/login-form' || 
+        req.path === '/auth/login-form' ||
+        req.path === '/auth/logout' ||
         req.path.startsWith('/css/') ||
         req.path.startsWith('/js/')) {
       return next();
