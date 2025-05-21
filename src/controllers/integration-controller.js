@@ -632,7 +632,7 @@ router.get('/ebs/projects', async (req, res) => {
     res.render('ebs-projects', {
       title: 'EBS Projects',
       projects: projects,
-      user: req.user
+      user: null
     });
   } catch (error) {
     logger.error('Error rendering EBS projects page', error.message);
@@ -640,7 +640,7 @@ router.get('/ebs/projects', async (req, res) => {
     res.render('error', {
       message: `Unable to load EBS projects: ${apiErrorDetails}`,
       error: process.env.NODE_ENV === 'development' ? error : {},
-      user: req.user
+      user: null
     });
   }
 });
@@ -675,7 +675,7 @@ router.get('/p6/projects', async (req, res) => {
     res.render('p6-projects', {
       title: 'P6 Projects',
       projects: projects,
-      user: req.user
+      user: null
     });
   } catch (error) {
     logger.error('Error rendering P6 projects page:', {
@@ -687,7 +687,7 @@ router.get('/p6/projects', async (req, res) => {
     res.render('error', {
         message: `Unable to load P6 projects: ${apiErrorDetails}`,
         error: process.env.NODE_ENV === 'development' ? error : {},
-        user: req.user
+        user: null
     });
   }
 });
@@ -710,7 +710,7 @@ router.get('/status', async (req, res) => {
       syncOperations: plainSyncOperations,
       p6Status: isP6Connected ? 'Connected' : 'Disconnected',
       ebsStatus: isEBSConnected ? 'Connected' : 'Disconnected',
-      user: req.user
+      user: null
     });
   } catch (error) {
      console.error('--- ERROR CAUGHT IN CONTROLLER /integration/status ---');
@@ -719,7 +719,7 @@ router.get('/status', async (req, res) => {
      res.render('error', {
        message: 'Error loading sync status page',
        error: process.env.NODE_ENV === 'development' ? error : {},
-       user: req.user
+       user: null
      });
   }
 });

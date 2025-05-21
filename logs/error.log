@@ -415,3 +415,10 @@ projects.forEach is not a function
 2025-05-12 13:07:07 error: Login form error: Failed to connect to localhost:1433 - Could not connect (sequence)
 2025-05-12 13:07:12 error: HTTP Error
 2025-05-12 13:08:53 error: HTTP Error
+2025-05-21 11:28:44 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 11:29:04 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 11:50:53 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 12:00:08 error: Error retrieving sync operations
+2025-05-21 12:00:08 error: Error rendering sync status page Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 12:00:29 error: Error retrieving sync operations
+2025-05-21 12:00:29 error: Error rendering sync status page Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1

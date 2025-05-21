@@ -3901,3 +3901,155 @@
 2025-05-12 13:09:02 info: Retrieved 3 projects from mock EBS service for UI
 2025-05-12 13:09:02 debug: GET /integration/ebs/projects 200 22.145 ms
 2025-05-12 13:09:02 debug: GET /css/style.css 304 3.731 ms
+2025-05-21 11:25:26 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:25:26 info: Using MOCK EBS service
+2025-05-21 11:25:26 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:25:26 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:25:26 info: Server running in development mode on port 3000
+2025-05-21 11:25:42 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:25:42 info: Using MOCK EBS service
+2025-05-21 11:25:42 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:25:42 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:25:42 info: Server running in development mode on port 3000
+2025-05-21 11:26:28 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:26:28 info: Using MOCK EBS service
+2025-05-21 11:26:28 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:26:28 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:26:28 info: Server running in development mode on port 3000
+2025-05-21 11:28:22 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:28:22 info: Using MOCK EBS service
+2025-05-21 11:28:22 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:28:22 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:28:22 info: Server running in development mode on port 3000
+2025-05-21 11:28:33 debug: GET / 302 1.989 ms
+2025-05-21 11:28:33 debug: GET /auth/login 304 23.614 ms
+2025-05-21 11:28:33 debug: GET /css/style.css 304 1.568 ms
+2025-05-21 11:28:44 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 11:28:44 debug: POST /auth/login-form 200 60.930 ms
+2025-05-21 11:28:44 debug: GET /css/style.css 304 0.470 ms
+2025-05-21 11:29:04 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 11:29:04 debug: POST /auth/login-form 200 14.407 ms
+2025-05-21 11:29:04 debug: GET /css/style.css 304 0.436 ms
+2025-05-21 11:36:31 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:36:31 info: Using MOCK EBS service
+2025-05-21 11:36:31 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:36:31 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:36:31 info: Server running in development mode on port 3000
+2025-05-21 11:36:36 debug: GET / 302 3.067 ms
+2025-05-21 11:36:36 debug: GET /auth/login 304 28.480 ms
+2025-05-21 11:36:36 debug: GET /css/style.css 304 1.405 ms
+2025-05-21 11:50:45 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:50:45 info: Using MOCK EBS service
+2025-05-21 11:50:45 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:50:45 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:50:45 info: Server running in development mode on port 3000
+2025-05-21 11:50:50 debug: GET / 302 2.771 ms
+2025-05-21 11:50:50 debug: GET /auth/login 304 14.887 ms
+2025-05-21 11:50:50 debug: GET /css/style.css 304 1.326 ms
+2025-05-21 11:50:53 error: Login form error: Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 11:50:53 debug: POST /auth/login-form 200 25.685 ms
+2025-05-21 11:50:53 debug: GET /css/style.css 304 0.307 ms
+2025-05-21 11:58:47 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:58:47 info: Using MOCK EBS service
+2025-05-21 11:58:47 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:58:48 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:58:48 info: Server running in development mode on port 3000
+2025-05-21 11:58:57 debug: GET / 200 14.539 ms
+2025-05-21 11:58:57 debug: GET /css/style.css 304 2.167 ms
+2025-05-21 11:59:35 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 11:59:35 info: Using MOCK EBS service
+2025-05-21 11:59:35 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 11:59:36 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 11:59:36 info: Server running in development mode on port 3000
+2025-05-21 11:59:39 debug: GET / 304 14.122 ms
+2025-05-21 11:59:39 debug: GET /css/style.css 304 3.148 ms
+2025-05-21 11:59:41 info: Accessing P6 projects page render function
+2025-05-21 11:59:41 debug: P6 Login required before making request to:
+2025-05-21 11:59:41 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-21 11:59:41 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-21 11:59:49 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-21 11:59:49 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-21 11:59:49 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 11:59:51 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 11:59:51 info: Rendering p6-projects view with 5 projects.
+2025-05-21 11:59:51 debug: GET /integration/p6/projects 200 10017.584 ms
+2025-05-21 11:59:51 debug: GET /css/style.css 304 0.523 ms
+2025-05-21 12:00:05 info: Mock EBS: Getting all projects
+2025-05-21 12:00:05 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-21 12:00:05 debug: GET /integration/ebs/projects 200 4.135 ms
+2025-05-21 12:00:05 debug: GET /css/style.css 304 0.481 ms
+2025-05-21 12:00:08 error: Error retrieving sync operations
+2025-05-21 12:00:08 error: Error rendering sync status page Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 12:00:08 debug: GET /integration/status 200 55.550 ms
+2025-05-21 12:00:29 error: Error retrieving sync operations
+2025-05-21 12:00:29 error: Error rendering sync status page Failed to connect to localhost1:1433 - getaddrinfo ENOTFOUND localhost1
+2025-05-21 12:00:29 debug: GET /integration/status 304 18.100 ms
+2025-05-21 12:00:36 info: Service Configuration: P6 Mock: false, EBS Mock: true
+2025-05-21 12:00:36 info: Using MOCK EBS service
+2025-05-21 12:00:36 info: Using MOCK EBS service in p6-to-ebs-service
+2025-05-21 12:00:37 info: Mock EBS API routes enabled at /ebs-api and /mock-ebs
+2025-05-21 12:00:37 info: Server running in development mode on port 3000
+2025-05-21 12:00:43 debug: GET / 304 16.700 ms
+2025-05-21 12:00:43 debug: GET /css/style.css 304 1.761 ms
+2025-05-21 12:00:45 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-21 12:00:45 debug: Performing P6 health check...
+2025-05-21 12:00:45 debug: P6 Login required before making request to:
+2025-05-21 12:00:45 info: Attempting P6 login via POST to: /restapi/login?DatabaseName=orcl19c using custom headers
+2025-05-21 12:00:45 debug: API Request: POST http://10.211.55.5:8206/p6ws/restapi/login?DatabaseName=orcl19c
+2025-05-21 12:00:46 debug: API Response: POST /restapi/login?DatabaseName=orcl19c Status: 200
+2025-05-21 12:00:46 info: P6 login successful (Status: 200). Cookie Jar active for subsequent requests.
+2025-05-21 12:00:46 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 12:00:46 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 12:00:46 debug: P6 health check successful.
+2025-05-21 12:00:46 debug: Performing EBS health check...
+2025-05-21 12:00:46 info: Mock EBS: Getting all projects
+2025-05-21 12:00:46 debug: Mock EBS health check successful.
+2025-05-21 12:00:46 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-21 12:00:46 debug: GET /integration/status 200 1226.409 ms
+2025-05-21 12:00:46 debug: GET /css/style.css 304 0.804 ms
+2025-05-21 12:00:52 info: Mock EBS: Getting all projects
+2025-05-21 12:00:52 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-21 12:00:52 debug: GET /integration/ebs/projects 304 5.274 ms
+2025-05-21 12:00:52 debug: GET /css/style.css 304 0.538 ms
+2025-05-21 12:00:53 info: Accessing P6 projects page render function
+2025-05-21 12:00:53 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 12:00:53 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 12:00:53 info: Rendering p6-projects view with 5 projects.
+2025-05-21 12:00:53 debug: GET /integration/p6/projects 304 115.983 ms
+2025-05-21 12:00:53 debug: GET /css/style.css 304 0.458 ms
+2025-05-21 12:00:54 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-21 12:00:54 debug: Performing P6 health check...
+2025-05-21 12:00:54 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 12:00:54 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 12:00:54 debug: P6 health check successful.
+2025-05-21 12:00:54 debug: Performing EBS health check...
+2025-05-21 12:00:54 info: Mock EBS: Getting all projects
+2025-05-21 12:00:54 debug: Mock EBS health check successful.
+2025-05-21 12:00:54 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-21 12:00:54 debug: GET /integration/status 200 73.520 ms
+2025-05-21 12:00:54 debug: GET /css/style.css 304 0.459 ms
+2025-05-21 12:00:55 debug: GET / 304 2.400 ms
+2025-05-21 12:00:55 debug: GET /css/style.css 304 0.848 ms
+2025-05-21 12:01:01 info: Mock EBS: Getting all projects
+2025-05-21 12:01:01 info: Retrieved 3 projects from mock EBS service for UI
+2025-05-21 12:01:01 debug: GET /integration/ebs/projects 304 12.651 ms
+2025-05-21 12:01:01 debug: GET /css/style.css 304 0.792 ms
+2025-05-21 12:01:03 info: Accessing P6 projects page render function
+2025-05-21 12:01:03 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 12:01:03 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 12:01:03 info: Rendering p6-projects view with 5 projects.
+2025-05-21 12:01:03 debug: GET /integration/p6/projects 304 137.041 ms
+2025-05-21 12:01:03 debug: GET /css/style.css 304 0.382 ms
+2025-05-21 12:01:09 debug: GET / 304 2.519 ms
+2025-05-21 12:01:09 debug: GET /css/style.css 304 0.720 ms
+2025-05-21 12:01:15 debug: Executing (default): SELECT [id], [sync_type] AS [type], [source], [status], [details], [started_at] AS [startedAt], [completed_at] AS [completedAt] FROM [dbo].[sync_operations] AS [SyncOperation] ORDER BY [startedAt] DESC OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+2025-05-21 12:01:15 debug: Performing P6 health check...
+2025-05-21 12:01:15 debug: API Request: GET http://10.211.55.5:8206/p6ws/restapi/project
+2025-05-21 12:01:15 debug: API Response: GET /restapi/project Status: 200
+2025-05-21 12:01:15 debug: P6 health check successful.
+2025-05-21 12:01:15 debug: Performing EBS health check...
+2025-05-21 12:01:15 info: Mock EBS: Getting all projects
+2025-05-21 12:01:15 debug: Mock EBS health check successful.
+2025-05-21 12:01:15 debug: Rendering status page with P6=true, EBS=true, Operations=10
+2025-05-21 12:01:15 debug: GET /integration/status 200 135.711 ms
+2025-05-21 12:01:15 debug: GET /css/style.css 304 0.424 ms

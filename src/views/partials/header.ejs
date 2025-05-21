@@ -16,20 +16,6 @@
             <a class="nav-link" href="/integration/status">Sync Status</a>
           </li>
         </ul>
-        <ul class="navbar-nav ms-auto">
-          <% if (typeof user !== 'undefined' && user) { %>
-            <li class="nav-item">
-              <span class="nav-link">Welcome, <%= user.username %></span>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/logout">Logout</a>
-            </li>
-            <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/login">Login</a>
-              </li>
-            <% } %>
-        </ul>
       </div>
     </div>
   </nav>

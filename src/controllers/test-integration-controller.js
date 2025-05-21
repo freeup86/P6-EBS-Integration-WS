@@ -33,7 +33,7 @@ router.get('/auth-test', async (req, res) => {
 router.get('/ui', (req, res) => {
   res.render('test-integration', {
     title: 'Integration Testing',
-    user: req.user
+    user: null
   });
 });
 

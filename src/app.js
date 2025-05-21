@@ -5,8 +5,7 @@ const cors = require('cors');
 const compression = require('compression');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
-const authController = require('./controllers/auth-controller');
-const { authenticateJWT } = require('./middleware/auth-middleware');
+// const authController = require('./controllers/auth-controller');
 
 // Logging and monitoring
 const logger = require('./utils/logger');
@@ -70,13 +69,11 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // Logging Middleware
 app.use(morganMiddleware);
 
-// Apply authentication middleware to all routes
-app.use(authenticateJWT);
 
 // Rate Limiting
 app.use('/api/', rateLimiter.apiLimiter);
 app.use('/api/v1/integration/', rateLimiter.integrationLimiter);
-app.use('/auth/', rateLimiter.authLimiter);
+// app.use('/auth/', rateLimiter.authLimiter);
 
 // Static file serving
 app.use(express.static(path.join(__dirname, 'public'), {
@@ -97,7 +94,7 @@ if (process.env.USE_MOCK_EBS === 'true') {
 // Routes
 app.use('/test-integration', testIntegrationController);
 app.use('/integration', integrationController);
-app.use('/auth', authController);
+// app.use('/auth', authController);
 app.use('/api/v1/integration', externalIntegrationController);
 
 // Home route
@@ -105,7 +102,7 @@ app.get('/', (req, res) => {
   res.render('index', { 
     title: 'P6-EBS Integration Portal',
     environment: process.env.NODE_ENV,
-    user: req.user 
+    user: null 
   });
 });
 
@@ -121,7 +118,7 @@ app.use((err, req, res, next) => {
   res.render('error', {
     message: err.message || 'An error occurred',
     error: errorDetails,
-    user: req.user
+    user: null
   });
 });
 
